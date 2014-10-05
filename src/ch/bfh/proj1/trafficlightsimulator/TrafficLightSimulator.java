@@ -24,8 +24,8 @@ public class TrafficLightSimulator {
 	private SimPanel simPanel;
 	JScrollPane scrollPanel;
 	
-	private Collection<Junction> junctions;
-	private Collection<Street> streets;
+	private ArrayList<Junction> junctions;
+	private ArrayList<Street> streets;
 	
 	private boolean simState;
 
@@ -51,6 +51,8 @@ public class TrafficLightSimulator {
 		 */
 		
 		Point origin_s1 = new Point(250,200);
+		
+		/*
 		Point origin_s2 = new Point(430,200);
 		Point origin_s3 = new Point(610,200);
 		Point origin_s4 = new Point(790,200);
@@ -62,7 +64,7 @@ public class TrafficLightSimulator {
 		Point origin_s8 = new Point(400,230);
 		Point origin_s9 = new Point(580,230);
 		Point origin_s10 = new Point(760,230);
-		
+		*/
 		
 		Junction j1 = new Junction();
 		Junction j2 = new Junction();
@@ -171,7 +173,7 @@ public class TrafficLightSimulator {
 		s10.addLane(l2_s10);
 		
 		s1.setOrigin(origin_s1);
-		s2.setOrigin(origin_s2);
+		/*s2.setOrigin(origin_s2);
 		s3.setOrigin(origin_s3);
 		s4.setOrigin(origin_s4);
 		s5.setOrigin(origin_s5);
@@ -179,7 +181,7 @@ public class TrafficLightSimulator {
 		s7.setOrigin(origin_s7);
 		s8.setOrigin(origin_s8);
 		s9.setOrigin(origin_s9);
-		s10.setOrigin(origin_s10);
+		s10.setOrigin(origin_s10);*/
 		
 		
 		

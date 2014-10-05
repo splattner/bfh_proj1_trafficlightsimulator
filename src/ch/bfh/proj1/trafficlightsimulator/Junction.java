@@ -1,5 +1,6 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -9,6 +10,9 @@ public class Junction implements DrawableObject{
 	private Street bottomStreet;
 	private Street leftStreet;
 	private Street rightStreet;
+	
+	private Point origin;
+	private Dimension dimension;
 	
 	public Street getTopStreet() {
 		return topStreet;
@@ -39,10 +43,58 @@ public class Junction implements DrawableObject{
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void setOrigin(Point origin) {
-		// TODO Auto-generated method stub
+		this.origin = origin;
 		
+	}
+	@Override
+	public void setDimension(Dimension dimension) {
+		this.dimension = dimension;
+		
+	}
+	@Override
+	public Point getOrigin() {
+		return this.origin;
+	}
+	@Override
+	public Dimension getDimension() {
+		return this.dimension;
+	}
+	
+	public Dimension calcucateDimension() {
+		Dimension d = new Dimension();
+		int numOfLanesVertical = 0;
+		int numOfLanesHorizontal = 0;
+		
+		if (this.getTopStreet() != null) {
+			numOfLanesVertical = this.getTopStreet().getLanes().size();
+		} else {
+			if (this.getBottomStreet() != null) {
+				numOfLanesVertical = this.getBottomStreet().getLanes().size();
+			}
+		}
+		
+		if (this.getLeftStreet() != null) {
+			numOfLanesVertical = this.getLeftStreet().getLanes().size();
+		} else {
+			if (this.getRightStreet() != null) {
+				numOfLanesVertical = this.getRightStreet().getLanes().size();
+			} 
+		}
+		
+		if (numOfLanesHorizontal == 0) {
+			numOfLanesHorizontal = numOfLanesVertical;
+		}
+		
+		if (numOfLanesVertical == 0) {
+			numOfLanesVertical = numOfLanesHorizontal;
+		}
+		
+		d.setSize(numOfLanesHorizontal * TrafficLightSimulator.defaultLaneWidth, numOfLanesVertical * TrafficLightSimulator.defaultLaneWidth);
+		
+		return d;
 	}
 
 }

@@ -1,6 +1,7 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Collection;
@@ -15,6 +16,7 @@ public class Street implements DrawableObject{
 	private Junction endJunction;
 	
 	private Point origin;
+	private Dimension dimension;
 	
 	public Street() {
 		this.lanes = new LinkedList<Lane>();
@@ -164,6 +166,26 @@ public class Street implements DrawableObject{
 
 	public void setLenght(int lenght) {
 		this.lenght = lenght;
+	}
+
+	@Override
+	public void setDimension(Dimension dimension) {
+		this.dimension = dimension;
+		
+	}
+	
+	public Collection<Lane> getLanes() {
+		return this.lanes;
+	}
+
+	@Override
+	public Point getOrigin() {
+		return this.origin;
+	}
+
+	@Override
+	public Dimension getDimension() {
+		return this.dimension;
 	}
 
 }
