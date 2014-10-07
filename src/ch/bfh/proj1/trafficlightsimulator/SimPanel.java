@@ -165,7 +165,7 @@ public class SimPanel extends JPanel {
 
 		
 		// Check orientation for street
-		if (lastJunction.getTopStreet().equals(s)) {
+		if (lastJunction.getTopStreet() != null && lastJunction.getTopStreet().equals(s)) {
 			// it was a top street
 			System.out.println("This Street is top of last Junction");
 
@@ -194,6 +194,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x - s.getDimension().width - nextJunction.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -212,6 +213,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -229,6 +231,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -242,7 +245,7 @@ public class SimPanel extends JPanel {
 		}
 		
 		// Check orientation for street
-		if (lastJunction.getBottomStreet().equals(s)) {
+		if (lastJunction.getBottomStreet() != null && lastJunction.getBottomStreet().equals(s)) {
 			// it was a bottom street
 			System.out.println("This Street is bottom of last Junction");
 			
@@ -269,8 +272,9 @@ public class SimPanel extends JPanel {
 					nextJunction.setDimension(nextJunction.calcucateDimension());
 					
 					newOrigin = new Point();
-					newOrigin.setLocation(s.getOrigin().x - s.getDimension().width - nextJunction.getDimension().width, s.getOrigin().y);
+					newOrigin.setLocation(s.getOrigin().x, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -288,6 +292,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -305,6 +310,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -315,14 +321,14 @@ public class SimPanel extends JPanel {
 		}
 		
 		// Check orientation for street
-		if (lastJunction.getLeftStreet().equals(s)) {
+		if (lastJunction.getLeftStreet() != null && lastJunction.getLeftStreet().equals(s)) {
 			// it was a left street
 			System.out.println("This Street is left of last Junction");
 			
 			newDimension.setSize(TrafficLightSimulator.defaultStreetLenght, numOfLanes * TrafficLightSimulator.defaultLaneWidth);
 			s.setDimension(newDimension);
 			System.out.println("Set Dimension for this street " + newDimension.width + " * " + newDimension.height);
-			newOrigin.setLocation(lastJunction.getOrigin().x + lastJunction.getDimension().getWidth(), lastJunction.getOrigin().y);
+			newOrigin.setLocation(lastJunction.getOrigin().x  - newDimension.width, lastJunction.getOrigin().y);
 			s.setOrigin(newOrigin);
 			System.out.println("Set origin for this street " + newOrigin.x + " / " + newOrigin.y);
 			
@@ -342,8 +348,9 @@ public class SimPanel extends JPanel {
 					nextJunction.setDimension(nextJunction.calcucateDimension());
 					
 					newOrigin = new Point();
-					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
+					newOrigin.setLocation(s.getOrigin().x - nextJunction.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -361,6 +368,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x - s.getDimension().width - nextJunction.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -378,6 +386,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -387,7 +396,7 @@ public class SimPanel extends JPanel {
 		}
 		
 		// Check orientation for street
-		if (lastJunction.getRightStreet().equals(s)) {
+		if (lastJunction.getRightStreet() != null &&  lastJunction.getRightStreet().equals(s)) {
 			// it was a right street
 			System.out.println("This Street is right of last Junction");
 			
@@ -416,6 +425,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 
 				
@@ -434,6 +444,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -451,6 +462,7 @@ public class SimPanel extends JPanel {
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
+					System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);

@@ -52,19 +52,6 @@ public class TrafficLightSimulator {
 		
 		Point origin_s1 = new Point(250,200);
 		
-		/*
-		Point origin_s2 = new Point(430,200);
-		Point origin_s3 = new Point(610,200);
-		Point origin_s4 = new Point(790,200);
-		
-		Point origin_s5 = new Point(400,50);
-		Point origin_s6 = new Point(580,50);
-		Point origin_s7 = new Point(760,50);
-		
-		Point origin_s8 = new Point(400,230);
-		Point origin_s9 = new Point(580,230);
-		Point origin_s10 = new Point(760,230);
-		*/
 		
 		Junction j1 = new Junction();
 		Junction j2 = new Junction();
@@ -173,15 +160,7 @@ public class TrafficLightSimulator {
 		s10.addLane(l2_s10);
 		
 		s1.setOrigin(origin_s1);
-		/*s2.setOrigin(origin_s2);
-		s3.setOrigin(origin_s3);
-		s4.setOrigin(origin_s4);
-		s5.setOrigin(origin_s5);
-		s6.setOrigin(origin_s6);
-		s7.setOrigin(origin_s7);
-		s8.setOrigin(origin_s8);
-		s9.setOrigin(origin_s9);
-		s10.setOrigin(origin_s10);*/
+
 		
 		
 		
@@ -233,6 +212,36 @@ public class TrafficLightSimulator {
 		s8.setStartJunction(j1);
 		s9.setStartJunction(j2);
 		s10.setStartJunction(j3);
+		
+		
+		Junction j4 = new Junction();
+		Junction j5 = new Junction();
+		Street s11 = new Street();
+		
+		s8.setEndJunction(j4);
+		s9.setEndJunction(j5);
+		
+		Lane l1_s11 = new Lane();
+		Lane l2_s11 = new Lane();
+		l1_s11.setLaneOrientation(laneOrientations.startToEnd);
+		l2_s11.setLaneOrientation(laneOrientations.endToStart);
+		
+		s11.addLane(l1_s11);
+		s11.addLane(l2_s11);
+		
+		j4.setTopStreet(s8);
+		j4.setRightStreet(s11);
+		j5.setTopStreet(s9);
+		j5.setLeftStreet(s11);
+		
+		s11.setStartJunction(j4);
+		s11.setEndJunction(j5);
+		
+		streets.add(s11);
+		junctions.add(j4);
+		junctions.add(j5);
+		
+		
 	}
 	
 	private void runGui() {
