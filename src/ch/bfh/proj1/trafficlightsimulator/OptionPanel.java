@@ -54,7 +54,6 @@ public class OptionPanel extends JPanel implements ActionListener{
 		if (e.getSource().equals(btBreak)) {
 			if (currentSImulation.isBreaking()) {
 				currentSImulation.setBreaking(false);
-				currentSImulation.notify();
 				btBreak.setText("Break");
 			} else {
 				currentSImulation.setBreaking(true);

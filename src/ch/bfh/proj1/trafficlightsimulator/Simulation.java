@@ -17,12 +17,15 @@ public class Simulation extends Thread {
 				
 				System.out.println("SimLoop");
 				
+				// Wait n ms after each loop
 				try {
 					this.wait(1000);
-				} catch (InterruptedException e) {
-					
+				} catch (InterruptedException e1) {
+
 				}
 				
+
+				// Check if we should break
 				if (this.isBreaking()) {
 					System.out.println("Breaking");
 					try {
@@ -31,22 +34,20 @@ public class Simulation extends Thread {
 
 					}
 				}
-				
+			
 			}
 			
 		}
-		
 
-
-		
 		System.out.println("Interrupted");
 	}
 	
 	public void stopSimulation() {
 		
 		this.running = false;
-		
-		this.interrupt();
+		synchronized(this) {
+			this.interrupt();
+		}
 	}
 	
 	public void startSimulation() {
@@ -69,6 +70,12 @@ public class Simulation extends Thread {
 	
 	public void setBreaking(boolean breakState) {
 		this.breakState = breakState;
+		
+		if (!this.isBreaking()) {
+			synchronized(this) {
+				this.notify();
+			}
+		}
 	}
 
 }
