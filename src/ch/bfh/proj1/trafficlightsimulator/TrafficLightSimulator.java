@@ -20,14 +20,16 @@ public class TrafficLightSimulator {
 	static public int defaultLaneWidth = 15;
 	
 	private JFrame mainFrame;
-	private JPanel optionPanel;
+	private OptionPanel optionPanel;
 	private SimPanel simPanel;
 	JScrollPane scrollPanel;
 	
 	private ArrayList<Junction> junctions;
 	private ArrayList<Street> streets;
+	private ArrayList<Route> routes;
 	
-	private boolean simState;
+	Simulation currentSimulation;
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -41,10 +43,11 @@ public class TrafficLightSimulator {
 	
 	private void init() {
 		
-		simState = false;
-		
+		currentSimulation = new Simulation();
+	
 		junctions = new ArrayList<Junction>();
 		streets = new ArrayList<Street>();
+		routes = new ArrayList<Route>();
 		
 		/*
 		 * Manually configure Street & Junctions
@@ -250,8 +253,10 @@ public class TrafficLightSimulator {
 		
 		mainFrame.setSize(TrafficLightSimulator.applicationWidth, TrafficLightSimulator.applicationHeight);
 		
-		optionPanel = new JPanel();
+		optionPanel = new OptionPanel(currentSimulation);
 		optionPanel.setSize(200, applicationHeight);
+		
+		
 		
 		
 		simPanel = new SimPanel(junctions, streets);
@@ -267,9 +272,6 @@ public class TrafficLightSimulator {
 		mainFrame.setVisible(true);
 	}
 	
-	private void simLoop() {
-		
-		
-	}
+
 
 }
