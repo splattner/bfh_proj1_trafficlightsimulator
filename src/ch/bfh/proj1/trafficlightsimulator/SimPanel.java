@@ -34,10 +34,9 @@ public class SimPanel extends JPanel {
 		
 		System.out.println("Startin with Street " + s.getOrigin().x + " / " + s.getOrigin().y);
 		Junction j;
-		int numOfLanes = 0, numOfLanesCrossStreet = 0;
+		int numOfLanes = 0;
 		Dimension d;
 		Point newOrigin;
-		Street crossStreet = null;
 		Street nextStreet = null;
 		
 		// Check if this is a horizontal or vertical steet

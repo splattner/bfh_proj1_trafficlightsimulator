@@ -1,39 +1,51 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
 public class Car extends Vehicle {
+	
+	
+	private Point origin;
+	private Dimension dimension;
+	
+	private Color carColor = Color.BLUE;
+	
+	
+	public Car() {
+		this.dimension = new Dimension(5,5);
+	}
 
 	@Override
 	public void paintObject(Graphics g) {
-		// TODO Auto-generated method stub
+		
+		g.setColor(carColor);
+		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
 		
 	}
 
 	@Override
 	public void setOrigin(Point origin) {
-		// TODO Auto-generated method stub
+		this.origin = origin;
 		
 	}
 
 	@Override
 	public void setDimension(Dimension dimension) {
-		// TODO Auto-generated method stub
+		// You cannot set the dimension of a car.
 		
 	}
 
 	@Override
 	public Point getOrigin() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.origin;
 	}
 
 	@Override
 	public Dimension getDimension() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.dimension;
 	}
 
 }

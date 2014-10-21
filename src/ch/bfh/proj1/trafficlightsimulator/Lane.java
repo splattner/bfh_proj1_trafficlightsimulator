@@ -20,6 +20,11 @@ public class Lane {
 	public Lane() {
 		this.verhiclesOnLane = new LinkedList<Vehicle>();
 	}
+	
+	public Lane(laneOrientations laneOrientation) {
+		this.verhiclesOnLane = new LinkedList<Vehicle>();
+		this.setLaneOrientation(laneOrientation);
+	}
 
 	public laneOrientations getLaneOrientation() {
 		return laneOrientation;

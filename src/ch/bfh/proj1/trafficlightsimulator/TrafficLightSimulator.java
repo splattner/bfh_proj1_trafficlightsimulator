@@ -2,13 +2,8 @@ package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-
 import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
 
 public class TrafficLightSimulator {
@@ -32,7 +27,7 @@ public class TrafficLightSimulator {
 
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
 		
 		TrafficLightSimulator app = new TrafficLightSimulator();
 		app.init();
@@ -72,65 +67,36 @@ public class TrafficLightSimulator {
 		Street s9 = new Street();
 		Street s10 = new Street();
 		
-		Lane l1_s1 = new Lane();
-		Lane l2_s1 = new Lane();
+		Lane l1_s1 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s1 = new Lane(laneOrientations.endToStart);
+
 		
-		l1_s1.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s1.setLaneOrientation(laneOrientations.endToStart);
+		Lane l1_s2 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s2 = new Lane(laneOrientations.endToStart);
 		
-		Lane l1_s2 = new Lane();
-		Lane l2_s2 = new Lane();
+		Lane l1_s3 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s3 = new Lane(laneOrientations.endToStart);
 		
-		l1_s2.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s2.setLaneOrientation(laneOrientations.endToStart);
+		Lane l1_s4 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s4 = new Lane(laneOrientations.endToStart);
 		
-		Lane l1_s3 = new Lane();
-		Lane l2_s3 = new Lane();
+		Lane l1_s5 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s5 = new Lane(laneOrientations.endToStart);
+	
+		Lane l1_s6 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s6 = new Lane(laneOrientations.endToStart);
 		
-		l1_s2.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s2.setLaneOrientation(laneOrientations.endToStart);
+		Lane l1_s7 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s7 = new Lane(laneOrientations.endToStart);
 		
-		Lane l1_s4 = new Lane();
-		Lane l2_s4 = new Lane();
-		
-		l1_s4.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s4.setLaneOrientation(laneOrientations.endToStart);
-		
-		Lane l1_s5 = new Lane();
-		Lane l2_s5 = new Lane();
-		
-		l1_s5.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s5.setLaneOrientation(laneOrientations.endToStart);
-		
-		Lane l1_s6 = new Lane();
-		Lane l2_s6 = new Lane();
-		
-		l1_s6.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s6.setLaneOrientation(laneOrientations.endToStart);
-		
-		Lane l1_s7 = new Lane();
-		Lane l2_s7 = new Lane();
-		
-		l1_s4.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s4.setLaneOrientation(laneOrientations.endToStart);
-		
-		Lane l1_s8 = new Lane();
-		Lane l2_s8 = new Lane();
-		
-		l1_s8.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s8.setLaneOrientation(laneOrientations.endToStart);
-		
-		Lane l1_s9 = new Lane();
-		Lane l2_s9 = new Lane();
-		
-		l1_s9.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s9.setLaneOrientation(laneOrientations.endToStart);
-		
-		Lane l1_s10 = new Lane();
-		Lane l2_s10 = new Lane();
-		
-		l1_s10.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s10.setLaneOrientation(laneOrientations.endToStart);
+		Lane l1_s8 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s8 = new Lane(laneOrientations.endToStart);
+	
+		Lane l1_s9 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s9 = new Lane(laneOrientations.endToStart);
+	
+		Lane l1_s10 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s10 = new Lane(laneOrientations.endToStart);
 		
 		s1.addLane(l1_s1);
 		s1.addLane(l2_s1);
@@ -224,10 +190,9 @@ public class TrafficLightSimulator {
 		s8.setEndJunction(j4);
 		s9.setEndJunction(j5);
 		
-		Lane l1_s11 = new Lane();
-		Lane l2_s11 = new Lane();
-		l1_s11.setLaneOrientation(laneOrientations.startToEnd);
-		l2_s11.setLaneOrientation(laneOrientations.endToStart);
+		Lane l1_s11 = new Lane(laneOrientations.startToEnd);
+		Lane l2_s11 = new Lane(laneOrientations.endToStart);
+
 		
 		s11.addLane(l1_s11);
 		s11.addLane(l2_s11);

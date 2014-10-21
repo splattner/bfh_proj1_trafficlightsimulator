@@ -32,8 +32,6 @@ public class Street implements DrawableObject{
 	public void paintObject(Graphics g) {
 		// TODO Auto-generated method stub
 		
-		boolean drawComplete = false;
-		
 		Color streetColor = Color.GRAY;
 		Color laneColor = Color.YELLOW;
 		
