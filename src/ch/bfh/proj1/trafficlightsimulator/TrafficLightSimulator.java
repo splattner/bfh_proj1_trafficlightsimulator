@@ -22,6 +22,7 @@ public class TrafficLightSimulator {
 	private ArrayList<Junction> junctions;
 	private ArrayList<Street> streets;
 	private ArrayList<Route> routes;
+	private ArrayList<Vehicle> verhicles;
 	
 	Simulation currentSimulation;
 
@@ -38,11 +39,11 @@ public class TrafficLightSimulator {
 	
 	private void init() {
 		
-		currentSimulation = new Simulation();
-	
+			
 		junctions = new ArrayList<Junction>();
 		streets = new ArrayList<Street>();
 		routes = new ArrayList<Route>();
+		verhicles = new ArrayList<Vehicle>();
 		
 		/*
 		 * Manually configure Street & Junctions
@@ -70,7 +71,6 @@ public class TrafficLightSimulator {
 		Lane l1_s1 = new Lane(laneOrientations.startToEnd);
 		Lane l2_s1 = new Lane(laneOrientations.endToStart);
 
-		
 		Lane l1_s2 = new Lane(laneOrientations.startToEnd);
 		Lane l2_s2 = new Lane(laneOrientations.endToStart);
 		
@@ -130,9 +130,7 @@ public class TrafficLightSimulator {
 		
 		s1.setOrigin(origin_s1);
 
-		
-		
-		
+	
 		junctions.add(j1);
 		junctions.add(j2);
 		junctions.add(j3);
@@ -209,6 +207,19 @@ public class TrafficLightSimulator {
 		junctions.add(j4);
 		junctions.add(j5);
 		
+		Route route1 = new Route();
+		route1.addLane(l1_s1);
+		route1.addLane(l1_s2);
+		route1.addLane(l1_s3);
+		route1.addLane(l1_s4);
+		
+		routes.add(route1);
+	
+		
+		
+		
+		
+		
 		
 	}
 	
@@ -218,8 +229,7 @@ public class TrafficLightSimulator {
 		
 		mainFrame.setSize(TrafficLightSimulator.applicationWidth, TrafficLightSimulator.applicationHeight);
 		
-		optionPanel = new OptionPanel(currentSimulation);
-		optionPanel.setSize(200, applicationHeight);
+
 		
 		
 		
@@ -230,6 +240,11 @@ public class TrafficLightSimulator {
 		//scrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		//scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
+		
+		currentSimulation = new Simulation(verhicles, routes, simPanel);
+		
+		optionPanel = new OptionPanel(currentSimulation);
+		optionPanel.setSize(200, applicationHeight);
 		
 		mainFrame.add(optionPanel);
 		mainFrame.add(scrollPanel);

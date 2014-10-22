@@ -1,11 +1,29 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.util.ArrayList;
+
 public class Simulation extends Thread {
 	
 	private boolean running = false;
 	private boolean breakState = false;
 	
-	public Simulation() {
+	private ArrayList<Vehicle> verhicles;
+	private ArrayList<Route> routes;
+	private SimPanel simPanel;
+	
+	public Simulation(ArrayList<Vehicle> verhicles, ArrayList<Route> routes, SimPanel simPanel) {
+		this.setVerhicles(verhicles);
+		this.setRoutes(routes);
+		this.setSimPanel(simPanel);
+		
+	}
+	
+	public Simulation (Simulation oldSimulation) {
+		this.setVerhicles(oldSimulation.getVerhicles());
+		this.setRoutes(oldSimulation.getRoutes());
+		this.setSimPanel(oldSimulation.getSimPanel());
+		
+		oldSimulation = null;
 		
 	}
 	
@@ -16,6 +34,19 @@ public class Simulation extends Thread {
 			while (this.isRunning()) {
 				
 				System.out.println("SimLoop");
+				
+				for (Vehicle v : this.verhicles) {
+					System.out.println("Simulate Car");
+					v.simulationStep();
+				}
+				
+				
+				
+				System.out.println("Redraw Sim Panel");
+				this.simPanel.invalidate();
+				this.simPanel.repaint();
+				
+				
 				
 				// Wait n ms after each loop
 				try {
@@ -76,6 +107,30 @@ public class Simulation extends Thread {
 				this.notify();
 			}
 		}
+	}
+
+	public ArrayList<Vehicle> getVerhicles() {
+		return verhicles;
+	}
+
+	public void setVerhicles(ArrayList<Vehicle> verhicles) {
+		this.verhicles = verhicles;
+	}
+
+	public ArrayList<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(ArrayList<Route> routes) {
+		this.routes = routes;
+	}
+
+	public SimPanel getSimPanel() {
+		return simPanel;
+	}
+
+	public void setSimPanel(SimPanel simPanel) {
+		this.simPanel = simPanel;
 	}
 
 }

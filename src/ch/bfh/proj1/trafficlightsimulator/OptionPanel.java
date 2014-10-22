@@ -2,6 +2,7 @@ package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -10,6 +11,10 @@ public class OptionPanel extends JPanel implements ActionListener{
 	
 	JButton btRunSimulation;
 	JButton btBreak;
+	
+	
+	// For temp purpose only
+	JButton btAddCar;
 	
 	Simulation currentSImulation;
 	
@@ -23,16 +28,37 @@ public class OptionPanel extends JPanel implements ActionListener{
 		btBreak.addActionListener(this);
 		btBreak.setEnabled(false);
 		
+		btAddCar = new JButton("Add Car");
+		btAddCar.addActionListener(this);
+		
 		
 		
 		this.add(btRunSimulation);
 		this.add(btBreak);
+		this.add(btAddCar);
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		
+		if (e.getSource().equals(btAddCar)) {
+			ArrayList<Vehicle> vehicles = this.currentSImulation.getVerhicles();
+			Vehicle car = new Car();
+			
+			Route r = this.currentSImulation.getRoutes().get(0);
+			Lane l = r.getRoute().getFirst();
+			
+			car.setRoute(r);
+			car.setCurrentLane(l);
+			
+			vehicles.add(car);
+			
+			System.out.println("Added car");
+			
+			
+		}
 
 		if (e.getSource().equals(btRunSimulation)) {
 
@@ -41,8 +67,11 @@ public class OptionPanel extends JPanel implements ActionListener{
 				currentSImulation.stopSimulation();
 				btBreak.setEnabled(false);
 				
-				this.currentSImulation = null;
-				this.currentSImulation = new Simulation();
+
+				this.currentSImulation = new Simulation(this.currentSImulation);
+				
+				
+				
 			} else {
 				btRunSimulation.setText("Stop");
 				currentSImulation.startSimulation();

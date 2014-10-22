@@ -65,6 +65,7 @@ public class Street implements DrawableObject{
 	
 	public void addLane(Lane lane) {
 		lanes.add(lane);
+		lane.setStreet(this);
 	}
 
 	public Junction getStartJunction() {

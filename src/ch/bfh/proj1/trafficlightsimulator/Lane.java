@@ -13,16 +13,18 @@ public class Lane {
 
 	private laneOrientations laneOrientation;
 	
-	private Collection<Vehicle> verhiclesOnLane;
+	private LinkedList<Vehicle> verhiclesOnLane;
 	
 	private TrafficLight trafficLight;
 	
+	private Street street;
+	
 	public Lane() {
-		this.verhiclesOnLane = new LinkedList<Vehicle>();
+		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
 	}
 	
 	public Lane(laneOrientations laneOrientation) {
-		this.verhiclesOnLane = new LinkedList<Vehicle>();
+		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
 		this.setLaneOrientation(laneOrientation);
 	}
 
@@ -32,6 +34,22 @@ public class Lane {
 
 	public void setLaneOrientation(laneOrientations laneOrientation) {
 		this.laneOrientation = laneOrientation;
+	}
+
+	public LinkedList<Vehicle> getVerhiclesOnLane() {
+		return verhiclesOnLane;
+	}
+
+	public void setVerhiclesOnLane(LinkedList<Vehicle> verhiclesOnLane) {
+		this.verhiclesOnLane = verhiclesOnLane;
+	}
+
+	public Street getStreet() {
+		return street;
+	}
+
+	public void setStreet(Street street) {
+		this.street = street;
 	}
 
 }
