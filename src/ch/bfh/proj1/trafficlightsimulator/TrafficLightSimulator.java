@@ -4,7 +4,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
+
+import javax.swing.ScrollPaneConstants;
+
 
 public class TrafficLightSimulator {
 	
@@ -55,49 +57,68 @@ public class TrafficLightSimulator {
 		Junction j1 = new Junction();
 		Junction j2 = new Junction();
 		Junction j3 = new Junction();
+		Junction j4 = new Junction();
+		Junction j5 = new Junction();
+		
+		junctions.add(j1);
+		junctions.add(j2);
+		junctions.add(j3);
+		junctions.add(j4);
+		junctions.add(j5);
+	
 		Street s1 = new Street();
 		Street s2 = new Street();
 		Street s3 = new Street();
-		Street s4 = new Street();
-		
+		Street s4 = new Street();		
 		Street s5 = new Street();
 		Street s6 = new Street();
-		Street s7 = new Street();
-		
+		Street s7 = new Street();		
 		Street s8 = new Street();
 		Street s9 = new Street();
 		Street s10 = new Street();
 		
-		Lane l1_s1 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s1 = new Lane(laneOrientations.endToStart);
+		streets.add(s1);
+		streets.add(s2);
+		streets.add(s3);
+		streets.add(s4);
+		streets.add(s5);
+		streets.add(s6);
+		streets.add(s7);
+		streets.add(s8);
+		streets.add(s9);
+		streets.add(s10);
 
-		Lane l1_s2 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s2 = new Lane(laneOrientations.endToStart);
+		Lane l1_s1 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s1 = new Lane(Lane.laneOrientations.startToEnd);
+
+		Lane l1_s2 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s2 = new Lane(Lane.laneOrientations.startToEnd);
+
+		Lane l1_s3 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s3 = new Lane(Lane.laneOrientations.startToEnd);
+
+		Lane l1_s4 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s4 = new Lane(Lane.laneOrientations.startToEnd);
+
+		Lane l1_s5 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s5 = new Lane(Lane.laneOrientations.startToEnd);
+
+		Lane l1_s6 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s6 = new Lane(Lane.laneOrientations.startToEnd);
 		
-		Lane l1_s3 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s3 = new Lane(laneOrientations.endToStart);
+		Lane l1_s7 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s7 = new Lane(Lane.laneOrientations.startToEnd);
 		
-		Lane l1_s4 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s4 = new Lane(laneOrientations.endToStart);
+		Lane l1_s8 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s8 = new Lane(Lane.laneOrientations.startToEnd);
+
+		Lane l1_s9 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s9 = new Lane(Lane.laneOrientations.startToEnd);
 		
-		Lane l1_s5 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s5 = new Lane(laneOrientations.endToStart);
-	
-		Lane l1_s6 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s6 = new Lane(laneOrientations.endToStart);
-		
-		Lane l1_s7 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s7 = new Lane(laneOrientations.endToStart);
-		
-		Lane l1_s8 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s8 = new Lane(laneOrientations.endToStart);
-	
-		Lane l1_s9 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s9 = new Lane(laneOrientations.endToStart);
-	
-		Lane l1_s10 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s10 = new Lane(laneOrientations.endToStart);
-		
+		Lane l1_s10 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s10 = new Lane(Lane.laneOrientations.startToEnd);
+
+
 		s1.addLane(l1_s1);
 		s1.addLane(l2_s1);
 		
@@ -129,7 +150,6 @@ public class TrafficLightSimulator {
 		s10.addLane(l2_s10);
 		
 		s1.setOrigin(origin_s1);
-
 	
 		junctions.add(j1);
 		junctions.add(j2);
@@ -145,7 +165,7 @@ public class TrafficLightSimulator {
 		streets.add(s8);
 		streets.add(s9);
 		streets.add(s10);
-		
+
 		j1.setLeftStreet(s1);
 		j1.setRightStreet(s2);
 		
@@ -180,16 +200,15 @@ public class TrafficLightSimulator {
 		s9.setStartJunction(j2);
 		s10.setStartJunction(j3);
 		
-		
-		Junction j4 = new Junction();
-		Junction j5 = new Junction();
 		Street s11 = new Street();
+		streets.add(s11);
 		
 		s8.setEndJunction(j4);
 		s9.setEndJunction(j5);
 		
-		Lane l1_s11 = new Lane(laneOrientations.startToEnd);
-		Lane l2_s11 = new Lane(laneOrientations.endToStart);
+
+		Lane l1_s11 = new Lane(Lane.laneOrientations.endToStart);
+		Lane l2_s11 = new Lane(Lane.laneOrientations.startToEnd);
 
 		
 		s11.addLane(l1_s11);
@@ -202,6 +221,7 @@ public class TrafficLightSimulator {
 		
 		s11.setStartJunction(j4);
 		s11.setEndJunction(j5);
+
 		
 		streets.add(s11);
 		junctions.add(j4);
@@ -215,11 +235,6 @@ public class TrafficLightSimulator {
 		
 		routes.add(route1);
 	
-		
-		
-		
-		
-		
 		
 	}
 	

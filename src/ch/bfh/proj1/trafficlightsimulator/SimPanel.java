@@ -477,31 +477,12 @@ public class SimPanel extends JPanel {
 		
 		super.paintComponent(g);
 		
-		System.out.println("Draw Sim Panel");
-		
-		/*for (DrawableObject junction : junctions) {
-			junction.paintObject(g);
-		}*/
-		
-		for (Street street : streets) {
+
+		for (DrawableObject street : streets) {
+
 			street.paintObject(g);
 			
-			for (Lane l : street.getLanes()) {
-				for (Vehicle v : l.getVerhiclesOnLane()) {
-					System.out.println("Draw Car on Lane");
-					g.setColor(Color.BLUE);
-					g.fillRect(street.getOrigin().x, street.getOrigin().y, 5, 5);
-				}
-			}
-			
 		}
-		
-
-		
-		//ArrayList<Street> myStreets = (ArrayList<Street>) streets;
-		//myStreets.get(0).paintObject(g);
-		
-
 	}
 
 }
