@@ -14,30 +14,22 @@ public class Junction implements DrawableObject{
 	private Point origin;
 	private Dimension dimension;
 	
-	public Street getTopStreet() {
-		return topStreet;
-	}
-	public void setTopStreet(Street topStreet) {
-		this.topStreet = topStreet;
-	}
-	public Street getBottomStreet() {
-		return bottomStreet;
-	}
-	public void setBottomStreet(Street bottomStreet) {
-		this.bottomStreet = bottomStreet;
-	}
-	public Street getLeftStreet() {
-		return leftStreet;
-	}
-	public void setLeftStreet(Street leftStreet) {
-		this.leftStreet = leftStreet;
-	}
-	public Street getRightStreet() {
-		return rightStreet;
-	}
-	public void setRightStreet(Street rightStreet) {
-		this.rightStreet = rightStreet;
-	}
+	public Street getTopStreet() {return topStreet;}
+	
+	public void setTopStreet(Street topStreet) {this.topStreet = topStreet;}
+	
+	public Street getBottomStreet() {return bottomStreet;}
+	
+	public void setBottomStreet(Street bottomStreet) {this.bottomStreet = bottomStreet;}
+	
+	public Street getLeftStreet() {return leftStreet;}
+	
+	public void setLeftStreet(Street leftStreet) {this.leftStreet = leftStreet;}
+	
+	public Street getRightStreet() {return rightStreet;}
+	
+	public void setRightStreet(Street rightStreet) {this.rightStreet = rightStreet;}
+	
 	@Override
 	public void paintObject(Graphics g) {
 		// TODO Auto-generated method stub
@@ -45,23 +37,16 @@ public class Junction implements DrawableObject{
 	}
 	
 	@Override
-	public void setOrigin(Point origin) {
-		this.origin = origin;
-		
-	}
+	public void setOrigin(Point origin) {this.origin = origin;}
+	
 	@Override
-	public void setDimension(Dimension dimension) {
-		this.dimension = dimension;
-		
-	}
+	public void setDimension(Dimension dimension) {this.dimension = dimension;}
+	
 	@Override
-	public Point getOrigin() {
-		return this.origin;
-	}
+	public Point getOrigin() {return this.origin;}
+	
 	@Override
-	public Dimension getDimension() {
-		return this.dimension;
-	}
+	public Dimension getDimension() {return this.dimension;}
 	
 	public Dimension calcucateDimension() {
 		Dimension d = new Dimension();

@@ -478,18 +478,9 @@ public class SimPanel extends JPanel {
 		
 		super.paintComponent(g);
 		
-		/*for (DrawableObject junction : junctions) {
-			junction.paintObject(g);
-		}*/
-		
 		for (DrawableObject street : streets) {
 			street.paintObject(g);
 		}
-		
-		//ArrayList<Street> myStreets = (ArrayList<Street>) streets;
-		//myStreets.get(0).paintObject(g);
-		
-
 	}
 
 }
