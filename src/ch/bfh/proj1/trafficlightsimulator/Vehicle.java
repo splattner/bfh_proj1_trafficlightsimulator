@@ -142,19 +142,24 @@ public abstract class Vehicle implements DrawableObject{
 			distFullStop += carLenghtinPositions;
 			//System.out.println("Distance full stop: " + distFullStop);
 			
+			// Did we already fired a breaking command? if so, no second one!
 			boolean alreadyBreaked = false;
 			
+			// Check if traffic light is red
 			boolean isRed = this.currentLane.getTrafficLight().getCurrentStatus() != TrafficLight.trafficLightStatus.RED;
+			
+			// Check if distance to next vehicle is enought (if any)
 			boolean isEnoughDistance = nextVehicle != null && nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() > minDistance;
 	 
 			
+			// is there a next vehicle
 			if (nextVehicle != null) {
-				System.out.println("There is a next car");
+				//System.out.println("There is a next car");
 				if (nextVehicle.getCurrentSpeed() == 0) {
-					System.out.println("Next Car has speed 0");
+					//System.out.println("Next Car has speed 0");
 					// Next Vehicle stop, break if distance is not enought for full stop
 					if (this.breakStatus || nextVehicle.getCurrentPosOnLane() - this.currentPosOnLane <= (distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin)) {
-						System.out.println("Distance not enoght -> break");
+						//System.out.println("Distance not enoght -> break");
 						this.breakStatus = true;
 						this.decreaseSpeed();
 						alreadyBreaked = true;
@@ -163,13 +168,14 @@ public abstract class Vehicle implements DrawableObject{
 					}
 				} else {
 					// Next Vehicle is moving
-					System.out.println("Next Car is moving");
-					if (Math.abs(this.currentSpeed - nextVehicle.currentSpeed) > this.currentSpeed*0.8) {
-						System.out.println("with big speed diference");
+					//System.out.println("Next Car is moving");
+					// TODO: Verify factor for differentiation of big & small speed difference
+					if (Math.abs(this.currentSpeed - nextVehicle.currentSpeed) > this.currentSpeed * 0.8) {
+						//System.out.println("with big speed diference");
 						// Speed of next vehicle has big difference
 						// break if distance is not enought for full stop
 						if (nextVehicle.getCurrentPosOnLane() - this.currentPosOnLane <= ( distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin)) {
-							System.out.println("Distance not enoght -> break");
+							//System.out.println("Distance not enoght -> break");
 							this.breakStatus = true;
 							this.decreaseSpeed();
 							alreadyBreaked = true;
@@ -179,9 +185,9 @@ public abstract class Vehicle implements DrawableObject{
 					} else {
 						// Speed difference is low
 						// Maintain minimum distance (based on current Speed)
-						System.out.println("no big speed diference");
+						//System.out.println("no big speed diference");
 						if (nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() < minDistance) {
-							System.out.println("Distance not enoght -> break");
+							//System.out.println("Distance not enoght -> break");
 							this.breakStatus = true;
 							this.decreaseSpeed();
 							alreadyBreaked = true;
@@ -193,12 +199,13 @@ public abstract class Vehicle implements DrawableObject{
 			}
 			
 			if (this.currentLane.getTrafficLight().getCurrentStatus() == TrafficLight.trafficLightStatus.RED) {
-				System.out.println("Traffic Light is red");
+				//System.out.println("Traffic Light is red");
 				if (this.breakStatus || this.currentLane.getStreet().getPositionsOnStreet() - this.currentPosOnLane <= (distFullStop + (2 * trafficLigthLenghtInPosition))) {
-					System.out.println("Distance not enoght");
+					//System.out.println("Distance not enoght");
 					this.breakStatus = true;
+					// Are we already breaking?
 					if (!alreadyBreaked) {
-						System.out.println("-> Break, because its not yet breaking");
+						//System.out.println("-> Break, because its not yet breaking");
 						this.decreaseSpeed();
 						alreadyBreaked = true;
 					}
@@ -208,15 +215,15 @@ public abstract class Vehicle implements DrawableObject{
 			}
 			
 			// Are we currently breaking?
-			if (!this.breakStatus && !alreadyBreaked) {
+			if (!this.breakStatus ) {
 				if (isRed && (this.currentLane.getStreet().getPositionsOnStreet() - this.currentPosOnLane > (distFullStop + (3 * trafficLigthLenghtInPosition)))) {
-					System.out.println("Not Breakning, Red but enought distance -> Increase Speed");
+					//System.out.println("Not Breakning, Red but enought distance -> Increase Speed");
 					this.increaseSpeed();
 				} else if (isEnoughDistance){
-					System.out.println("Not Breakning, distance to next enought -> Increase Speed");
+					//System.out.println("Not Breakning, distance to next enought -> Increase Speed");
 					this.increaseSpeed();
 				} else {
-					System.out.println("Not Breakning, Increase Speed");
+					//System.out.println("Not Breakning, Increase Speed");
 					this.increaseSpeed();
 				}
 					
@@ -257,7 +264,7 @@ public abstract class Vehicle implements DrawableObject{
 			this.currentAcceleration = 0;
 		}
 		
-		System.out.println("Increase. Current Speed: " + this.currentSpeed + " Current Acc: " + this.currentAcceleration);
+		//System.out.println("Increase. Current Speed: " + this.currentSpeed + " Current Acc: " + this.currentAcceleration);
 	
 	}
 	
@@ -282,7 +289,7 @@ public abstract class Vehicle implements DrawableObject{
 			this.breakStatus = false; // You do not need to break, if already at zero
 		}
 		
-		System.out.println("Decrease. Current Speed: " + this.currentSpeed + " Current Acc: " + this.currentAcceleration);
+		//System.out.println("Decrease. Current Speed: " + this.currentSpeed + " Current Acc: " + this.currentAcceleration);
 		
 	}
 	
