@@ -48,6 +48,10 @@ public class TrafficLight implements DrawableObject {
 	@Override
 	public Dimension getDimension() {return dimension;}
 	
-	public String getCurrentStatus () {return currentStatus.toString();}
+	public trafficLightStatus getCurrentStatus () {return currentStatus;}
+
+	public void setCurrentStatus(trafficLightStatus currentStatus) {
+		this.currentStatus = currentStatus;
+	}
 
 }

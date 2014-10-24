@@ -19,7 +19,7 @@ public class TrafficLightSimulator {
 	static public int defaultLaneWidth = 15;
 	
 	static public int minimumDistanceBetweenVehiclesMax = 20000;
-	static public int minimumDistanceBetweenVehiclesMin = 100;
+	static public int minimumDistanceBetweenVehiclesMin = 4000;
 	
 	private JFrame mainFrame;
 	
@@ -37,6 +37,11 @@ public class TrafficLightSimulator {
 	
 	private ArrayList<Junction> junctions;
 	private ArrayList<Street> streets;
+	
+	public ArrayList<Street> getStreets() {
+		return streets;
+	}
+
 	private ArrayList<Route> routes;
 	private ArrayList<Vehicle> verhicles;
 	

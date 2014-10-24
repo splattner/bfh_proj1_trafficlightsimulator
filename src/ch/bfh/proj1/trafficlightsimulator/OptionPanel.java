@@ -14,7 +14,9 @@ public class OptionPanel extends JPanel implements ActionListener{
 	
 	
 	// For temp purpose only
-	JButton btAddCar;
+	JButton btAddCar1;
+	JButton btAddCar2;
+	JButton btLight;
 	
 
 	private TrafficLightSimulator simulator;
@@ -29,14 +31,21 @@ public class OptionPanel extends JPanel implements ActionListener{
 		btBreak.addActionListener(this);
 		btBreak.setEnabled(false);
 		
-		btAddCar = new JButton("Add Car");
-		btAddCar.addActionListener(this);
+		btAddCar1 = new JButton("Add Car");
+		btAddCar1.addActionListener(this);
+		btAddCar2 = new JButton("Add Truck");
+		btAddCar2.addActionListener(this);
+		
+		btLight = new JButton("Set Green");
+		btLight.addActionListener(this);
 		
 		
 		
 		this.add(btRunSimulation);
 		this.add(btBreak);
-		this.add(btAddCar);
+		this.add(btAddCar1);
+		this.add(btAddCar2);
+		this.add(btLight);
 		
 	}
 
@@ -44,7 +53,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		
-		if (e.getSource().equals(btAddCar)) {
+		if (e.getSource().equals(btAddCar1)) {
 			ArrayList<Vehicle> vehicles = this.simulator.getCurrentSimulation().getVerhicles();
 			Vehicle v = new Car();
 			//Vehicle v = new Truck();
@@ -57,6 +66,42 @@ public class OptionPanel extends JPanel implements ActionListener{
 			
 			vehicles.add(v);
 			
+		}
+		
+		if (e.getSource().equals(btAddCar2)) {
+			ArrayList<Vehicle> vehicles = this.simulator.getCurrentSimulation().getVerhicles();
+			Vehicle v = new Truck();
+			//Vehicle v = new Truck();
+			
+			Route r = this.simulator.getCurrentSimulation().getRoutes().get(2);
+			Lane l = r.getRoute().getFirst();
+			
+			v.setRoute(r);
+			v.setCurrentLane(l);
+			
+			vehicles.add(v);
+			
+		}
+		
+		if (e.getSource().equals(btLight)) {
+			if(btLight.getText().equals("Set Green")) {
+				btLight.setText("Set Red");
+				
+				for (Street s : this.simulator.getStreets()) {
+					for (Lane l : s.getLanes()) {
+						l.getTrafficLight().setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+					}
+				}
+				
+			} else {
+				btLight.setText("Set Green");
+
+				for (Street s : this.simulator.getStreets()) {
+					for (Lane l : s.getLanes()) {
+						l.getTrafficLight().setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+					}
+				}
+			}
 		}
 
 		if (e.getSource().equals(btRunSimulation)) {

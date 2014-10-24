@@ -12,7 +12,12 @@ public class Car extends Vehicle {
 		this.carColor = Color.BLUE;
 		
 		this.accelerationMaxPositiv = 15;
-		this.accelerationMaxNegativ = 15;
+		this.accelerationMaxNegativ = 25;
+		this.accelerationStartPositiv = 5;
+		this.accelerationStartNegativ = 10;
+		this.accelerationStepPositiv = 2;
+		this.accelerationStepNegativ = 3;
+		
 		this.maxSpeed = 500;
 		
 	}
