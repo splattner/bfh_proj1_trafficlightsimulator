@@ -6,10 +6,12 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
-public class SimPanel extends JPanel {
+public class SimPanel extends JPanel{
 	
 	private ArrayList<Junction> junctions;
 	
@@ -483,17 +485,17 @@ public class SimPanel extends JPanel {
 			// Draw Vehicles on Lane
 			for (Lane l : street.getLanes()) {
 				for (Vehicle v : l.getVerhiclesOnLane()) {
-					
-					
+
 					v.paintObject(g);
 				}
 			}
 			
 		}
 		
-		
-		
-		
+		for (Junction j : junctions) {
+			j.paintObject(g);
+		}
 	}
+
 
 }

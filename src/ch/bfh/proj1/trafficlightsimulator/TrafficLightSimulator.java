@@ -13,20 +13,34 @@ public class TrafficLightSimulator {
 	static public String applicationTitle = "TrafficLightSimulator v0.1";
 	static public int applicationWidth = 1024;
 	static public int applicationHeight = 600;
+	
+	static public int defaultPositinOnStreet = 100000;
 	static public int defaultStreetLenght = 150;
 	static public int defaultLaneWidth = 15;
 	
+	static public int minimumDistanceBetweenVehiclesMax = 20000;
+	static public int minimumDistanceBetweenVehiclesMin = 100;
+	
 	private JFrame mainFrame;
+	
+	public JFrame getMainFrame() {
+		return mainFrame;
+	}
+
+	public void setMainFrame(JFrame mainFrame) {
+		this.mainFrame = mainFrame;
+	}
+
 	private OptionPanel optionPanel;
 	private SimPanel simPanel;
-	JScrollPane scrollPanel;
+	private JScrollPane scrollPanel;
 	
 	private ArrayList<Junction> junctions;
 	private ArrayList<Street> streets;
 	private ArrayList<Route> routes;
 	private ArrayList<Vehicle> verhicles;
 	
-	Simulation currentSimulation;
+	private Simulation currentSimulation;
 
 
 	public static void main(String[] args) {
@@ -41,6 +55,15 @@ public class TrafficLightSimulator {
 	
 	private void init() {
 		
+		/*
+		 * Some Remarks:
+		 * - Start of a street is always on left/top side
+		 * - End of a street is always on right/bottom side
+		 * - Very first street need to start with start == null and end != null and with a origin
+		 *   and has to be on left or top side of a junction
+		 *   otherwise calculation of origin for the other streets does not work!
+		 */
+		
 			
 		junctions = new ArrayList<Junction>();
 		streets = new ArrayList<Street>();
@@ -49,6 +72,7 @@ public class TrafficLightSimulator {
 		
 		/*
 		 * Manually configure Street & Junctions
+		 * TODO: We will shift this into a XML loader!
 		 */
 		
 		Point origin_s1 = new Point(250,200);
@@ -67,27 +91,26 @@ public class TrafficLightSimulator {
 		junctions.add(j5);
 	
 		Street s1 = new Street();
+		s1.setOrientaion(Street.orientation.horizontal);
 		Street s2 = new Street();
+		s2.setOrientaion(Street.orientation.horizontal);
 		Street s3 = new Street();
-		Street s4 = new Street();		
+		s3.setOrientaion(Street.orientation.horizontal);
+		Street s4 = new Street();
+		s4.setOrientaion(Street.orientation.horizontal);
 		Street s5 = new Street();
+		s5.setOrientaion(Street.orientation.vertical);
 		Street s6 = new Street();
-		Street s7 = new Street();		
+		s6.setOrientaion(Street.orientation.vertical);
+		Street s7 = new Street();
+		s7.setOrientaion(Street.orientation.vertical);
 		Street s8 = new Street();
+		s8.setOrientaion(Street.orientation.vertical);
 		Street s9 = new Street();
+		s9.setOrientaion(Street.orientation.vertical);
 		Street s10 = new Street();
+		s10.setOrientaion(Street.orientation.vertical);
 		
-		streets.add(s1);
-		streets.add(s2);
-		streets.add(s3);
-		streets.add(s4);
-		streets.add(s5);
-		streets.add(s6);
-		streets.add(s7);
-		streets.add(s8);
-		streets.add(s9);
-		streets.add(s10);
-
 		Lane l1_s1 = new Lane(Lane.laneOrientations.endToStart);
 		Lane l2_s1 = new Lane(Lane.laneOrientations.startToEnd);
 
@@ -100,23 +123,24 @@ public class TrafficLightSimulator {
 		Lane l1_s4 = new Lane(Lane.laneOrientations.endToStart);
 		Lane l2_s4 = new Lane(Lane.laneOrientations.startToEnd);
 
-		Lane l1_s5 = new Lane(Lane.laneOrientations.endToStart);
-		Lane l2_s5 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l1_s5 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l2_s5 = new Lane(Lane.laneOrientations.endToStart);
 
-		Lane l1_s6 = new Lane(Lane.laneOrientations.endToStart);
-		Lane l2_s6 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l1_s6 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l2_s6 = new Lane(Lane.laneOrientations.endToStart);
 		
-		Lane l1_s7 = new Lane(Lane.laneOrientations.endToStart);
-		Lane l2_s7 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l1_s7 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l2_s7 = new Lane(Lane.laneOrientations.endToStart);
 		
-		Lane l1_s8 = new Lane(Lane.laneOrientations.endToStart);
-		Lane l2_s8 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l1_s8 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l2_s8 = new Lane(Lane.laneOrientations.endToStart);
+		
+		Lane l1_s9 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l2_s9 = new Lane(Lane.laneOrientations.endToStart);
+		
+		Lane l1_s10 = new Lane(Lane.laneOrientations.startToEnd);
+		Lane l2_s10 = new Lane(Lane.laneOrientations.endToStart);
 
-		Lane l1_s9 = new Lane(Lane.laneOrientations.endToStart);
-		Lane l2_s9 = new Lane(Lane.laneOrientations.startToEnd);
-		
-		Lane l1_s10 = new Lane(Lane.laneOrientations.endToStart);
-		Lane l2_s10 = new Lane(Lane.laneOrientations.startToEnd);
 
 
 		s1.addLane(l1_s1);
@@ -151,10 +175,7 @@ public class TrafficLightSimulator {
 		
 		s1.setOrigin(origin_s1);
 	
-		junctions.add(j1);
-		junctions.add(j2);
-		junctions.add(j3);
-		
+	
 		streets.add(s1);
 		streets.add(s2);
 		streets.add(s3);
@@ -201,6 +222,7 @@ public class TrafficLightSimulator {
 		s10.setStartJunction(j3);
 		
 		Street s11 = new Street();
+		s11.setOrientaion(Street.orientation.horizontal);
 		streets.add(s11);
 		
 		s8.setEndJunction(j4);
@@ -210,7 +232,6 @@ public class TrafficLightSimulator {
 		Lane l1_s11 = new Lane(Lane.laneOrientations.endToStart);
 		Lane l2_s11 = new Lane(Lane.laneOrientations.startToEnd);
 
-		
 		s11.addLane(l1_s11);
 		s11.addLane(l2_s11);
 		
@@ -221,11 +242,6 @@ public class TrafficLightSimulator {
 		
 		s11.setStartJunction(j4);
 		s11.setEndJunction(j5);
-
-		
-		streets.add(s11);
-		junctions.add(j4);
-		junctions.add(j5);
 		
 		Route route1 = new Route();
 		route1.addLane(l2_s1);
@@ -233,7 +249,21 @@ public class TrafficLightSimulator {
 		route1.addLane(l2_s3);
 		route1.addLane(l2_s4);
 		
+		Route route2 = new Route();
+		route2.addLane(l1_s4);
+		route2.addLane(l1_s3);
+		route2.addLane(l1_s2);
+		route2.addLane(l1_s1);
+		
+		Route route3 = new Route();
+		route3.addLane(l1_s5);
+		route3.addLane(l2_s2);
+		route3.addLane(l1_s9);
+
+		
 		routes.add(route1);
+		routes.add(route2);
+		routes.add(route3);
 	
 		
 	}
@@ -244,11 +274,6 @@ public class TrafficLightSimulator {
 		
 		mainFrame.setSize(TrafficLightSimulator.applicationWidth, TrafficLightSimulator.applicationHeight);
 		
-
-		
-		
-		
-		
 		simPanel = new SimPanel(junctions, streets);
 		
 		scrollPanel = new JScrollPane(simPanel);
@@ -256,15 +281,23 @@ public class TrafficLightSimulator {
 		//scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		
-		currentSimulation = new Simulation(verhicles, routes, simPanel);
+		setCurrentSimulation(new Simulation(verhicles, routes, this));
 		
-		optionPanel = new OptionPanel(currentSimulation);
+		optionPanel = new OptionPanel(this);
 		optionPanel.setSize(200, applicationHeight);
 		
 		mainFrame.add(optionPanel);
 		mainFrame.add(scrollPanel);
 		
 		mainFrame.setVisible(true);
+	}
+
+	public Simulation getCurrentSimulation() {
+		return currentSimulation;
+	}
+
+	public void setCurrentSimulation(Simulation currentSimulation) {
+		this.currentSimulation = currentSimulation;
 	}
 	
 

@@ -1,5 +1,6 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -13,6 +14,8 @@ public class Junction implements DrawableObject{
 	
 	private Point origin;
 	private Dimension dimension;
+	
+	private Color junctionColor = Color.DARK_GRAY;
 	
 	public Street getTopStreet() {return topStreet;}
 	
@@ -32,7 +35,8 @@ public class Junction implements DrawableObject{
 	
 	@Override
 	public void paintObject(Graphics g) {
-		// TODO Auto-generated method stub
+		g.setColor(junctionColor);
+		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
 		
 	}
 	

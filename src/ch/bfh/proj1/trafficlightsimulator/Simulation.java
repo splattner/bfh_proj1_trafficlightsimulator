@@ -9,19 +9,19 @@ public class Simulation extends Thread {
 	
 	private ArrayList<Vehicle> verhicles;
 	private ArrayList<Route> routes;
-	private SimPanel simPanel;
+	private TrafficLightSimulator simulator;
 	
-	public Simulation(ArrayList<Vehicle> verhicles, ArrayList<Route> routes, SimPanel simPanel) {
+	public Simulation(ArrayList<Vehicle> verhicles, ArrayList<Route> routes, TrafficLightSimulator simulator) {
 		this.setVerhicles(verhicles);
 		this.setRoutes(routes);
-		this.setSimPanel(simPanel);
+		this.setSimulator(simulator);
 		
 	}
 	
 	public Simulation (Simulation oldSimulation) {
 		this.setVerhicles(oldSimulation.getVerhicles());
 		this.setRoutes(oldSimulation.getRoutes());
-		this.setSimPanel(oldSimulation.getSimPanel());
+		this.setSimulator(oldSimulation.getSimulator());
 		
 		oldSimulation = null;
 		
@@ -43,9 +43,8 @@ public class Simulation extends Thread {
 				
 				
 				//System.out.println("Redraw Sim Panel");
-				this.simPanel.invalidate();
-				this.simPanel.repaint();
-				
+				this.getSimulator().getMainFrame().invalidate();
+				this.getSimulator().getMainFrame().repaint();
 				
 				
 				// Wait n ms after each loop
@@ -125,12 +124,13 @@ public class Simulation extends Thread {
 		this.routes = routes;
 	}
 
-	public SimPanel getSimPanel() {
-		return simPanel;
+
+	public TrafficLightSimulator getSimulator() {
+		return simulator;
 	}
 
-	public void setSimPanel(SimPanel simPanel) {
-		this.simPanel = simPanel;
+	public void setSimulator(TrafficLightSimulator simulator) {
+		this.simulator = simulator;
 	}
 
 }

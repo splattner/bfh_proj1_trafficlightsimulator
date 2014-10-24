@@ -1,17 +1,28 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
+
 public abstract class Vehicle implements DrawableObject{
 
-	private int maxSpeed;
-	private int accelerationMaxPositiv;
-	private int accelerationMaxNegativ;
-	private int lenght;
-	private int currentSpeed;
-	private int currentAcceleration;
-	private int currentPosOnLane;
+	protected int maxSpeed;
+	protected int accelerationMaxPositiv;
+	protected int accelerationMaxNegativ;
+	protected int lenght;
+	protected int currentSpeed;
+	protected int currentAcceleration;
+	protected int currentPosOnLane;
 	
-	private Route route;
-	private Lane currentLane;
+	protected Route route;
+	protected Lane currentLane;
+	
+	protected Point origin;
+	protected Dimension dimension;
+	
+	protected Color carColor;
 	
 	public int getMaxSpeed() {
 		return maxSpeed;
@@ -67,22 +78,77 @@ public abstract class Vehicle implements DrawableObject{
 	{
 		// Check if this Vehicle is on a Lane
 		if (this.currentLane != null) {
-		
-			this.currentPosOnLane++;
+			
+			
+			// Get Discance to next car
+			int indexOfVehicleonLane = this.currentLane.getVerhiclesOnLane().indexOf(this);
+			int indexOfNextVehicleonLane = indexOfVehicleonLane + 1;
+			
+			LinkedList<Vehicle> vehiclesOnThisLane = this.currentLane.getVerhiclesOnLane();
 			
 			/*
+			System.out.println("Index of this: " + indexOfVehicleonLane);
+			System.out.println("NUmber of Vehicles on Lane: " + vehiclesOnThisLane.size());
+			System.out.println("get Next: " + indexOfNextVehicleonLane);
+			*/
+			
+			Vehicle v;
+			int posOfNextVehicle;
+			try {
+				v = vehiclesOnThisLane.get(indexOfNextVehicleonLane);
+				posOfNextVehicle = v.getCurrentPosOnLane();
+				
+			} catch (IndexOutOfBoundsException e) {
+				v = null;
+			}
+		
+			this.currentPosOnLane += this.currentSpeed;
+			
+			// Get Minimum Distance between two vehicles based on this vehicles speed
+			int minDistance = ((TrafficLightSimulator.minimumDistanceBetweenVehiclesMax - TrafficLightSimulator.minimumDistanceBetweenVehiclesMin) / this.maxSpeed * this.currentSpeed) + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin; 
+			
+			// Force Max Speed
+			if (this.currentSpeed > this.maxSpeed) this.currentSpeed = this.maxSpeed;
+			
 			// Incease Speed if we are not at max speed
 			if (this.currentSpeed < this.maxSpeed) {
-				// Increase Acceleration if we are not at max acceleration positiv
-				if (this.currentAcceleration < this.accelerationMaxPositiv)
-					this.currentAcceleration++;
+				
+				// Only Accelerate if minimum distance between vehicles is given
+				if (v == null || (v.getCurrentPosOnLane() - this.getCurrentPosOnLane() > minDistance)) {
+					if (currentAcceleration < 0) {
+						// If still on neg acceleration, stop this
+						this.currentAcceleration = 0;
+					} else {
+						// Increase Acceleration if we are not at max acceleration positiv
+						if (this.currentAcceleration < this.accelerationMaxPositiv) {
+							this.currentAcceleration++;
+							//System.out.println("Current Acceleration: " + currentAcceleration);
+						}
+					}
+				} else {
+					// Break, we are to close
+					if (currentAcceleration > 0) {
+						// If still on pos acceleration, stop this
+						this.currentAcceleration = 0;
+					} else {
+						// Break until max neg. Acceleration
+						if (currentAcceleration > - this.accelerationMaxNegativ) {
+							this.currentAcceleration--;
+							//System.out.println("Current Acceleration: " + currentAcceleration);
+						}
+					}
+					
+				}
+
 				this.currentSpeed += this.currentAcceleration;
 			} else {
 				this.currentAcceleration = 0;
 			}
-			*/
 			
-			if (this.currentPosOnLane > this.currentLane.getStreet().getLenght()) {
+			//System.out.println("Current Speed: " + currentSpeed + " Current Acceleration: " + currentAcceleration);
+			
+			
+			if (this.currentPosOnLane > this.currentLane.getStreet().getPositionsOnStreet()) {
 				this.toNextLaneOnRoute();
 			}
 		}
@@ -121,5 +187,65 @@ public abstract class Vehicle implements DrawableObject{
 	}
 	public void setCurrentPosOnLane(int currentPosOnLane) {
 		this.currentPosOnLane = currentPosOnLane;
+	}
+	
+	@Override
+	public void paintObject(Graphics g) {
+		
+		Lane l = this.getCurrentLane();
+		Street s = l.getStreet();
+		
+		g.setColor(carColor);
+		
+		Double convertedPos =  ( (double) this.getCurrentPosOnLane() / (double) s.getPositionsOnStreet() * (double) s.getLenght());
+		
+		if (s.getOrientaion() == Street.orientation.horizontal) {
+			// Car is on a horizontal Street
+			if (currentLane.getLaneOrientation() == Lane.laneOrientations.startToEnd) {
+				// Drive from left to right
+				this.setOrigin(new Point(l.getOrigin().x + convertedPos.intValue(), l.getOrigin().y + 5));
+			} else {
+				// Drive from right to left
+				this.setOrigin(new Point(l.getOrigin().x + l.getDimension().width- convertedPos.intValue() , l.getOrigin().y + 5));
+			}
+			
+			g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
+			
+		} else {
+			// Car is on a vertical Street
+			if (currentLane.getLaneOrientation() == Lane.laneOrientations.startToEnd) {
+				// Drive from left to right
+				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + convertedPos.intValue()));
+			} else {
+				// Drive from right to left
+				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + l.getDimension().width- convertedPos.intValue()));
+			}
+			
+			g.fillRect(origin.x, origin.y, dimension.height, dimension.width);
+		}
+
+		
+	}
+	
+	@Override
+	public void setOrigin(Point origin) {
+		this.origin = origin;
+		
+	}
+
+	@Override
+	public void setDimension(Dimension dimension) {
+		// You cannot set the dimension of a car.
+		
+	}
+
+	@Override
+	public Point getOrigin() {
+		return this.origin;
+	}
+
+	@Override
+	public Dimension getDimension() {
+		return this.dimension;
 	}
 }

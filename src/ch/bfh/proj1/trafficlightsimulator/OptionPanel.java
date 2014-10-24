@@ -16,10 +16,11 @@ public class OptionPanel extends JPanel implements ActionListener{
 	// For temp purpose only
 	JButton btAddCar;
 	
-	Simulation currentSImulation;
+
+	private TrafficLightSimulator simulator;
 	
-	public OptionPanel(Simulation currentSimulation) {
-		this.currentSImulation = currentSimulation;
+	public OptionPanel(TrafficLightSimulator simulator) {
+		this.setSimulator(simulator);
 		
 		btRunSimulation = new JButton("Start");
 		btRunSimulation.addActionListener(this);
@@ -44,31 +45,29 @@ public class OptionPanel extends JPanel implements ActionListener{
 		
 		
 		if (e.getSource().equals(btAddCar)) {
-			ArrayList<Vehicle> vehicles = this.currentSImulation.getVerhicles();
-			Vehicle car = new Car();
+			ArrayList<Vehicle> vehicles = this.simulator.getCurrentSimulation().getVerhicles();
+			Vehicle v = new Car();
+			//Vehicle v = new Truck();
 			
-			Route r = this.currentSImulation.getRoutes().get(0);
+			Route r = this.simulator.getCurrentSimulation().getRoutes().get(2);
 			Lane l = r.getRoute().getFirst();
 			
-			car.setRoute(r);
-			car.setCurrentLane(l);
+			v.setRoute(r);
+			v.setCurrentLane(l);
 			
-			vehicles.add(car);
-			
-			System.out.println("Added car");
-			
+			vehicles.add(v);
 			
 		}
 
 		if (e.getSource().equals(btRunSimulation)) {
 
-			if (currentSImulation.isRunning()) {
+			if (this.simulator.getCurrentSimulation().isRunning()) {
 				btRunSimulation.setText("Start");
-				currentSImulation.stopSimulation();
+				this.simulator.getCurrentSimulation().stopSimulation();
 				btBreak.setEnabled(false);
 				
 				// Remove all cars from Lanes (if they are still on a lane)
-				for (Vehicle v : this.currentSImulation.getVerhicles()) {
+				for (Vehicle v : this.simulator.getCurrentSimulation().getVerhicles()) {
 					
 					if (v.getCurrentLane() != null)
 						v.getCurrentLane().getVerhiclesOnLane().remove(v);
@@ -79,32 +78,40 @@ public class OptionPanel extends JPanel implements ActionListener{
 				}
 				
 				// Remove all Vehicles
-				this.currentSImulation.getVerhicles().clear();
+				this.simulator.getCurrentSimulation().getVerhicles().clear();
 
 				// Create a new Simulation (based on the old one)
-				this.currentSImulation = new Simulation(this.currentSImulation);
+				this.simulator.setCurrentSimulation(new Simulation(this.simulator.getCurrentSimulation()));
 				
 				
 				
 			} else {
 				btRunSimulation.setText("Stop");
-				currentSImulation.startSimulation();
+				this.simulator.getCurrentSimulation().startSimulation();
 				btBreak.setEnabled(true);
 			}
 	
 		}
 		
 		if (e.getSource().equals(btBreak)) {
-			if (currentSImulation.isBreaking()) {
-				currentSImulation.setBreaking(false);
+			if (this.simulator.getCurrentSimulation().isBreaking()) {
+				this.simulator.getCurrentSimulation().setBreaking(false);
 				btBreak.setText("Break");
 			} else {
-				currentSImulation.setBreaking(true);
+				this.simulator.getCurrentSimulation().setBreaking(true);
 				btBreak.setText("Continue");
 			}
 			
 		}
 		
+	}
+
+	public TrafficLightSimulator getSimulator() {
+		return simulator;
+	}
+
+	public void setSimulator(TrafficLightSimulator simulator) {
+		this.simulator = simulator;
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 public class Street implements DrawableObject{
 	
 	private int length;
+	private int positionsOnStreet;
 	private Collection<Lane> lanes;
 	
 	private Junction startJunction;
@@ -18,16 +19,25 @@ public class Street implements DrawableObject{
 	private Point origin;
 	private Dimension dimension;
 	
+	public enum orientation {
+		horizontal,
+		vertical
+	}
+	
+	private orientation orientaion;
+	
 	public static final Color laneColor = Color.YELLOW;
 	public static final Color streetColor = Color.GRAY;
 	
 	public Street() {
 		this.lanes = new LinkedList<Lane>();
 		this.length = TrafficLightSimulator.defaultStreetLenght;
+		this.positionsOnStreet = TrafficLightSimulator.defaultPositinOnStreet;
 	}
 
 	public Street(int length) {
 		this.lanes = new LinkedList<Lane>();
+		this.positionsOnStreet = TrafficLightSimulator.defaultPositinOnStreet;
 		this.length = length;
 	}
 	
@@ -109,5 +119,21 @@ public class Street implements DrawableObject{
 
 	@Override
 	public Dimension getDimension() {return this.dimension;}
+
+	public orientation getOrientaion() {
+		return orientaion;
+	}
+
+	public void setOrientaion(orientation orientaion) {
+		this.orientaion = orientaion;
+	}
+
+	public int getPositionsOnStreet() {
+		return positionsOnStreet;
+	}
+
+	public void setPositionsOnStreet(int positionsOnStreet) {
+		this.positionsOnStreet = positionsOnStreet;
+	}
 
 }
