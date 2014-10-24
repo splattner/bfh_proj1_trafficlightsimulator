@@ -21,6 +21,10 @@ public class Car extends Vehicle {
 	@Override
 	public void paintObject(Graphics g) {
 		
+		if (this.origin == null) {
+			this.setOrigin(new Point(this.getCurrentLane().getOrigin().x + this.getCurrentPosOnLane(), this.getCurrentLane().getOrigin().y + 5));
+		}
+		
 		g.setColor(carColor);
 		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
 		

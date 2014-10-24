@@ -125,9 +125,6 @@ public class SimPanel extends JPanel {
 			}
 			
 		}
-		
-				
-		
 	}
 	
 	private void calcucalteOriginAndDimension(Street s, Junction lastJunction) {
@@ -477,12 +474,26 @@ public class SimPanel extends JPanel {
 		
 		super.paintComponent(g);
 		
-
-		for (DrawableObject street : streets) {
+		// Draw all Streets
+		for (Street street : streets) {
 
 			street.paintObject(g);
 			
+			
+			// Draw Vehicles on Lane
+			for (Lane l : street.getLanes()) {
+				for (Vehicle v : l.getVerhiclesOnLane()) {
+					
+					
+					v.paintObject(g);
+				}
+			}
+			
 		}
+		
+		
+		
+		
 	}
 
 }

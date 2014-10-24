@@ -29,20 +29,20 @@ public class Simulation extends Thread {
 	
 	public void run() {
 
+		System.out.println("Start SimLoop");
 		
 		synchronized (this) {
 			while (this.isRunning()) {
 				
-				System.out.println("SimLoop");
+				
 				
 				for (Vehicle v : this.verhicles) {
-					System.out.println("Simulate Car");
 					v.simulationStep();
 				}
 				
 				
 				
-				System.out.println("Redraw Sim Panel");
+				//System.out.println("Redraw Sim Panel");
 				this.simPanel.invalidate();
 				this.simPanel.repaint();
 				
@@ -50,7 +50,7 @@ public class Simulation extends Thread {
 				
 				// Wait n ms after each loop
 				try {
-					this.wait(1000);
+					this.wait(10);
 				} catch (InterruptedException e1) {
 
 				}

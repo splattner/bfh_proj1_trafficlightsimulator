@@ -60,6 +60,7 @@ public abstract class Vehicle implements DrawableObject{
 	}
 	public void setCurrentLane(Lane currentLane) {
 		this.currentLane = currentLane;
+		this.currentLane.getVerhiclesOnLane().addFirst(this);
 	}
 	
 	public void simulationStep()
@@ -69,7 +70,19 @@ public abstract class Vehicle implements DrawableObject{
 		
 			this.currentPosOnLane++;
 			
-			if (this.currentLane.getStreet().getLenght() > this.currentPosOnLane) {
+			/*
+			// Incease Speed if we are not at max speed
+			if (this.currentSpeed < this.maxSpeed) {
+				// Increase Acceleration if we are not at max acceleration positiv
+				if (this.currentAcceleration < this.accelerationMaxPositiv)
+					this.currentAcceleration++;
+				this.currentSpeed += this.currentAcceleration;
+			} else {
+				this.currentAcceleration = 0;
+			}
+			*/
+			
+			if (this.currentPosOnLane > this.currentLane.getStreet().getLenght()) {
 				this.toNextLaneOnRoute();
 			}
 		}

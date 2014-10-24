@@ -228,10 +228,10 @@ public class TrafficLightSimulator {
 		junctions.add(j5);
 		
 		Route route1 = new Route();
-		route1.addLane(l1_s1);
-		route1.addLane(l1_s2);
-		route1.addLane(l1_s3);
-		route1.addLane(l1_s4);
+		route1.addLane(l2_s1);
+		route1.addLane(l2_s2);
+		route1.addLane(l2_s3);
+		route1.addLane(l2_s4);
 		
 		routes.add(route1);
 	

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Collection;
 import java.util.LinkedList;
 
 public class Lane implements DrawableObject {
@@ -32,8 +31,8 @@ public class Lane implements DrawableObject {
 	public Lane(laneOrientations laneOrientation) {
 		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
 		this.setLaneOrientation(laneOrientation);
-		trafficLight = new TrafficLight(this);
-		laneOrientation = laneOrientation;
+		this.trafficLight = new TrafficLight(this);
+		this.laneOrientation = laneOrientation;
 	}
 
 	public laneOrientations getLaneOrientation() {return laneOrientation;}

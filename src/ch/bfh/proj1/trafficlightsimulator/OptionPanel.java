@@ -67,7 +67,21 @@ public class OptionPanel extends JPanel implements ActionListener{
 				currentSImulation.stopSimulation();
 				btBreak.setEnabled(false);
 				
+				// Remove all cars from Lanes (if they are still on a lane)
+				for (Vehicle v : this.currentSImulation.getVerhicles()) {
+					
+					if (v.getCurrentLane() != null)
+						v.getCurrentLane().getVerhiclesOnLane().remove(v);
+					
+					// Dereference, so Garbage Collector can remove the object
+					v = null;
+					
+				}
+				
+				// Remove all Vehicles
+				this.currentSImulation.getVerhicles().clear();
 
+				// Create a new Simulation (based on the old one)
 				this.currentSImulation = new Simulation(this.currentSImulation);
 				
 				
