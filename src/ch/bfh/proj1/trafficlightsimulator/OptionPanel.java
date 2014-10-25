@@ -58,7 +58,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 			Vehicle v = new Car();
 			//Vehicle v = new Truck();
 			
-			Route r = this.simulator.getCurrentSimulation().getRoutes().get(2);
+			Route r = this.simulator.getCurrentSimulation().getRoutes().get(1);
 			Lane l = r.getRoute().getFirst();
 			
 			v.setRoute(r);
@@ -73,7 +73,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 			Vehicle v = new Truck();
 			//Vehicle v = new Truck();
 			
-			Route r = this.simulator.getCurrentSimulation().getRoutes().get(2);
+			Route r = this.simulator.getCurrentSimulation().getRoutes().get(0);
 			Lane l = r.getRoute().getFirst();
 			
 			v.setRoute(r);
