@@ -13,26 +13,26 @@ public class Lane implements DrawableObject {
 		endToStart
 	}
 
-	private Dimension dimension;
-
 	private laneOrientations laneOrientation;
 	
+	private Dimension dimension;
+
 	private Point origin;
 	
 	private LinkedList<Vehicle> verhiclesOnLane;
 	
 	private TrafficLight trafficLight;
 	
+	private Arrow arrow = new Arrow();
+	
 	private Street street;
-	
-	private static final Color laneColor = Color.GRAY;
-	
-	
+		
 	public Lane(laneOrientations laneOrientation) {
 		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
 		this.setLaneOrientation(laneOrientation);
+		
 		this.trafficLight = new TrafficLight(this);
-		this.laneOrientation = laneOrientation;
+
 	}
 
 	public laneOrientations getLaneOrientation() {return laneOrientation;}
@@ -45,51 +45,126 @@ public class Lane implements DrawableObject {
 	@Override
 	public void paintObject(Graphics g) {
 		
+		
+		// Remove traffic light if non is necessary, e.g. at a start/end without a junction
+		if (this.getLaneOrientation() == laneOrientations.startToEnd && this.getStreet().getEndJunction() == null) {
+			this.trafficLight = null;
+		}
+		
+		if (this.getLaneOrientation() == laneOrientations.endToStart && this.getStreet().getStartJunction() == null) {
+			this.trafficLight = null;
+		}
+			
+		
 		g.setColor(Street.streetColor);
-		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
+		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);		
 		
-		//TODO: Arrow
-		
-		
-		if (dimension.width > dimension.height) {
-			// Vertical			
-			
+
+		// on vertical lane
+		if (dimension.width > dimension.height) {			
 			if (this.getLaneOrientation() == laneOrientations.startToEnd){
-				trafficLight.setOrigin(new Point (origin.x+dimension.width-10, origin.y));
-				trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
+
+				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
+					trafficLight.setOrigin(new Point (origin.x+dimension.width-10, origin.y));
+					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
+				}
+
+				if (this.arrow.getOrigin() == null) {
+					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
+					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
+
+					arrow.setXPoints(
+							arrow.getOrigin().x+arrow.getDimension().width/2,
+							arrow.getOrigin().x+arrow.getDimension().width/2,
+							arrow.getOrigin().x+arrow.getDimension().width/2+10);
+					arrow.setYPoints(
+							arrow.getOrigin().y-5,
+							arrow.getOrigin().y+5,
+							arrow.getOrigin().y+arrow.getDimension().height/2);
+				}
 			}
-			
+
 			else {
-				trafficLight.setOrigin(new Point (origin.x, origin.y));
-				trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
-									
+				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
+					trafficLight.setOrigin(new Point (origin.x, origin.y));
+					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
+				}
+
+				if (this.arrow.getOrigin() == null) {
+					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
+					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
+
+					arrow.setXPoints(
+							arrow.getOrigin().x-arrow.getDimension().width/2,
+							arrow.getOrigin().x-arrow.getDimension().width/2,
+							arrow.getOrigin().x-arrow.getDimension().width/2-10);
+					arrow.setYPoints(
+							arrow.getOrigin().y-5,
+							arrow.getOrigin().y+5,
+							arrow.getOrigin().y+arrow.getDimension().height/2);
+				}
 			}
+
+		}
+
+		// on horizontal lane
+		else {			
+			if (this.getLaneOrientation() == laneOrientations.startToEnd){
+
+				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
+					trafficLight.setOrigin(new Point (origin.x, origin.y+dimension.height-10));
+					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
+				}
+
+				if (this.arrow.getOrigin() == null) {
+					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
+					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
+
+					arrow.setXPoints(	
+							arrow.getOrigin().x-5,
+							arrow.getOrigin().x+5,
+							arrow.getOrigin().x+arrow.getDimension().width/2);
+
+					arrow.setYPoints(
+							arrow.getOrigin().y+arrow.getDimension().height/2,
+							arrow.getOrigin().y+arrow.getDimension().height/2,
+							arrow.getOrigin().y+arrow.getDimension().height/2+10);
+				}
+
+			}
+
+			else {
+				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
+					trafficLight.setOrigin(new Point (origin.x, origin.y));
+					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
+				}
+
+				if (this.arrow.getOrigin() == null) {
+					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
+					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
+
+					arrow.setXPoints(	
+							arrow.getOrigin().x-5,
+							arrow.getOrigin().x+5,
+							arrow.getOrigin().x+arrow.getDimension().width/2);
+
+					arrow.setYPoints(
+							arrow.getOrigin().y-arrow.getDimension().height/2,
+							arrow.getOrigin().y-arrow.getDimension().height/2,
+							arrow.getOrigin().y-arrow.getDimension().height/2-10);
+				}
+			}
+		}			
 			
-			
+		// Draw Traffic light if any
+		if (this.trafficLight != null) {
 			trafficLight.paintObject(g);
-						
 		}
 		
-		else {
-			
-			//TODO:Horizontal line
-
-		
-//		if (this.getLaneOrientation() == laneOrientations.startToEnd){
-//			trafficLight.setOrigin(new Point (origin.x+dimension.width-10, origin.y));
-//			trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
-//			trafficLight.paintObject(g);	
-//		}
-//		
-//		else {
-//			trafficLight.setOrigin(new Point (origin.x, origin.y));
-//			trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
-//			trafficLight.paintObject(g);					
-//			}			
-		}
-		
-
+		// Draw arrow
+		arrow.paintObject(g);
 	}
+	
 	
 	@Override
 	public void setOrigin (Point aPoint) {origin = aPoint;}
@@ -103,20 +178,63 @@ public class Lane implements DrawableObject {
 	@Override
 	public Dimension getDimension() {return dimension;}
 
-	public LinkedList<Vehicle> getVerhiclesOnLane() {
-		return verhiclesOnLane;
-	}
+	public LinkedList<Vehicle> getVerhiclesOnLane() {return verhiclesOnLane;}
 
-	public void setVerhiclesOnLane(LinkedList<Vehicle> verhiclesOnLane) {
-		this.verhiclesOnLane = verhiclesOnLane;
-	}
+	public void setVerhiclesOnLane(LinkedList<Vehicle> verhiclesOnLane) {this.verhiclesOnLane = verhiclesOnLane;}
 
-	public Street getStreet() {
-		return street;
-	}
+	public Street getStreet() {return street;}
 
 	public void setStreet(Street street) {
+		
 		this.street = street;
+		
+		
+	}
+	
+	private class Arrow implements DrawableObject {
+		
+		private Dimension dimension;
+
+		private Point origin;
+		
+		private int[] triangleXPoints = new int[3];
+		
+		private int[] triangleYPoints = new int[3];
+		
+
+		@Override
+		public void paintObject(Graphics g) {
+			g.setColor(Color.WHITE);
+			g.fillRect(origin.x-dimension.width/2, origin.y-dimension.height/2, dimension.width, dimension.height);
+			g.fillPolygon(triangleXPoints, triangleYPoints, 3);
+		}
+		
+		public void setXPoints (int first, int second, int third)
+		{
+			triangleXPoints[0] = first;
+			triangleXPoints[1] = second;
+			triangleXPoints[2] = third;
+		}
+		
+		public void setYPoints (int first, int second, int third)
+		{
+			triangleYPoints[0] = first;
+			triangleYPoints[1] = second;
+			triangleYPoints[2] = third;		
+		}
+
+		@Override
+		public void setOrigin (Point aPoint) {origin = aPoint;}
+		
+		@Override
+		public Point getOrigin() {return origin;}
+
+		@Override
+		public void setDimension(Dimension dimension) {this.dimension = dimension;}
+
+		@Override
+		public Dimension getDimension() {return dimension;}
+		
 	}
 
 }

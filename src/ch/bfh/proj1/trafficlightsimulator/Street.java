@@ -44,36 +44,34 @@ public class Street implements DrawableObject{
 	@Override
 	public void paintObject(Graphics g) {
 		
-		Color streetColor = Color.GRAY;
-		Color laneColor = Color.YELLOW;
-
 		int numOfLanes = lanes.size();
 				
 		// Paint the lanes and give origin point to the latter
 		int i=0;
 		
-		// ask the lanes to draw themselves
+		// Ask the lanes to draw themselves
 		for (Lane l : lanes) {
 			
-			if(l.getOrigin() == null) // if the origins have been calculated already, skip and paint
+			if(l.getOrigin() == null) // calculate origins and dimension the first time only
 			{
-			
 				if (dimension.width > dimension.height) {
-					// vertical street
+					// Vertical street
 					l.setOrigin(new Point (origin.x, origin.y+TrafficLightSimulator.defaultLaneWidth*i));
 					l.setDimension(new Dimension (TrafficLightSimulator.defaultStreetLenght, TrafficLightSimulator.defaultLaneWidth));
 				} else {
-					// horizontal
+					// Horizontal
 					l.setOrigin(new Point (origin.x +TrafficLightSimulator.defaultLaneWidth*i, origin.y));
 					l.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth, TrafficLightSimulator.defaultStreetLenght));
 				}
+				
 				i++;
 			}
+			
 			l.paintObject(g);
-			// TODO : somehow indicate the direction of the lane (needed for trafficlight later) 
+
 		}
 		
-		// draws the separation line (that belongs to the street)
+		// Draw the separation line
 		if (numOfLanes > 1) {
 			for (int j = 1 ; j < numOfLanes ; j++) {
 				if (dimension.width > dimension.height) {

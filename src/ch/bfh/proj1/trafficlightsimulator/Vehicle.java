@@ -146,7 +146,8 @@ public abstract class Vehicle implements DrawableObject{
 			boolean alreadyBreaked = false;
 			
 			// Check if traffic light is red
-			boolean isRed = this.currentLane.getTrafficLight().getCurrentStatus() != TrafficLight.trafficLightStatus.RED;
+			// false if there is no traffic light
+			boolean isRed = (this.currentLane.getTrafficLight() != null) && (this.currentLane.getTrafficLight().getCurrentStatus() == TrafficLight.trafficLightStatus.RED);
 			
 			// Check if distance to next vehicle is enought (if any)
 			boolean isEnoughDistance = nextVehicle != null && nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() > minDistance;
@@ -198,7 +199,7 @@ public abstract class Vehicle implements DrawableObject{
 				}
 			}
 			
-			if (this.currentLane.getTrafficLight().getCurrentStatus() == TrafficLight.trafficLightStatus.RED) {
+			if (isRed) {
 				//System.out.println("Traffic Light is red");
 				if (this.breakStatus || this.currentLane.getStreet().getPositionsOnStreet() - this.currentPosOnLane <= (distFullStop + (2 * trafficLigthLenghtInPosition))) {
 					//System.out.println("Distance not enoght");
