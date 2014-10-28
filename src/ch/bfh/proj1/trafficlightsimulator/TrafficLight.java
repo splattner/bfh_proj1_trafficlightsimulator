@@ -10,7 +10,7 @@ public class TrafficLight implements DrawableObject {
 	private Point origin;
 	private Dimension dimension;
 	private Lane lane;
-	private trafficLightStatus currentStatus;
+	private trafficLightStatus currentStatus = trafficLightStatus.RED; // TODO : remove that later
 	
 	public enum trafficLightStatus {
 	    RED,
@@ -20,19 +20,13 @@ public class TrafficLight implements DrawableObject {
 
 	public TrafficLight (Lane aLane) {
 		this.lane = aLane;
-		currentStatus = trafficLightStatus.RED;
-		// TODO : size of the traficlight should be known during object instantiation
-		// TODO : maybe red should not be in the constructor...
 		}
 	
 	@Override
 	public void paintObject(Graphics g) {		
-		//TODO: draw the trafficLight based on the direction of the lane (changes way to calculate coordinates)
-		//TODO: dynamic color selection
 		if(currentStatus.name().equalsIgnoreCase("RED")) {g.setColor(Color.RED);}
 		else if(currentStatus.name().equalsIgnoreCase("GREEN")) {g.setColor(Color.GREEN);}
 		else if(currentStatus.name().equalsIgnoreCase("ORANGE")) {g.setColor(Color.ORANGE);}
-		else{}
 		g.fillRect(origin.x , origin.y, dimension.width, dimension.height);
 	}
 
