@@ -336,11 +336,20 @@ public class TrafficLightSimulator {
 		route3.addLane(l1_s5);
 		route3.addLane(l2_s2);
 		route3.addLane(l1_s9);
+		
+		Route route4 = new Route();
+		route4.addLane(l2_s1);
+		route4.addLane(l1_s8);
+		route4.addLane(l2_s11);
+		route4.addLane(l2_s9);
+		route4.addLane(l2_s3);
+		route4.addLane(l1_s10);
 
 		
 		routes.add(route1);
 		routes.add(route2);
 		routes.add(route3);
+		routes.add(route4);
 	
 		
 	}

@@ -391,12 +391,11 @@ public abstract class Vehicle implements DrawableObject{
 				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + convertedPos.intValue()));
 			} else {
 				// Drive from right to left
-				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + l.getDimension().width- convertedPos.intValue()));
+				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + l.getDimension().height- convertedPos.intValue()));
 			}
 			
 			g.fillRect(origin.x, origin.y, dimension.height, dimension.width);
 		}
-
 		
 	}
 	
