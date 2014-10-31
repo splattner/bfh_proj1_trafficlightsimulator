@@ -12,6 +12,8 @@ public class TrafficLight implements DrawableObject {
 	private Lane lane;
 	private trafficLightStatus currentStatus = trafficLightStatus.RED; // TODO : remove that later
 	
+	private int timeLastChange;
+	
 	public enum trafficLightStatus {
 	    RED,
 	    ORANGE,
@@ -19,7 +21,7 @@ public class TrafficLight implements DrawableObject {
 	}
 
 	public TrafficLight (Lane aLane) {
-		this.lane = aLane;
+		this.setLane(aLane);
 		}
 	
 	@Override
@@ -28,6 +30,11 @@ public class TrafficLight implements DrawableObject {
 		else if(currentStatus.name().equalsIgnoreCase("GREEN")) {g.setColor(Color.GREEN);}
 		else if(currentStatus.name().equalsIgnoreCase("ORANGE")) {g.setColor(Color.ORANGE);}
 		g.fillRect(origin.x , origin.y, dimension.width, dimension.height);
+		
+		
+		// Just Debug
+		g.setColor(Color.WHITE);
+		g.drawString(Integer.toString(timeLastChange) , this.origin.x, this.origin.y);
 	}
 
 	@Override
@@ -46,6 +53,35 @@ public class TrafficLight implements DrawableObject {
 
 	public void setCurrentStatus(trafficLightStatus currentStatus) {
 		this.currentStatus = currentStatus;
+	}
+
+	public Lane getLane() {
+		return lane;
+	}
+
+	public void setLane(Lane lane) {
+		this.lane = lane;
+	}
+
+	public int getTimeLastChange() {
+		return timeLastChange;
+	}
+
+	public void setTimeLastChange(int timeLastChange) {
+		this.timeLastChange = timeLastChange;
+	}
+	
+	public int getNumOfVehiclesNearLight() {
+		int numberOfVehiclesNearLight = 0;
+		for (Vehicle v : this.getLane().getVerhiclesOnLane()) {
+			// All vehicles closer as 35% of Street Lenght
+
+			if (v.currentPosOnLane > this.getLane().getStreet().getPositionsOnStreet() * 0.65) {
+				numberOfVehiclesNearLight++;
+			}
+		}
+		
+		return numberOfVehiclesNearLight;
 	}
 
 }

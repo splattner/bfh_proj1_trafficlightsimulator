@@ -21,7 +21,20 @@ public class TrafficLightSimulator {
 	static public int minimumDistanceBetweenVehiclesMax = 20000;
 	static public int minimumDistanceBetweenVehiclesMin = 4000;
 	
+	static public int minimumGreenLightPhase = 400;
+	
 	private JFrame mainFrame;
+	
+	public enum TrafficLightMode {
+		manuel,
+		sequenze,
+		smart
+	}
+	
+	public enum SimulationMode {
+		manuel,
+		automatic
+	}
 	
 	public JFrame getMainFrame() {
 		return mainFrame;
@@ -86,6 +99,25 @@ public class TrafficLightSimulator {
 		this.currentSimulation = currentSimulation;
 	}
 	
+	private TrafficLightMode currentMode = TrafficLightMode.smart;
+	
+	public TrafficLightMode getCurrentMode() {
+		return currentMode;
+	}
+
+	public void setCurrentMode(TrafficLightMode currentMode) {
+		this.currentMode = currentMode;
+	}
+	
+	private SimulationMode simulationMode = SimulationMode.manuel;
+	
+	public SimulationMode getSimulationMode() {
+		return simulationMode;
+	}
+
+	public void setSimulationMode(SimulationMode simulationMode) {
+		this.simulationMode = simulationMode;
+	}
 
 
 	public static void main(String[] args) {
@@ -120,7 +152,7 @@ public class TrafficLightSimulator {
 		 * TODO: We will shift this into a XML loader!
 		 */
 		
-		Point origin_s1 = new Point(250,200);
+		Point origin_s1 = new Point(300,200);
 		
 		
 		Junction j1 = new Junction();
@@ -329,14 +361,13 @@ public class TrafficLightSimulator {
 		setCurrentSimulation(new Simulation(verhicles, routes, this));
 		
 		optionPanel = new OptionPanel(this);
-		optionPanel.setSize(200, applicationHeight);
+		optionPanel.setSize(250, applicationHeight);
 		
 		mainFrame.add(optionPanel);
 		mainFrame.add(scrollPanel);
 		
 		mainFrame.setVisible(true);
 	}
-
 
 
 

@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.util.LinkedList;
 
 import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
+import ch.bfh.proj1.trafficlightsimulator.TrafficLight.trafficLightStatus;
+import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
 public class Junction implements DrawableObject{
 	
@@ -147,6 +149,63 @@ public class Junction implements DrawableObject{
 		
 		
 		return this.trafficLights;
+		
+	}
+	
+	public void simulationStep(TrafficLightSimulator.TrafficLightMode mode) {
+		
+
+		if (mode == TrafficLightMode.smart) {
+		
+			TrafficLight lightToChange = null;
+			TrafficLight currentGreenLight = null;
+			int numberOnLane = Integer.MIN_VALUE;
+			boolean hasGreenLight = false;
+			
+			// Check if there is a green light
+			for (TrafficLight l : this.getTrafficLights()) {
+				if (l.getCurrentStatus() == trafficLightStatus.GREEN) {
+					currentGreenLight = l;
+				}
+			}
+			
+			// If we have a green light
+			// Check if it was green enought
+			if (currentGreenLight != null) {
+				if (currentGreenLight.getTimeLastChange() > TrafficLightSimulator.minimumGreenLightPhase || currentGreenLight.getNumOfVehiclesNearLight() == 0) {
+					currentGreenLight.setCurrentStatus(trafficLightStatus.RED);
+					hasGreenLight = false;
+				} else {
+					currentGreenLight.setTimeLastChange(currentGreenLight.getTimeLastChange()+1);
+					hasGreenLight = true;
+				}
+			}
+			
+			// If we don't yet have a green light
+			if (!hasGreenLight) {
+				// Get traffic light with most vehicles
+				for (TrafficLight l : this.getTrafficLights()) {
+					if (l.getNumOfVehiclesNearLight() > numberOnLane ) {
+						numberOnLane = l.getNumOfVehiclesNearLight();
+						lightToChange = l;
+					}
+				}
+				
+				
+			}
+				
+			if (lightToChange != null && numberOnLane != 0) {
+				lightToChange.setCurrentStatus(trafficLightStatus.GREEN);
+				lightToChange.setTimeLastChange(0);
+				
+				// If new light was not old one, then reset Time
+				if (lightToChange != currentGreenLight && currentGreenLight != null) {
+					currentGreenLight.setTimeLastChange(0);
+					
+				}
+			}
+
+		}
 		
 	}
 

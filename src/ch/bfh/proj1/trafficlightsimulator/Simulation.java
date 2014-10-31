@@ -25,10 +25,11 @@ public class Simulation extends Thread {
 	
 	public void run() {
 
-		System.out.println("Start SimLoop");
+		//System.out.println("Start SimLoop");
 		
 		synchronized (this) {
 			while (this.isRunning()) {
+				
 				
 				
 				
@@ -36,6 +37,11 @@ public class Simulation extends Thread {
 					v.simulationStep();
 				}
 				
+				
+				
+				for (Junction j : this.getSimulator().getJunctions()) {
+					j.simulationStep(this.getSimulator().getCurrentMode());
+				}
 				
 				
 				//System.out.println("Redraw Sim Panel");
@@ -53,7 +59,7 @@ public class Simulation extends Thread {
 
 				// Check if we should break
 				if (this.isBreaking()) {
-					System.out.println("Breaking");
+					//System.out.println("Breaking");
 					try {
 						this.wait();
 					} catch (InterruptedException e) {
@@ -65,7 +71,7 @@ public class Simulation extends Thread {
 			
 		}
 
-		System.out.println("Interrupted");
+		//System.out.println("Interrupted");
 	}
 	
 	public void stopSimulation() {

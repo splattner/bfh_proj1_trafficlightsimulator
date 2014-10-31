@@ -14,6 +14,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import ch.bfh.proj1.trafficlightsimulator.TrafficLight.trafficLightStatus;
+import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
 public class SimPanel extends JPanel implements MouseListener{
 	
@@ -490,6 +491,20 @@ public class SimPanel extends JPanel implements MouseListener{
 		
 		super.paintComponent(g);
 		
+		
+		// Change Color of Backgrund when Simulation is running
+		if (this.getSimulator().getCurrentSimulation().isRunning()) {
+			g.setColor(new Color(100,0,0));
+			
+		} else {
+			g.setColor(Color.BLACK);
+		}
+		
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+		
+
+		
 		// Draw all Streets
 		for (Street street : this.getSimulator().getStreets()) {
 
@@ -514,37 +529,43 @@ public class SimPanel extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		for (Junction j : this.getSimulator().getJunctions()) {
-			
-			// Change a single light
-			for (TrafficLight tf : j.getTrafficLights()) {
-				if (e.getX() >= tf.getOrigin().x && e.getX() < tf.getOrigin().x + tf.getDimension().width &&
-						e.getY() >= tf.getOrigin().y && e.getY() < tf.getOrigin().y + tf.getDimension().height) {
-					if (tf.getCurrentStatus() == trafficLightStatus.GREEN) {
-						tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
-					} else {
-						tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+		// Only allow interction with traffic lights in manuel mode
+		if (this.getSimulator().getCurrentMode() == TrafficLightMode.manuel) {
+			for (Junction j : this.getSimulator().getJunctions()) {
+				
+				// Change a single light
+				for (TrafficLight tf : j.getTrafficLights()) {
+					if (e.getX() >= tf.getOrigin().x && e.getX() < tf.getOrigin().x + tf.getDimension().width &&
+							e.getY() >= tf.getOrigin().y && e.getY() < tf.getOrigin().y + tf.getDimension().height) {
+						if (tf.getCurrentStatus() == trafficLightStatus.GREEN) {
+							tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+						} else {
+							tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+						}
+						
+						
 					}
-					
 					
 				}
 				
-			}
-			
-			// Change all light of a Junction
-			if (e.getX() >= j.getOrigin().x && e.getX() < j.getOrigin().x + j.getDimension().width &&
-				e.getY() >= j.getOrigin().y && e.getY() < j.getOrigin().y + j.getDimension().height) {
-				
-				for (TrafficLight tf : j.getTrafficLights()) {
-					if (tf.getCurrentStatus() == trafficLightStatus.GREEN) {
-						tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
-					} else {
-						tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+				// Change all light of a Junction
+				if (e.getX() >= j.getOrigin().x && e.getX() < j.getOrigin().x + j.getDimension().width &&
+					e.getY() >= j.getOrigin().y && e.getY() < j.getOrigin().y + j.getDimension().height) {
+					
+					for (TrafficLight tf : j.getTrafficLights()) {
+						if (tf.getCurrentStatus() == trafficLightStatus.GREEN) {
+							tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+						} else {
+							tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+						}
 					}
 				}
 			}
 		}
 		
+		// Redraw
+		this.getSimulator().getMainFrame().invalidate();
+		this.getSimulator().getMainFrame().repaint();
 	}
 
 	@Override
