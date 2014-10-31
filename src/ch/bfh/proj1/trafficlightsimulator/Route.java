@@ -6,7 +6,12 @@ public class Route {
 	
 	private LinkedList<Lane> route;
 	
-	private int distribution = 10;
+	/**
+	 * Distribute vehicles based on this distribution on all available routes
+	 * Value between 0 and 100
+	 * Sum of all distribution of all routes should be 100
+	 */
+	private int distribution = 0;
 	
 	public Route() {
 		this.route = new LinkedList<Lane>();

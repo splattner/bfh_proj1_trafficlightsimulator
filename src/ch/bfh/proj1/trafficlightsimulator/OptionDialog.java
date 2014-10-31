@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.Hashtable;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -54,7 +55,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 		this.routeTable = new JTable(new RouteTableModel(this.getSimulator()));
 		JScrollPane scrollPane = new JScrollPane(this.routeTable);
 
-		this.routeTable.setPreferredScrollableViewportSize(new Dimension(800, 200));
+		this.routeTable.setPreferredScrollableViewportSize(new Dimension(400, 400));
 		this.routeTable.setFillsViewportHeight(true);
 
 		this.routeTable.getColumnModel().getColumn(1).setCellRenderer(new SliderRenderer(JSlider.HORIZONTAL,0,100,0));
@@ -64,7 +65,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 		this.routeTable.getColumnModel().getColumn(2).setCellRenderer(new AddVehicleRendererAndEditor(this.getSimulator()));
 		this.routeTable.getColumnModel().getColumn(2).setCellEditor(new AddVehicleRendererAndEditor(this.getSimulator()));
 
-		this.routeTable.setRowHeight(50);
+		this.routeTable.setRowHeight(40);
 
 		this.add(scrollPane, BorderLayout.CENTER);
 
@@ -127,7 +128,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 			switch (columnIndex) {
 			case 0:
-				ret =  "Route " + Integer.toString(rowIndex);
+				ret =  "Route " + Integer.toString(rowIndex+1);
 				break;
 			case 1:
 				ret = routes.get(rowIndex).getDistribution();
@@ -345,9 +346,13 @@ public class OptionDialog extends JDialog implements ActionListener{
 			if (value != null){
 				setValue(((Integer)value).intValue());
 			}
-			updateUI();
 
+			setMajorTickSpacing(10);
+			setMinorTickSpacing(5);
 			setPaintTicks(true);
+			setLabelTable(createStandardLabels(10));
+			setPaintLabels(true);
+			
 			return this;
 		}
 	}
@@ -356,29 +361,37 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 
 	class SliderEditor extends DefaultCellEditor implements MouseListener {
-		protected JSlider slider;
+		private JSlider slider;
 
 		private int value;
 		public SliderEditor(int orientation, int min, int max, int value) {
 			super(new JCheckBox());
-			slider = new JSlider(orientation, min, max, value);     
-			slider.setOpaque(true);   
-			slider.addMouseListener(this);
+			this.slider = new JSlider(orientation, min, max, value);     
+			this.slider.setOpaque(true);   
+			this.slider.addMouseListener(this);
+			
 			
 		}
 
 		public Component getTableCellEditorComponent(JTable table, Object value,
 				boolean isSelected, int row, int column) {
+			
 			if (isSelected) {
-				slider.setForeground(table.getSelectionForeground());
-				slider.setBackground(table.getSelectionBackground());
+				this.slider.setForeground(table.getSelectionForeground());
+				this.slider.setBackground(table.getSelectionBackground());
 			} else {
-				slider.setForeground(table.getForeground());
-				slider.setBackground(table.getBackground());
+				this.slider.setForeground(table.getForeground());
+				this.slider.setBackground(table.getBackground());
 			}
-			slider.setValue(((Integer) value).intValue());
+			this.slider.setValue(((Integer) value).intValue());
 
-			slider.setPaintTicks(true);
+			this.slider.setMajorTickSpacing(10);
+			this.slider.setMinorTickSpacing(5);
+			this.slider.setPaintTicks(true);
+			
+			this.slider.setLabelTable(this.slider.createStandardLabels(10));
+			this.slider.setPaintLabels(true);
+			
 			this.value = this.slider.getValue();
 			return slider;
 		}

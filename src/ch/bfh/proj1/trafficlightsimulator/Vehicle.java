@@ -6,6 +6,14 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 
+/**
+ * @author sebastianplattner
+ *
+ */
+/**
+ * @author sebastianplattner
+ *
+ */
 public abstract class Vehicle implements DrawableObject{
 
 	protected int maxSpeed;
@@ -99,11 +107,26 @@ public abstract class Vehicle implements DrawableObject{
 	public Lane getCurrentLane() {
 		return currentLane;
 	}
+	
+	
+	
+	/**
+	 * Set the current Lane for this vehicle
+	 * Also add this vehicle to the Vehicle Collection on the lane
+	 * @param currentLane
+	 */
+	/**
+	 * @param currentLane
+	 */
 	public void setCurrentLane(Lane currentLane) {
 		this.currentLane = currentLane;
 		this.currentLane.getVerhiclesOnLane().addFirst(this);
 	}
 	
+	/**
+	 * One Step of the simulation. This function is called by the Simulation Threat
+	 * Move Vehicles
+	 */
 	public void simulationStep()
 	{
 		// Check if this Vehicle is on a Lane
@@ -287,7 +310,7 @@ public abstract class Vehicle implements DrawableObject{
 			this.currentSpeed += this.currentAcceleration;
 		}
 		
-		// Don't accelerate anymore when max speed reached
+		// Don't accelerate anymore when min speed reached
 		if (currentSpeed <= 0) {
 			this.currentSpeed = 0;
 			this.currentAcceleration = 0;
@@ -297,6 +320,9 @@ public abstract class Vehicle implements DrawableObject{
 		
 	}
 	
+	/**
+	 * Put this vehicle on the next lane of the route
+	 */
 	public void toNextLaneOnRoute() {
 		// Do we have a current Lane? Other we are on the first lane of our route;
 		if (currentLane == null) {
@@ -325,6 +351,10 @@ public abstract class Vehicle implements DrawableObject{
 		this.currentPosOnLane = 0;
 	}
 	
+	/**
+	 * Calculate the distance for a full stop based on this vehicles properties
+	 * @return
+	 */
 	private int calcucateDistanceForBraking() {
 		int speed = this.currentSpeed;
 		int acc = -this.accelerationStartNegativ;

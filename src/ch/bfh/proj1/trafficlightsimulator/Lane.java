@@ -6,21 +6,41 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 
+/**
+ * @author sebastianplattner
+ *
+ */
 public class Lane implements DrawableObject {
 	
+	/**
+	 * Orientation for this Lane
+	 * From the streets start Junction to the streets end Junction
+	 * ore vice versa
+	 *
+	 */
 	public enum laneOrientations {
 		startToEnd,
 		endToStart
 	}
 
+	/**
+	 * Current lane orientation
+	 */
 	private laneOrientations laneOrientation;
 	
 	private Dimension dimension;
 
 	private Point origin;
 	
+	/**
+	 * All vehicles on this lane
+	 */
 	private LinkedList<Vehicle> verhiclesOnLane;
 	
+	
+	/**
+	 * The traffic light for this lane
+	 */
 	private TrafficLight trafficLight;
 	
 	private Arrow arrow = new Arrow();
@@ -61,7 +81,7 @@ public class Lane implements DrawableObject {
 		
 
 		// on vertical lane
-		if (dimension.width > dimension.height) {			
+		if (this.getStreet().getOrientaion() == Street.orientation.horizontal) {			
 			if (this.getLaneOrientation() == laneOrientations.startToEnd){
 
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {

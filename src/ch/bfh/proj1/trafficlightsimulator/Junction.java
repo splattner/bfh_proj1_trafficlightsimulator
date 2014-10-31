@@ -62,11 +62,16 @@ public class Junction implements DrawableObject{
 	@Override
 	public Dimension getDimension() {return this.dimension;}
 	
+	/**
+	 * Calculate Dimension of this Junction based on the connected streets / lanes
+	 * @return Dimension of this junction
+	 */
 	public Dimension calcucateDimension() {
 		Dimension d = new Dimension();
 		int numOfLanesVertical = 0;
 		int numOfLanesHorizontal = 0;
 		
+		// Get number of lanes on top and bottom streets
 		if (this.getTopStreet() != null) {
 			numOfLanesVertical = this.getTopStreet().getLanes().size();
 		} else {
@@ -75,6 +80,7 @@ public class Junction implements DrawableObject{
 			}
 		}
 		
+		// Get number of lanes on left and right streets
 		if (this.getLeftStreet() != null) {
 			numOfLanesVertical = this.getLeftStreet().getLanes().size();
 		} else {
@@ -83,10 +89,12 @@ public class Junction implements DrawableObject{
 			} 
 		}
 		
+		// if no Horizontal lanes, use num of Vertical Lanes
 		if (numOfLanesHorizontal == 0) {
 			numOfLanesHorizontal = numOfLanesVertical;
 		}
 		
+		// if no Vertical lanes, use num of Horizontal Lanes
 		if (numOfLanesVertical == 0) {
 			numOfLanesVertical = numOfLanesHorizontal;
 		}
@@ -96,7 +104,12 @@ public class Junction implements DrawableObject{
 		return d;
 	}
 	
+	/**
+	 * Get all traffic lights of the connected streets / lanes
+	 * @return LinkedList with all connected Traffic Lights
+	 */
 	public LinkedList<TrafficLight> getTrafficLights() {
+		// We need to do this only once. After that, reuse the List
 		if (this.trafficLights == null) {
 			
 			this.trafficLights = new LinkedList<TrafficLight>();
@@ -152,9 +165,15 @@ public class Junction implements DrawableObject{
 		
 	}
 	
+	/**
+	 * One Step of the simulation. This function is called by the Simulation Threat
+	 * Depending of the Traffic Light Mode, compute the traffic light status
+	 * @param mode The current Traffic Light Mode
+	 */
 	public void simulationStep(TrafficLightSimulator.TrafficLightMode mode) {
 		
 
+		// Smart Traffic Light Mode
 		if (mode == TrafficLightMode.smart) {
 		
 			TrafficLight lightToChange = null;
@@ -193,7 +212,8 @@ public class Junction implements DrawableObject{
 				
 				
 			}
-				
+			
+			// if there is a light to change, do it
 			if (lightToChange != null && numberOnLane != 0) {
 				lightToChange.setCurrentStatus(trafficLightStatus.GREEN);
 				lightToChange.setTimeLastChange(0);

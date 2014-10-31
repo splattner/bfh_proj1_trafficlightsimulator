@@ -1,5 +1,6 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,7 +35,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 	
 	public OptionPanel(TrafficLightSimulator simulator) {
 		this.setSimulator(simulator);
-		
+
 		
 		optionDialog = new OptionDialog(this.getSimulator());
 		optionDialog.pack();
@@ -44,9 +45,10 @@ public class OptionPanel extends JPanel implements ActionListener{
 
 		GridBagConstraints c = new GridBagConstraints();
 		
-		//c.anchor = GridBagConstraints.PAGE_START;
-		//c.gridwidth = 2;
-		//c.gridheight = 5;
+		c.anchor = GridBagConstraints.NORTH;
+
+		//c.weighty = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		
 		
 
@@ -59,7 +61,6 @@ public class OptionPanel extends JPanel implements ActionListener{
 		c.gridx = 0;
 		c.gridy = 0;
 
-		c.fill = GridBagConstraints.HORIZONTAL;
 
 		this.add(lb1, c);
 		
@@ -86,7 +87,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 
 	
 		c.gridx = 0;
-		c.gridy = 4;
+		c.gridy = 2;
 
 		this.add(lb2, c);
 		
@@ -107,14 +108,14 @@ public class OptionPanel extends JPanel implements ActionListener{
 		LightModeSelector.addActionListener(this);
 		
 		c.gridx = 1;
-		c.gridy = 4;
+		c.gridy = 2;
 		this.add(LightModeSelector, c);
 		
 		JLabel lb3 = new JLabel("Simulation Mode");
 
 		
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 3;
 
 		this.add(lb3, c);
 		
@@ -133,14 +134,14 @@ public class OptionPanel extends JPanel implements ActionListener{
 		SimulationModeSelector.addActionListener(this);
 		
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 3;
 		this.add(SimulationModeSelector, c);
 		
 		this.btShowConfig = new JButton("Simulation Control");
 		this.btShowConfig.addActionListener(this);
 		
 		c.gridx = 0;
-		c.gridy = 6;
+		c.gridy = 4;
 		c.gridwidth = 2;
 		this.add(this.btShowConfig,c);
 

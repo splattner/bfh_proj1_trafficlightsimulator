@@ -19,14 +19,20 @@ public class Street implements DrawableObject{
 	private Point origin;
 	private Dimension dimension;
 	
+	/*
+	 * Possible orientation of the street
+	 */
 	public enum orientation {
 		horizontal,
 		vertical
 	}
 	
+	/*
+	 * Current orientation for the Street
+	 */
 	private orientation orientaion;
 	
-	public static final Color laneColor = Color.YELLOW;
+	public static final Color laneColor = Color.WHITE;
 	public static final Color streetColor = Color.GRAY;
 	
 	public Street() {
@@ -54,12 +60,12 @@ public class Street implements DrawableObject{
 			
 			if(l.getOrigin() == null) // calculate origins and dimension the first time only
 			{
-				if (dimension.width > dimension.height) {
-					// Vertical street
+				if (this.getOrientaion() == orientation.horizontal) {
+					// Horizontal street
 					l.setOrigin(new Point (origin.x, origin.y+TrafficLightSimulator.defaultLaneWidth*i));
 					l.setDimension(new Dimension (TrafficLightSimulator.defaultStreetLenght, TrafficLightSimulator.defaultLaneWidth));
 				} else {
-					// Horizontal
+					// Vertical Street
 					l.setOrigin(new Point (origin.x +TrafficLightSimulator.defaultLaneWidth*i, origin.y));
 					l.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth, TrafficLightSimulator.defaultStreetLenght));
 				}
@@ -67,6 +73,7 @@ public class Street implements DrawableObject{
 				i++;
 			}
 			
+			// Draw Lane
 			l.paintObject(g);
 
 		}
@@ -74,7 +81,7 @@ public class Street implements DrawableObject{
 		// Draw the separation line
 		if (numOfLanes > 1) {
 			for (int j = 1 ; j < numOfLanes ; j++) {
-				if (dimension.width > dimension.height) {
+				if (this.getOrientaion() == orientation.horizontal) {
 					g.setColor(laneColor);
 					g.drawLine(origin.x, origin.y + (TrafficLightSimulator.defaultLaneWidth * j), origin.x + dimension.width, origin.y + (TrafficLightSimulator.defaultLaneWidth * j));
 					
@@ -87,6 +94,11 @@ public class Street implements DrawableObject{
 		}
 	}
 
+	/**
+	 * Add a lane to the Street
+	 * and set Street for the lane
+	 * @param lane The lane to add
+	 */
 	public void addLane(Lane lane) {
 		lanes.add(lane);
 		lane.setStreet(this);

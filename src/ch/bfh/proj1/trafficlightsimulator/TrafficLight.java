@@ -12,6 +12,9 @@ public class TrafficLight implements DrawableObject {
 	private Lane lane;
 	private trafficLightStatus currentStatus = trafficLightStatus.RED; // TODO : remove that later
 	
+	/*
+	 * Number of Simulation steps since we changed this to green
+	 */
 	private int timeLastChange;
 	
 	public enum trafficLightStatus {
@@ -22,7 +25,7 @@ public class TrafficLight implements DrawableObject {
 
 	public TrafficLight (Lane aLane) {
 		this.setLane(aLane);
-		}
+	}
 	
 	@Override
 	public void paintObject(Graphics g) {		
@@ -32,9 +35,11 @@ public class TrafficLight implements DrawableObject {
 		g.fillRect(origin.x , origin.y, dimension.width, dimension.height);
 		
 		
+		/*
 		// Just Debug
 		g.setColor(Color.WHITE);
 		g.drawString(Integer.toString(timeLastChange) , this.origin.x, this.origin.y);
+		*/
 	}
 
 	@Override
@@ -71,6 +76,10 @@ public class TrafficLight implements DrawableObject {
 		this.timeLastChange = timeLastChange;
 	}
 	
+	/**
+	 * Get the number of vehicles that are close to this traffic light
+	 * @return
+	 */
 	public int getNumOfVehiclesNearLight() {
 		int numberOfVehiclesNearLight = 0;
 		for (Vehicle v : this.getLane().getVerhiclesOnLane()) {
