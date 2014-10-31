@@ -494,7 +494,11 @@ public class SimPanel extends JPanel implements MouseListener{
 		
 		// Change Color of Backgrund when Simulation is running
 		if (this.getSimulator().getCurrentSimulation().isRunning()) {
-			g.setColor(new Color(100,0,0));
+			if (this.getSimulator().getCurrentSimulation().isBreaking()) {
+				g.setColor(new Color(100,100,100));
+			} else {
+				g.setColor(new Color(100,0,0));
+			}
 			
 		} else {
 			g.setColor(Color.BLACK);

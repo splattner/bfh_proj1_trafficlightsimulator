@@ -60,6 +60,9 @@ public class Simulation extends Thread {
 				// Check if we should break
 				if (this.isBreaking()) {
 					//System.out.println("Breaking");
+					//System.out.println("Redraw Sim Panel");
+					this.getSimulator().getMainFrame().invalidate();
+					this.getSimulator().getMainFrame().repaint();
 					try {
 						this.wait();
 					} catch (InterruptedException e) {
