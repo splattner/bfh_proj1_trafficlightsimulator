@@ -138,7 +138,7 @@ public abstract class Vehicle implements DrawableObject{
 			if (this.currentSpeed > this.maxSpeed) this.currentSpeed = this.maxSpeed;
 			
 			// Calculate Distance for a full stop (for traffic light stop)
-			int distFullStop = this.calcucateDistanceForBreaking();
+			int distFullStop = this.calcucateDistanceForBraking();
 			distFullStop += carLenghtinPositions;
 			//System.out.println("Distance full stop: " + distFullStop);
 			
@@ -325,7 +325,7 @@ public abstract class Vehicle implements DrawableObject{
 		this.currentPosOnLane = 0;
 	}
 	
-	private int calcucateDistanceForBreaking() {
+	private int calcucateDistanceForBraking() {
 		int speed = this.currentSpeed;
 		int acc = -this.accelerationStartNegativ;
 		int dist = 0;
@@ -370,6 +370,7 @@ public abstract class Vehicle implements DrawableObject{
 		
 		Double convertedPos =  ( (double) this.getCurrentPosOnLane() / (double) s.getPositionsOnStreet() * (double) s.getLenght());
 		
+		
 		if (s.getOrientaion() == Street.orientation.horizontal) {
 			// Car is on a horizontal Street
 			if (currentLane.getLaneOrientation() == Lane.laneOrientations.startToEnd) {
@@ -381,6 +382,7 @@ public abstract class Vehicle implements DrawableObject{
 			}
 			
 			g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
+			
 			
 		} else {
 			// Car is on a vertical Street

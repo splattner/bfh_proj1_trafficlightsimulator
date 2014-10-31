@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
@@ -11,28 +13,40 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-public class SimPanel extends JPanel{
+import ch.bfh.proj1.trafficlightsimulator.TrafficLight.trafficLightStatus;
+
+public class SimPanel extends JPanel implements MouseListener{
 	
-	private ArrayList<Junction> junctions;
+
 	
-	private ArrayList<Street> streets;
+	private TrafficLightSimulator simulator;
 	
-	public SimPanel(ArrayList<Junction> junctions, ArrayList<Street> streets) {
+	public TrafficLightSimulator getSimulator() {
+		return simulator;
+	}
+
+	public void setSimulator(TrafficLightSimulator simulator) {
+		this.simulator = simulator;
+	}
+
+	
+	public SimPanel(TrafficLightSimulator simulator) {
 		super();
 		
-		this.junctions = junctions;
-		this.streets = streets;
+		this.setSimulator(simulator);
 		
 		setBackground(Color.BLACK);
 		
 		initOrigins();
+		
+		this.addMouseListener(this);
 		
 	}
 	
 	private void initOrigins() {
 
 		// Start with first street (the one very left/top and should have no start junction
-		Street s = streets.get(0);
+		Street s = this.getSimulator().getStreets().get(0);
 		
 		System.out.println("Startin with Street " + s.getOrigin().x + " / " + s.getOrigin().y);
 		Junction j;
@@ -477,7 +491,7 @@ public class SimPanel extends JPanel{
 		super.paintComponent(g);
 		
 		// Draw all Streets
-		for (Street street : streets) {
+		for (Street street : this.getSimulator().getStreets()) {
 
 			street.paintObject(g);
 			
@@ -492,9 +506,69 @@ public class SimPanel extends JPanel{
 			
 		}
 		
-		for (Junction j : junctions) {
+		for (Junction j : this.getSimulator().getJunctions()) {
 			j.paintObject(g);
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		for (Junction j : this.getSimulator().getJunctions()) {
+			
+			// Change a single light
+			for (TrafficLight tf : j.getTrafficLights()) {
+				if (e.getX() >= tf.getOrigin().x && e.getX() < tf.getOrigin().x + tf.getDimension().width &&
+						e.getY() >= tf.getOrigin().y && e.getY() < tf.getOrigin().y + tf.getDimension().height) {
+					if (tf.getCurrentStatus() == trafficLightStatus.GREEN) {
+						tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+					} else {
+						tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+					}
+					
+					
+				}
+				
+			}
+			
+			// Change all light of a Junction
+			if (e.getX() >= j.getOrigin().x && e.getX() < j.getOrigin().x + j.getDimension().width &&
+				e.getY() >= j.getOrigin().y && e.getY() < j.getOrigin().y + j.getDimension().height) {
+				
+				for (TrafficLight tf : j.getTrafficLights()) {
+					if (tf.getCurrentStatus() == trafficLightStatus.GREEN) {
+						tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+					} else {
+						tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+					}
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

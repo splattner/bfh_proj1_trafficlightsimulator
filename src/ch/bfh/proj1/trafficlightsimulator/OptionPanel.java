@@ -54,11 +54,11 @@ public class OptionPanel extends JPanel implements ActionListener{
 		
 		
 		if (e.getSource().equals(btAddCar1)) {
-			ArrayList<Vehicle> vehicles = this.simulator.getCurrentSimulation().getVerhicles();
+			ArrayList<Vehicle> vehicles = this.getSimulator().getVerhicles();
 			Vehicle v = new Car();
 			//Vehicle v = new Truck();
 
-			Route r = this.simulator.getCurrentSimulation().getRoutes().get(0);
+			Route r = this.getSimulator().getRoutes().get(0);
 
 			Lane l = r.getRoute().getFirst();
 			
@@ -70,12 +70,12 @@ public class OptionPanel extends JPanel implements ActionListener{
 		}
 		
 		if (e.getSource().equals(btAddCar2)) {
-			ArrayList<Vehicle> vehicles = this.simulator.getCurrentSimulation().getVerhicles();
+			ArrayList<Vehicle> vehicles = this.getSimulator().getVerhicles();
 			Vehicle v = new Truck();
 			//Vehicle v = new Truck();
 			
 
-			Route r = this.simulator.getCurrentSimulation().getRoutes().get(1);
+			Route r = this.getSimulator().getRoutes().get(1);
 
 			Lane l = r.getRoute().getFirst();
 			
@@ -90,6 +90,12 @@ public class OptionPanel extends JPanel implements ActionListener{
 			if(btLight.getText().equals("Set Green")) {
 				btLight.setText("Set Red");
 				
+				/*
+				for (TrafficLight tf : this.simulator.getJunctions().get(1).getTrafficLights()) {
+					tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+				}*/
+				
+				
 				for (Street s : this.simulator.getStreets()) {
 					for (Lane l : s.getLanes()) {
 						if (l.getTrafficLight() != null) {
@@ -98,9 +104,17 @@ public class OptionPanel extends JPanel implements ActionListener{
 					}
 				}
 				
+				
+				
 			} else {
 				btLight.setText("Set Green");
+				
+				/*
+				for (TrafficLight tf : this.simulator.getJunctions().get(0).getTrafficLights()) {
+					tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+				}*/
 
+				
 				for (Street s : this.simulator.getStreets()) {
 					for (Lane l : s.getLanes()) {
 						if (l.getTrafficLight() != null) {
@@ -108,6 +122,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 						}
 					}
 				}
+				
 			}
 		}
 
@@ -119,7 +134,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 				btBreak.setEnabled(false);
 				
 				// Remove all cars from Lanes (if they are still on a lane)
-				for (Vehicle v : this.simulator.getCurrentSimulation().getVerhicles()) {
+				for (Vehicle v : this.getSimulator().getVerhicles()) {
 					
 					if (v.getCurrentLane() != null)
 						v.getCurrentLane().getVerhiclesOnLane().remove(v);
@@ -130,7 +145,7 @@ public class OptionPanel extends JPanel implements ActionListener{
 				}
 				
 				// Remove all Vehicles
-				this.simulator.getCurrentSimulation().getVerhicles().clear();
+				this.getSimulator().getVerhicles().clear();
 
 				// Create a new Simulation (based on the old one)
 				this.simulator.setCurrentSimulation(new Simulation(this.simulator.getCurrentSimulation()));

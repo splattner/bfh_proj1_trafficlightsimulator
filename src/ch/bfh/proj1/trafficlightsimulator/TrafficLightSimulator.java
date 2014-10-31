@@ -36,16 +36,56 @@ public class TrafficLightSimulator {
 	private JScrollPane scrollPanel;
 	
 	private ArrayList<Junction> junctions;
-	private ArrayList<Street> streets;
+
 	
+	public ArrayList<Junction> getJunctions() {
+		return junctions;
+	}
+
+	public void setJunctions(ArrayList<Junction> junctions) {
+		this.junctions = junctions;
+	}
+
+	private ArrayList<Street> streets;
+
+	public void setStreets(ArrayList<Street> streets) {
+		this.streets = streets;
+	}
+
 	public ArrayList<Street> getStreets() {
 		return streets;
 	}
 
 	private ArrayList<Route> routes;
+	
+	public ArrayList<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(ArrayList<Route> routes) {
+		this.routes = routes;
+	}
+	
 	private ArrayList<Vehicle> verhicles;
 	
+	public ArrayList<Vehicle> getVerhicles() {
+		return verhicles;
+	}
+
+	public void setVerhicles(ArrayList<Vehicle> verhicles) {
+		this.verhicles = verhicles;
+	}
+	
 	private Simulation currentSimulation;
+	
+	public Simulation getCurrentSimulation() {
+		return currentSimulation;
+	}
+
+	public void setCurrentSimulation(Simulation currentSimulation) {
+		this.currentSimulation = currentSimulation;
+	}
+	
 
 
 	public static void main(String[] args) {
@@ -279,7 +319,7 @@ public class TrafficLightSimulator {
 		
 		mainFrame.setSize(TrafficLightSimulator.applicationWidth, TrafficLightSimulator.applicationHeight);
 		
-		simPanel = new SimPanel(junctions, streets);
+		simPanel = new SimPanel(this);
 		
 		scrollPanel = new JScrollPane(simPanel);
 		//scrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -297,14 +337,7 @@ public class TrafficLightSimulator {
 		mainFrame.setVisible(true);
 	}
 
-	public Simulation getCurrentSimulation() {
-		return currentSimulation;
-	}
 
-	public void setCurrentSimulation(Simulation currentSimulation) {
-		this.currentSimulation = currentSimulation;
-	}
-	
 
 
 }

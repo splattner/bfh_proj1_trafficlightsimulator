@@ -7,20 +7,16 @@ public class Simulation extends Thread {
 	private boolean running = false;
 	private boolean breakState = false;
 	
-	private ArrayList<Vehicle> verhicles;
-	private ArrayList<Route> routes;
 	private TrafficLightSimulator simulator;
 	
 	public Simulation(ArrayList<Vehicle> verhicles, ArrayList<Route> routes, TrafficLightSimulator simulator) {
-		this.setVerhicles(verhicles);
-		this.setRoutes(routes);
+
 		this.setSimulator(simulator);
 		
 	}
 	
 	public Simulation (Simulation oldSimulation) {
-		this.setVerhicles(oldSimulation.getVerhicles());
-		this.setRoutes(oldSimulation.getRoutes());
+
 		this.setSimulator(oldSimulation.getSimulator());
 		
 		oldSimulation = null;
@@ -36,7 +32,7 @@ public class Simulation extends Thread {
 				
 				
 				
-				for (Vehicle v : this.verhicles) {
+				for (Vehicle v : this.getSimulator().getVerhicles()) {
 					v.simulationStep();
 				}
 				
@@ -108,21 +104,6 @@ public class Simulation extends Thread {
 		}
 	}
 
-	public ArrayList<Vehicle> getVerhicles() {
-		return verhicles;
-	}
-
-	public void setVerhicles(ArrayList<Vehicle> verhicles) {
-		this.verhicles = verhicles;
-	}
-
-	public ArrayList<Route> getRoutes() {
-		return routes;
-	}
-
-	public void setRoutes(ArrayList<Route> routes) {
-		this.routes = routes;
-	}
 
 
 	public TrafficLightSimulator getSimulator() {
