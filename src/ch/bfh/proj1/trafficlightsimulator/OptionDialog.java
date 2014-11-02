@@ -175,6 +175,20 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 			case 1:
 				this.simulator.getVehicleRegistry().get(rowIndex).setDistribution((Integer) value);
+				
+				int sum = 0;
+				int overRunBy = 0;
+				
+				for (VehicleRegistryEntry ve : this.simulator.getVehicleRegistry()) {
+					sum += ve.getDistribution();
+				}
+
+				if (sum > 100) {
+					overRunBy = sum - 100;
+					this.simulator.getVehicleRegistry().get(rowIndex).setDistribution(this.simulator.getVehicleRegistry().get(rowIndex).getDistribution() - overRunBy);
+
+				}
+				
 				break;
 			}
 			fireTableCellUpdated(rowIndex, columnIndex);
