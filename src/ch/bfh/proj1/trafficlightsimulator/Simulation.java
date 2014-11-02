@@ -65,14 +65,16 @@ public class Simulation extends Thread {
 				
 				
 				// Add Vehicles if in automatic mode
+				// Only add them, when we habe a simulation speed and current step is 0
 				if (this.getSimulationSpeed() > 0 && this.currentStep == 0 && this.getSimulator().getSimulationMode() == SimulationMode.automatic) {
-					
-					// TODO: Frequency of adding Vehicles!!
 					
 					//System.out.println("Automatic mode");
 					
+					// Get Randoms for Vehicle and Route (from 0 to 100)
+					// If boundery is between a vehicle/routes lower and upper bounder, then add the car to the route.
 					int randNumberVehicle = this.rand.nextInt(100);
 					int randNumberRoute = this.rand.nextInt(100);
+					
 					int currentVehicleDist = 0;
 					int nextVehicleDist = 0;
 					
@@ -81,32 +83,30 @@ public class Simulation extends Thread {
 					
 					// Loop trought all Vehicles
 					for (VehicleRegistryEntry ve : this.getSimulator().getVehicleRegistry()) {
+						// Set distribution for upper boundery
 						nextVehicleDist += ve.getDistribution();
 						
 						// if random was for this vehicle
 						if (randNumberVehicle > currentVehicleDist && randNumberVehicle <= nextVehicleDist) {
-							
-							int i = 0;
+
 							// Loop trought all routes
 							for (Route r : this.getSimulator().getRoutes()) {
+								// Set distribution for upper boundery
 								nextRouteDist += r.getDistribution();
 								
 								// Random was for this route
 								if (randNumberRoute > currentRouteDist && randNumberRoute <= nextRouteDist) {
-									System.out.println("Add a : " + ve.getVehicleName() + " to Route " + (i+1));
-									
-									
+	
 									Vehicle v = null;
 									try {
 										v = (Vehicle) ve.getVehicle().newInstance();
 									} catch (InstantiationException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
 
+									} catch (IllegalAccessException e) {
+
+									}
+									
+									
 									if (v != null) {
 										v.setRoute(r);
 										v.setCurrentLane(r.getRoute().getFirst());
@@ -116,25 +116,23 @@ public class Simulation extends Thread {
 									
 								}
 								
-								i++;
-								
+								// Set Distribution for lower boundery (this upper is the next lower)
 								currentRouteDist += r.getDistribution();
 								
 							}
 							
 						}
 						
+						// Set Distribution for lower boundery (this upper is the next lower)
 						currentVehicleDist += ve.getDistribution();
-						
 
-						
-						
 					}	
 					
 				}
 				
+				// Increase current Simulation Step
 				currentStep++;
-				
+				// Based on the Simulation speed, do we need to add new vehicles?
 				if (this.getSimulationSpeed() > 0 && ((currentStep % ((101 - this.getSimulationSpeed())) * 10000)  == 0)) {
 					currentStep = 0;
 				}
