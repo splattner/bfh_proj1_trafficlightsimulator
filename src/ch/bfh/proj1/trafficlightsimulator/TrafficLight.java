@@ -29,9 +29,19 @@ public class TrafficLight implements DrawableObject {
 	
 	@Override
 	public void paintObject(Graphics g) {		
-		if(currentStatus.name().equalsIgnoreCase("RED")) {g.setColor(Color.RED);}
-		else if(currentStatus.name().equalsIgnoreCase("GREEN")) {g.setColor(Color.GREEN);}
-		else if(currentStatus.name().equalsIgnoreCase("ORANGE")) {g.setColor(Color.ORANGE);}
+		if(currentStatus.name().equalsIgnoreCase("RED")) {
+			g.setColor(Color.RED);
+		} else if(currentStatus.name().equalsIgnoreCase("GREEN")) {
+			
+			/*if (this.getTimeLastChange() > TrafficLightSimulator.minimumGreenLightPhase * 0.8) {
+				g.setColor(Color.ORANGE);
+			} else {*/
+				g.setColor(Color.GREEN);
+			/*}*/
+			
+		} else if (currentStatus.name().equalsIgnoreCase("ORANGE")) {
+			g.setColor(Color.ORANGE);
+		}
 		g.fillRect(origin.x , origin.y, dimension.width, dimension.height);
 		
 		

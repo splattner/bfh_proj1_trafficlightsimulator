@@ -13,6 +13,11 @@ public class Route {
 	 */
 	private int distribution = 0;
 	
+	/**
+	 * Indicate if a route is visible / drawn on the Sim Panel
+	 */
+	private boolean visible = false;
+	
 	public Route() {
 		this.route = new LinkedList<Lane>();
 	}
@@ -31,6 +36,14 @@ public class Route {
 
 	public void setDistribution(int distribution) {
 		this.distribution = distribution;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 }

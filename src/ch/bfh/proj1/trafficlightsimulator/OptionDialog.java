@@ -12,9 +12,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,6 +29,8 @@ import javax.swing.border.Border;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -41,19 +45,24 @@ public class OptionDialog extends JDialog implements ActionListener{
 	private JButton btApply;
 
 	private JTable routeTable;
+	private JTable vehicleTable;
 
 	public OptionDialog(TrafficLightSimulator simulator) {
 		super();
 
 		this.setSimulator(simulator);
 
-		this.setPreferredSize(new Dimension(800,400));
+		this.setPreferredSize(new Dimension(800,600));
 
 		this.setLayout(new BorderLayout());
+		
+		JPanel panel  = new JPanel();
+		BoxLayout bl = new BoxLayout(panel, BoxLayout.Y_AXIS);
+		panel.setLayout(bl);
 
 		// Routes Table
 		this.routeTable = new JTable(new RouteTableModel(this.getSimulator()));
-		JScrollPane scrollPane = new JScrollPane(this.routeTable);
+		JScrollPane scrollPaneRoutes = new JScrollPane(this.routeTable);
 
 		this.routeTable.setPreferredScrollableViewportSize(new Dimension(400, 400));
 		this.routeTable.setFillsViewportHeight(true);
@@ -66,8 +75,28 @@ public class OptionDialog extends JDialog implements ActionListener{
 		this.routeTable.getColumnModel().getColumn(2).setCellEditor(new AddVehicleRendererAndEditor(this.getSimulator()));
 
 		this.routeTable.setRowHeight(40);
+		
+		SelectionListener listener = new SelectionListener(this.routeTable, this.getSimulator().getRoutes());
+		this.routeTable.getSelectionModel().addListSelectionListener(listener);
+		
 
-		this.add(scrollPane, BorderLayout.CENTER);
+		panel.add(scrollPaneRoutes);
+		
+		// Vehicle Table
+		this.vehicleTable = new JTable(new VehicleTableModel(this.getSimulator()));
+		JScrollPane scrollPaneVehicles = new JScrollPane(this.vehicleTable);
+
+		this.vehicleTable.setPreferredScrollableViewportSize(new Dimension(400, 400));
+		this.vehicleTable.setFillsViewportHeight(true);
+
+		this.vehicleTable.getColumnModel().getColumn(1).setCellRenderer(new SliderRenderer(JSlider.HORIZONTAL,0,100,0));
+		this.vehicleTable.getColumnModel().getColumn(1).setCellEditor(new SliderEditor(JSlider.HORIZONTAL, 0, 100, 0));
+		
+		this.vehicleTable.setRowHeight(40);
+		
+		panel.add(scrollPaneVehicles);
+
+		this.add(panel, BorderLayout.CENTER);
 
 		this.btApply = new JButton("Apply");
 		this.btApply.addActionListener(this);
@@ -90,6 +119,77 @@ public class OptionDialog extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	class VehicleTableModel extends AbstractTableModel {
+		private String[] columnNames = {"Vehicle","Distribution of Vehicle"};
+
+		private TrafficLightSimulator simulator;
+
+		public VehicleTableModel(TrafficLightSimulator simulator) {
+			this.simulator = simulator;
+		}
+
+		public Class getColumnClass(int column) {
+			return getValueAt(0, column).getClass();
+		}
+
+
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+
+		public int getRowCount() {
+			return this.simulator.getVehicleRegistry().size();
+		}
+
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			Object ret = null;
+
+			switch (columnIndex) {
+			case 0:
+				ret = this.simulator.getVehicleRegistry().get(rowIndex).getVehicleName();
+
+				break;
+			case 1:
+				ret = this.simulator.getVehicleRegistry().get(rowIndex).getDistribution();
+				break;
+
+			}
+
+			return ret;
+
+
+		}
+		@Override
+		public void setValueAt(Object value, int rowIndex, int columnIndex) {
+
+			switch (columnIndex) {
+
+			case 1:
+				this.simulator.getVehicleRegistry().get(rowIndex).setDistribution((Integer) value);
+				break;
+			}
+			fireTableCellUpdated(rowIndex, columnIndex);
+
+		}
+
+		@Override
+		public boolean isCellEditable(int row, int col) {
+			if (col == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 
 	}
 
@@ -444,6 +544,32 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 
 	}
+	
+	class SelectionListener implements ListSelectionListener {
+		  private JTable table;
+		  private ArrayList<Route> routes;
+
+		  SelectionListener(JTable table, ArrayList<Route> routes) {
+		    this.table = table;
+		    this.routes = routes;
+		  }
+		  public void valueChanged(ListSelectionEvent e) {
+			  
+			  int[] selectedRow = this.table.getSelectedRows();
+			  
+			  
+		      
+		      for (Route r : this.routes) {
+		    	  r.setVisible(false);
+		      }
+		      
+		      for (int i = 0; i < selectedRow.length; i++) {
+		    	  routes.get(selectedRow[i]).setVisible(true);
+		      }
+			  
+			  
+		  }
+		}
 
 
 

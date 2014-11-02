@@ -1,28 +1,30 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
-import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.SimulationMode;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
-public class OptionPanel extends JPanel implements ActionListener{
+public class OptionPanel extends JPanel implements ActionListener, ChangeListener{
 	
 	JButton btRunSimulation;
 	JButton btBreak;
 	JButton btShowConfig;
+	
+	JSlider simulationFrequency;
 	
 	
 	JComboBox<String> LightModeSelector;
@@ -144,6 +146,29 @@ public class OptionPanel extends JPanel implements ActionListener{
 		c.gridy = 4;
 		c.gridwidth = 2;
 		this.add(this.btShowConfig,c);
+		
+		JLabel lb4 = new JLabel("Simulation Speed");
+
+		
+		c.gridx = 0;
+		c.gridy = 5;
+
+		this.add(lb4, c);
+		
+		this.simulationFrequency = new JSlider(0,100,20);
+		this.simulationFrequency.setMajorTickSpacing(10);
+		this.simulationFrequency.setMinorTickSpacing(5);
+		this.simulationFrequency.setPaintTicks(true);
+		this.simulationFrequency.setLabelTable(this.simulationFrequency.createStandardLabels(10));
+		this.simulationFrequency.setPaintLabels(true);
+		this.simulationFrequency.addChangeListener(this);
+		
+		c.gridx = 0;
+		c.gridy = 6;
+
+		this.add(this.simulationFrequency, c);
+		
+		
 
 		
 	}
@@ -157,11 +182,15 @@ public class OptionPanel extends JPanel implements ActionListener{
 		}
 		
 		if (e.getSource().equals(SimulationModeSelector)) {
-			switch (LightModeSelector.getSelectedIndex()) {
+
+			
+			switch (SimulationModeSelector.getSelectedIndex()) {
 			case 0:
+
 				this.getSimulator().setSimulationMode(SimulationMode.manuel);
 				break;
 			case 1:
+
 				this.getSimulator().setSimulationMode(SimulationMode.automatic);
 				break;
 
@@ -243,6 +272,14 @@ public class OptionPanel extends JPanel implements ActionListener{
 
 	public void setSimulator(TrafficLightSimulator simulator) {
 		this.simulator = simulator;
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource().equals(this.simulationFrequency)) {
+			this.getSimulator().getCurrentSimulation().setSimulationSpeed(this.simulationFrequency.getValue());
+		}
+		
 	}
 
 }

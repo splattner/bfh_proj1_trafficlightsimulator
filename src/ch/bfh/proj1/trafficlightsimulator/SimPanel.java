@@ -1,8 +1,10 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -552,6 +554,28 @@ public class SimPanel extends JPanel implements MouseListener{
 		for (Junction j : this.getSimulator().getJunctions()) {
 			j.paintObject(g);
 		}
+		
+		
+		// Draw all visible Routes
+		g.setColor(Color.RED);
+		
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.setStroke(new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+     
+		
+		for (Route r : this.getSimulator().getRoutes()) {
+			if (r.isVisible()) {
+				for (Lane l : r.getRoute()) {
+					if (l.getStreet().getOrientaion() == Street.orientation.horizontal) {
+						g2d.drawLine(l.getOrigin().x, l.getOrigin().y + 7, l.getOrigin().x + l.getDimension().width, l.getOrigin().y + 7);
+					} else {
+						g2d.drawLine(l.getOrigin().x + 7, l.getOrigin().y, l.getOrigin().x + 7, l.getOrigin().y + l.getDimension().height);
+					}
+					
+				}
+			}
+		}
+		
 	}
 
 	@Override

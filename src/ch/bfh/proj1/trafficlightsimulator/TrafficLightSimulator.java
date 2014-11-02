@@ -25,6 +25,16 @@ public class TrafficLightSimulator {
 	
 	private JFrame mainFrame;
 	
+	private ArrayList<VehicleRegistryEntry> vehicleRegistry;
+	
+	public ArrayList<VehicleRegistryEntry> getVehicleRegistry() {
+		return vehicleRegistry;
+	}
+
+	public void setVehicleRegistry(ArrayList<VehicleRegistryEntry> vehicleRegistry) {
+		this.vehicleRegistry = vehicleRegistry;
+	}
+	
 	public enum TrafficLightMode {
 		manuel,
 		sequenze,
@@ -130,6 +140,19 @@ public class TrafficLightSimulator {
 
 	}
 	
+	public TrafficLightSimulator() {
+		
+		this.vehicleRegistry = new ArrayList<VehicleRegistryEntry>();
+		
+		this.vehicleRegistry.add(new VehicleRegistryEntry(Car.class, "Car",50));
+		this.vehicleRegistry.add(new VehicleRegistryEntry(Truck.class, "Truck",50));
+		
+		
+		
+	}
+	
+
+
 	private void init() {
 		
 		/*
@@ -321,23 +344,27 @@ public class TrafficLightSimulator {
 		s11.setEndJunction(j5);
 		
 		Route route1 = new Route();
+		route1.setDistribution(25);
 		route1.addLane(l2_s1);
 		route1.addLane(l2_s2);
 		route1.addLane(l2_s3);
 		route1.addLane(l2_s4);
 		
 		Route route2 = new Route();
+		route2.setDistribution(25);
 		route2.addLane(l1_s4);
 		route2.addLane(l1_s3);
 		route2.addLane(l1_s2);
 		route2.addLane(l1_s1);
 		
 		Route route3 = new Route();
+		route3.setDistribution(25);
 		route3.addLane(l1_s5);
 		route3.addLane(l2_s2);
 		route3.addLane(l1_s9);
 		
 		Route route4 = new Route();
+		route4.setDistribution(25);
 		route4.addLane(l2_s1);
 		route4.addLane(l1_s8);
 		route4.addLane(l2_s11);
