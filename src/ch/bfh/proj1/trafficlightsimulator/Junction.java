@@ -177,6 +177,7 @@ public class Junction implements DrawableObject{
 		if (mode == TrafficLightMode.smart) {
 		
 			TrafficLight lightToChange = null;
+			TrafficLight backupLightToChange = null;
 			TrafficLight currentGreenLight = null;
 			int numberOnLane = Integer.MIN_VALUE;
 			boolean hasGreenLight = false;
@@ -205,12 +206,22 @@ public class Junction implements DrawableObject{
 				// Get traffic light with most vehicles
 				for (TrafficLight l : this.getTrafficLights()) {
 					if (l.getNumOfVehiclesNearLight() > numberOnLane ) {
-						numberOnLane = l.getNumOfVehiclesNearLight();
-						lightToChange = l;
+						// Don't change if its the old one
+						if (currentGreenLight != l) {
+							numberOnLane = l.getNumOfVehiclesNearLight();
+							lightToChange = l;
+						} else {
+							// if no other light meets the criteria, we still have one to change
+							backupLightToChange = l;
+						}
 					}
 				}
 				
 				
+			}
+			
+			if (lightToChange == null && backupLightToChange != null) {
+				lightToChange = backupLightToChange;
 			}
 			
 			// if there is a light to change, do it

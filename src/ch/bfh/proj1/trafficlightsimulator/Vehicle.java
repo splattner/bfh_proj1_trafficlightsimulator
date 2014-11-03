@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 /**
  * @author sebastianplattner
@@ -141,11 +142,35 @@ public abstract class Vehicle implements DrawableObject{
 			LinkedList<Vehicle> vehiclesOnThisLane = this.currentLane.getVerhiclesOnLane();
 			
 			// Get next vehicle, if any
-			Vehicle nextVehicle;
+			// next vehicle could be on next lane!
+			Vehicle nextVehicle = null;
+			Lane nextLane = null;
 			try {
+				// Try on same lane first
 				nextVehicle = vehiclesOnThisLane.get(indexOfNextVehicleonLane);	
-			} catch (IndexOutOfBoundsException e) {
-				nextVehicle = null;
+			} catch (IndexOutOfBoundsException e1) {
+				// There is no next Vehicle on this Lane
+				
+				// Find next Lane on route
+				for (int i = 0; i < route.getRoute().size(); i++) {
+					if (route.getRoute().get(i) == this.currentLane) {
+						
+						try {
+							nextLane = route.getRoute().get(i+1);
+							// Next Vehicle is first on next lane
+							nextVehicle = nextLane.getVerhiclesOnLane().getFirst();
+						} catch (NoSuchElementException e2) {
+							// No Vehicle on next lane
+							nextVehicle = null;
+						} catch (IndexOutOfBoundsException e3) {
+							// No next Lane, so no next vehicle
+							nextVehicle = null;
+						}
+						
+						// We found it, skip the rest
+						break;
+					}
+				}
 			}
 			
 			int carLenghtinPositions = (int) ( ( (double)this.dimension.width / (double) TrafficLightSimulator.defaultStreetLenght) * TrafficLightSimulator.defaultPositinOnStreet);			
@@ -173,7 +198,35 @@ public abstract class Vehicle implements DrawableObject{
 			boolean isRed = (this.currentLane.getTrafficLight() != null) && (this.currentLane.getTrafficLight().getCurrentStatus() == TrafficLight.trafficLightStatus.RED);
 			
 			// Check if distance to next vehicle is enought (if any)
-			boolean isEnoughDistance = nextVehicle != null && nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() > minDistance;
+			boolean isEnoughDistance = false;
+			if (nextVehicle != null) {
+				if ( this.getCurrentLane() != nextVehicle.getCurrentLane()) {
+					// Next Vehicle is on next lane
+					// Add current Street lenght to next Vehicle current Position
+					//System.out.println("Next VehicleVirtual Pos: " + (this.getCurrentLane().getStreet().getPositionsOnStreet() + nextVehicle.getCurrentPosOnLane()));
+					//System.out.println("This Vehicle Pos: " + this.getCurrentPosOnLane());
+					isEnoughDistance = ((this.getCurrentLane().getStreet().getPositionsOnStreet() + nextVehicle.getCurrentPosOnLane()) - this.getCurrentPosOnLane()) > minDistance;
+					//System.out.println("Is Enought: " + isEnoughDistance);
+				} else {
+					// They are on the same lane
+					isEnoughDistance = nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() > minDistance;
+				}
+			}
+			
+			// Check if distance for full brake to next vehicle is enought (if any)
+			boolean isEnoughDistanceFullBrake = false;
+			if (nextVehicle != null) {
+				if ( this.getCurrentLane() != nextVehicle.getCurrentLane()) {
+					// Next Vehicle is on next lane
+					// Add current Street lenght to next Vehicle current Position
+					isEnoughDistanceFullBrake = ((nextVehicle.getCurrentPosOnLane() + this.getCurrentLane().getStreet().getPositionsOnStreet()) - this.currentPosOnLane) > (distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin);
+				} else {
+					// They are on the same lane
+					isEnoughDistanceFullBrake = (nextVehicle.getCurrentPosOnLane() - this.currentPosOnLane) > (distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin);
+				}
+			}			
+			
+
 	 
 			
 			// is there a next vehicle
@@ -182,7 +235,7 @@ public abstract class Vehicle implements DrawableObject{
 				if (nextVehicle.getCurrentSpeed() == 0) {
 					//System.out.println("Next Car has speed 0");
 					// Next Vehicle stop, brake if distance is not enought for full stop
-					if (this.brakeStatus || nextVehicle.getCurrentPosOnLane() - this.currentPosOnLane <= (distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin)) {
+					if (this.brakeStatus || !isEnoughDistanceFullBrake) {
 						//System.out.println("Distance not enoght -> brake");
 						this.brakeStatus = true;
 						this.decreaseSpeed();
@@ -198,7 +251,7 @@ public abstract class Vehicle implements DrawableObject{
 						//System.out.println("with big speed diference");
 						// Speed of next vehicle has big difference
 						// brake if distance is not enought for full stop
-						if (nextVehicle.getCurrentPosOnLane() - this.currentPosOnLane <= ( distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin)) {
+						if (!isEnoughDistanceFullBrake) {
 							//System.out.println("Distance not enoght -> brake");
 							this.brakeStatus = true;
 							this.decreaseSpeed();
@@ -210,7 +263,8 @@ public abstract class Vehicle implements DrawableObject{
 						// Speed difference is low
 						// Maintain minimum distance (based on current Speed)
 						//System.out.println("no big speed diference");
-						if (nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() < minDistance) {
+						//if ((nextVehicle.getCurrentPosOnLane() + this.getCurrentLane().getStreet().getPositionsOnStreet()) - this.getCurrentPosOnLane() < minDistance) {
+						if (!isEnoughDistance) {
 							//System.out.println("Distance not enoght -> bracke");
 							this.brakeStatus = true;
 							this.decreaseSpeed();
