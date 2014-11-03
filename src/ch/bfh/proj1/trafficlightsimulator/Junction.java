@@ -172,6 +172,51 @@ public class Junction implements DrawableObject{
 	 */
 	public void simulationStep(TrafficLightSimulator.TrafficLightMode mode) {
 		
+		
+		if (mode == TrafficLightMode.sequenze) {
+			
+			TrafficLight currentGreenLight = null;
+			int currentTrafficLightIndex = -1;
+			
+			// Check if there is a green light
+			for (TrafficLight l : this.getTrafficLights()) {
+				if (l.getCurrentStatus() == trafficLightStatus.GREEN) {
+					currentGreenLight = l;
+					break;
+				}
+			}
+			
+			// None is green, set the first one
+			if (currentGreenLight == null){
+				currentGreenLight = this.getTrafficLights().getFirst();
+			}
+			
+			// Check if we have a light at all?
+			if (currentGreenLight != null) {
+				
+				if (currentGreenLight.getTimeLastChange() > (1 * TrafficLightSimulator.minimumGreenLightPhase)) {
+					currentGreenLight.setCurrentStatus(trafficLightStatus.RED);
+					currentGreenLight.setTimeLastChange(0);
+					
+					// Change Light to next one
+					currentTrafficLightIndex = this.getTrafficLights().indexOf(currentGreenLight);
+					
+					try {
+						currentGreenLight = this.getTrafficLights().get(currentTrafficLightIndex+1);
+					} catch (IndexOutOfBoundsException e) {
+						currentGreenLight = this.getTrafficLights().getFirst();
+					}
+					
+					currentGreenLight.setCurrentStatus(trafficLightStatus.GREEN);
+	
+				} else {
+					// Increase Light Time
+					currentGreenLight.setTimeLastChange(currentGreenLight.getTimeLastChange()+1);
+				}
+			}
+			
+			
+		}
 
 		// Smart Traffic Light Mode
 		if (mode == TrafficLightMode.smart) {
