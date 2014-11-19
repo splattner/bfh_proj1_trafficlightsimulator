@@ -23,6 +23,7 @@ public class Simulation extends Thread {
 		this.setSimulator(simulator);
 		
 	}
+		
 	
 	public Simulation (Simulation oldSimulation) {
 

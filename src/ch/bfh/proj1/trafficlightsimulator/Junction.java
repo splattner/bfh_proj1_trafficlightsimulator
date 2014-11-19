@@ -19,11 +19,15 @@ public class Junction implements DrawableObject{
 	
 	private Point origin;
 	private Dimension dimension;
+	private int id;
 	
 	private Color junctionColor = Color.DARK_GRAY;
 	
-	
 	private LinkedList<TrafficLight> trafficLights;
+	
+	public Junction (int id){this.id=id;}
+	
+	public int getId() {return id;}
 	
 	public Street getTopStreet() {return topStreet;}
 	
@@ -41,7 +45,6 @@ public class Junction implements DrawableObject{
 	
 	public void setRightStreet(Street rightStreet) {this.rightStreet = rightStreet;}
 	
-
 	
 	@Override
 	public void paintObject(Graphics g) {

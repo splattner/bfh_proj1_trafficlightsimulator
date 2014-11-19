@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -67,7 +68,7 @@ public class SimPanel extends JPanel implements MouseListener{
 	private void initOrigins() {
 
 		// Start with first street (the one very left/top and should have no start junction
-		Street s = this.getSimulator().getStreets().get(0);
+		Street s = ((List<Street>) this.getSimulator().getStreets()).get(0);
 		
 		//System.out.println("Startin with Street " + s.getOrigin().x + " / " + s.getOrigin().y);
 		Junction j;

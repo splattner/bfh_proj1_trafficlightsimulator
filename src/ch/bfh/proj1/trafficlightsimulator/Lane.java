@@ -22,6 +22,8 @@ public class Lane implements DrawableObject {
 		startToEnd,
 		endToStart
 	}
+	
+	private int id;
 
 	/**
 	 * Current lane orientation
@@ -47,9 +49,10 @@ public class Lane implements DrawableObject {
 	
 	private Street street;
 		
-	public Lane(laneOrientations laneOrientation) {
+	public Lane(int id, laneOrientations laneOrientation) {
 		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
 		this.setLaneOrientation(laneOrientation);
+		this.id=id;
 		
 		this.trafficLight = new TrafficLight(this);
 
@@ -205,11 +208,10 @@ public class Lane implements DrawableObject {
 	public Street getStreet() {return street;}
 
 	public void setStreet(Street street) {
-		
 		this.street = street;
-		
-		
 	}
+	
+	public int getId() {return id;}
 	
 	private class Arrow implements DrawableObject {
 		

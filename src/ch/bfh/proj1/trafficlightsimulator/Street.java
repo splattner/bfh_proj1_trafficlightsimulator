@@ -19,6 +19,8 @@ public class Street implements DrawableObject{
 	private Point origin;
 	private Dimension dimension;
 	
+	private int id;
+	
 	/*
 	 * Possible orientation of the street
 	 */
@@ -35,17 +37,19 @@ public class Street implements DrawableObject{
 	public static final Color laneColor = Color.WHITE;
 	public static final Color streetColor = Color.GRAY;
 	
-	public Street() {
+	public Street(int id) {
 		this.lanes = new LinkedList<Lane>();
 		this.length = TrafficLightSimulator.defaultStreetLenght;
 		this.positionsOnStreet = TrafficLightSimulator.defaultPositinOnStreet;
+		this.id=id;
 	}
 
-	public Street(int length) {
-		this.lanes = new LinkedList<Lane>();
-		this.positionsOnStreet = TrafficLightSimulator.defaultPositinOnStreet;
-		this.length = length;
-	}
+//	public Street(int id, int length) {
+//		this.lanes = new LinkedList<Lane>();
+//		this.positionsOnStreet = TrafficLightSimulator.defaultPositinOnStreet;
+//		this.length = length;
+//		this.id=id;
+//	} TODO : cancel this constructor ? this is not supported by the XML loader
 	
 	@Override
 	public void paintObject(Graphics g) {
@@ -130,20 +134,14 @@ public class Street implements DrawableObject{
 	@Override
 	public Dimension getDimension() {return this.dimension;}
 
-	public orientation getOrientaion() {
-		return orientaion;
-	}
+	public orientation getOrientaion() {return orientaion;}
 
-	public void setOrientaion(orientation orientaion) {
-		this.orientaion = orientaion;
-	}
+	public void setOrientaion(orientation orientaion) {this.orientaion = orientaion;}
 
-	public int getPositionsOnStreet() {
-		return positionsOnStreet;
-	}
+	public int getPositionsOnStreet() {return positionsOnStreet;}
 
-	public void setPositionsOnStreet(int positionsOnStreet) {
-		this.positionsOnStreet = positionsOnStreet;
-	}
+	public void setPositionsOnStreet(int positionsOnStreet) {this.positionsOnStreet = positionsOnStreet;}
+	
+	public int getId() {return id;}
 
 }

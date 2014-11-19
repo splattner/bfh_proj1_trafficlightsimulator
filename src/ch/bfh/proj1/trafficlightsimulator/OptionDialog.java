@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EventObject;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -215,7 +216,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		public RouteTableModel(TrafficLightSimulator simulator) {
 			this.simulator = simulator;
-			routes = this.simulator.getRoutes();
+			routes = (ArrayList<Route>) this.simulator.getRoutes();
 		}
 
 		public Class getColumnClass(int column) {
@@ -356,7 +357,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 				Vehicle v = new Car();
 				//Vehicle v = new Truck();
 
-				Route r = this.getSimulator().getRoutes().get(this.routeIndex);
+				Route r = ((ArrayList<Route>) this.getSimulator().getRoutes()).get(this.routeIndex);
 
 				Lane l = r.getRoute().getFirst();
 				
@@ -372,7 +373,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 				ArrayList<Vehicle> vehicles = this.getSimulator().getVerhicles();
 				Vehicle v = new Truck();
 
-				Route r = this.getSimulator().getRoutes().get(this.routeIndex);
+				Route r = ((ArrayList<Route>) this.getSimulator().getRoutes()).get(this.routeIndex);
 
 				Lane l = r.getRoute().getFirst();
 				
@@ -563,9 +564,9 @@ public class OptionDialog extends JDialog implements ActionListener{
 		  private JTable table;
 		  private ArrayList<Route> routes;
 
-		  SelectionListener(JTable table, ArrayList<Route> routes) {
+		  SelectionListener(JTable table, Collection<Route> routes) {
 		    this.table = table;
-		    this.routes = routes;
+		    this.routes = (ArrayList<Route>)routes;
 		  }
 		  public void valueChanged(ListSelectionEvent e) {
 			  

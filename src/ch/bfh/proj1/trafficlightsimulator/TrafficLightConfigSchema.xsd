@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema"
+	xmlns:tns="http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema"
+	elementFormDefault="qualified">
+
+    <element name="TrafficLightConfig" type="tns:ConfigType"></element>
+
+    <complexType name="ConfigType">
+    	<sequence>
+    		<element name="Junctions" type="tns:JunctionsType" maxOccurs="1" minOccurs="1"></element>
+    		<element name="Streets" type="tns:StreetsType" maxOccurs="1" minOccurs="1"></element>
+    		<element name="Lanes" type="tns:LanesType" maxOccurs="1" minOccurs="1"></element>
+    		<element name="Routes" type="tns:RoutesType" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="JunctionType">
+    	<sequence>
+    		<element name="id" type="int" maxOccurs="1" minOccurs="1"></element>
+            <element name="leftStreet" type="int" maxOccurs="1" minOccurs="0"></element>
+            <element name="topStreet" type="int" maxOccurs="1" minOccurs="0"></element>
+            <element name="rightStreet" type="int" maxOccurs="1" minOccurs="0"></element>
+            <element name="bottomStreet" type="int" maxOccurs="1" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="StreetType">
+    	<sequence>
+    		<element name="id" type="int" maxOccurs="1" minOccurs="1"></element>
+    		<element name="orientation" maxOccurs="1" minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="horizontal"></enumeration>
+    					<enumeration value="vertical"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+            <element name="startJunction" type="int" maxOccurs="1" minOccurs="0">
+    		</element>
+            <element name="endJunction" type="int" maxOccurs="1" minOccurs="0">
+    		</element>
+        </sequence>
+    </complexType>
+
+    <complexType name="LaneType">
+        <sequence>
+        	<element name="id" type="int" maxOccurs="1" minOccurs="1"></element>
+        	<element name="street" type="int" maxOccurs="1"
+        		minOccurs="1">
+        	</element>
+        	<element name="direction" maxOccurs="1" minOccurs="1">
+        		<simpleType>
+        			<restriction base="string">
+        				<enumeration value="endToStart"></enumeration>
+        				<enumeration value="startToEnd"></enumeration>
+        			</restriction>
+        		</simpleType>
+        	</element>
+        </sequence>
+    </complexType>
+
+    <complexType name="RouteType">
+        <sequence>
+        	<element name="id" type="int" maxOccurs="1" minOccurs="1"></element>
+        	<element name="lane" type="int" maxOccurs="unbounded" minOccurs="2"></element>
+        </sequence>
+    </complexType>
+
+
+    <complexType name="JunctionsType">
+    	<sequence>
+    		<element name="junction" type="tns:JunctionType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="StreetsType">
+    	<sequence>
+    		<element name="street" type="tns:StreetType" maxOccurs="unbounded" minOccurs="2"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="LanesType">
+    	<sequence>
+    		<element name="lane" type="tns:LaneType" maxOccurs="unbounded" minOccurs="2"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="RoutesType">
+    	<sequence>
+    		<element name="route" type="tns:RouteType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+</schema>

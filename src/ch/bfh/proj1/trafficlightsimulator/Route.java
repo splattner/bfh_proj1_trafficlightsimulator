@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 public class Route {
 	
+	private int id;
+	
 	private LinkedList<Lane> route;
 	
 	/**
@@ -18,8 +20,9 @@ public class Route {
 	 */
 	private boolean visible = false;
 	
-	public Route() {
+	public Route(int id) {
 		this.route = new LinkedList<Lane>();
+		this.id = id;
 	}
 	
 	public void addLane (Lane l) {
@@ -45,5 +48,7 @@ public class Route {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+	
+	public int getId() {return id;}
 
 }
