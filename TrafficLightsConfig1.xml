@@ -91,12 +91,12 @@
 		</tns:street>
 		<tns:street>
 			<tns:id>10</tns:id>
-			<tns:orientation>horizontal</tns:orientation>
+			<tns:orientation>vertical</tns:orientation>
 			<tns:startJunction>3</tns:startJunction>
 		</tns:street>
 		<tns:street>
 			<tns:id>11</tns:id>
-			<tns:orientation>vertical</tns:orientation>
+			<tns:orientation>horizontal</tns:orientation>
 			<tns:startJunction>4</tns:startJunction>
 			<tns:endJunction>5</tns:endJunction>
 		</tns:street>
@@ -195,7 +195,7 @@
 		</tns:lane>
 		<tns:lane>
 			<tns:id>19</tns:id>
-			<tns:street>1</tns:street>
+			<tns:street>10</tns:street>
 			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
