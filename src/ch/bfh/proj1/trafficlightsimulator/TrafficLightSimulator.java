@@ -158,8 +158,7 @@ public class TrafficLightSimulator {
 //		routes = new ArrayList<Route>();
 		verhicles = new ArrayList<Vehicle>();
 		
-		TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler();
-		
+		TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler("C:\\Users\\HP\\Documents\\eclipse workspace\\bfh_proj1_trafficlightsimulator\\TrafficLightsConfig1.xml");//TODO:put string variable from filechoser instead of hardtext
 		junctions = txmlh.getJunctions();
 		streets = txmlh.getStreets();
 		routes = txmlh.getRoutes();

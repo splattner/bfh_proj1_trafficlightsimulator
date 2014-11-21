@@ -9,28 +9,32 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.SimulationMode;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
 public class OptionPanel extends JPanel implements ActionListener, ChangeListener{
 	
-	JButton btRunSimulation;
-	JButton btBreak;
-	JButton btShowConfig;
+	private JButton btRunSimulation;
+	private JButton btBreak;
+	private JButton btShowConfig;
+	private JButton btloadXML;
 	
-	JSlider simulationFrequency;
+	private JSlider simulationFrequency;
 	
+	private JComboBox<String> LightModeSelector;
+	private JComboBox<String> SimulationModeSelector;
 	
-	JComboBox<String> LightModeSelector;
-	JComboBox<String> SimulationModeSelector;
+	private OptionDialog optionDialog;
 	
-	OptionDialog optionDialog;
+	private JFileChooser fileChooser;
 	
 
 	private TrafficLightSimulator simulator;
@@ -168,13 +172,29 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 
 		this.add(this.simulationFrequency, c);
 		
+		this.btloadXML = new JButton("Load XML file");
+		this.btloadXML.addActionListener(this);
 		
+		c.gridx = 0;
+		c.gridy = 7
+				;
+		this.add(btloadXML, c);
 
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource().equals(this.btloadXML))
+		{
+			this.fileChooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file .xml", "xml");
+			fileChooser.setMultiSelectionEnabled(false);
+			fileChooser.setFileFilter(filter);
+		    int returnVal = fileChooser.showOpenDialog(this);
+		    if(returnVal == JFileChooser.APPROVE_OPTION);	    
+		}
 		
 		if (e.getSource().equals(this.btShowConfig)) {
 			this.optionDialog.setVisible(true);

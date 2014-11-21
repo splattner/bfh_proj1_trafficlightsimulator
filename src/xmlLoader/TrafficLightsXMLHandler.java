@@ -29,8 +29,7 @@ public class TrafficLightsXMLHandler {
 	public Collection<Lane> getLanes () {return lanes;}
 	public Collection<Route> getRoutes () {return routes;}
 	
-//    public static void main( String[] args )
-	public TrafficLightsXMLHandler ()
+	public TrafficLightsXMLHandler (String xmlFilePath)
     {
         try {
         	
@@ -47,7 +46,7 @@ public class TrafficLightsXMLHandler {
              * objects composed of classes from the xmlLoader package.
              */
             
-            JAXBElement<?> poElement = (JAXBElement<?>)u.unmarshal( new FileInputStream("TrafficLightsConfig1.xml"));
+            JAXBElement<?> poElement = (JAXBElement<?>)u.unmarshal( new FileInputStream(xmlFilePath));
             ConfigType ct = (ConfigType)poElement.getValue();
             
             junctions = new LinkedList<Junction>();
@@ -177,10 +176,6 @@ public class TrafficLightsXMLHandler {
 					}
 				}
 			}
-
-/*
- * 7) set origin of first street
- */
             
         } catch( JAXBException je ) {
             je.printStackTrace();
