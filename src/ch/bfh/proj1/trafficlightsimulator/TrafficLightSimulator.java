@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 import xmlLoader.TrafficLightsXMLHandler;
 
@@ -153,19 +152,22 @@ public class TrafficLightSimulator {
 		 */
 		
 			
-//		junctions = new ArrayList<Junction>();
-//		streets = new ArrayList<Street>();
-//		routes = new ArrayList<Route>();
-		verhicles = new ArrayList<Vehicle>();
+
+
 		
 		TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler("C:\\Users\\HP\\Documents\\eclipse workspace\\bfh_proj1_trafficlightsimulator\\TrafficLightsConfig1.xml");//TODO:put string variable from filechoser instead of hardtext
 		junctions = txmlh.getJunctions();
 		streets = txmlh.getStreets();
 		routes = txmlh.getRoutes();
 		
-//		((ArrayList<Street>)streets).get(0).setOrigin(new Point(300,200));
+		verhicles = new ArrayList<Vehicle>();
 		
-		((List<Street>) streets).get(0).setOrigin(new Point(300,200));
+//		junctions = new ArrayList<Junction>();
+//		streets = new ArrayList<Street>();
+//		routes = new ArrayList<Route>();			
+		((List<Street>)streets).get(0).setOrigin(new Point(300,200));
+		
+
 	
 		
 		/*
@@ -369,8 +371,8 @@ public class TrafficLightSimulator {
 //		routes.add(route2);
 //		routes.add(route3);
 //		routes.add(route4);
-		
-//		s1.setOrigin(origin_s1);
+//		
+//		((ArrayList<Street>)streets).get(0).setOrigin(new Point(300,200));
 	
 		
 	}

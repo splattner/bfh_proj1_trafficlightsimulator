@@ -92,7 +92,7 @@
 		<tns:street>
 			<tns:id>10</tns:id>
 			<tns:orientation>vertical</tns:orientation>
-			<tns:startJunction>3</tns:startJunction>
+			<tns:endJunction>3</tns:endJunction>
 		</tns:street>
 		<tns:street>
 			<tns:id>11</tns:id>
@@ -106,112 +106,112 @@
 		<tns:lane>
 			<tns:id>1</tns:id>
 			<tns:street>1</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>2</tns:id>
 			<tns:street>1</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>3</tns:id>
 			<tns:street>2</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>4</tns:id>
 			<tns:street>2</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>5</tns:id>
 			<tns:street>3</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>6</tns:id>
 			<tns:street>3</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>7</tns:id>
 			<tns:street>4</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>8</tns:id>
 			<tns:street>4</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>9</tns:id>
 			<tns:street>5</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>10</tns:id>
 			<tns:street>5</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>11</tns:id>
 			<tns:street>6</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>12</tns:id>
 			<tns:street>6</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>13</tns:id>
 			<tns:street>7</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>14</tns:id>
 			<tns:street>7</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>15</tns:id>
 			<tns:street>8</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>16</tns:id>
 			<tns:street>8</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>17</tns:id>
 			<tns:street>9</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>18</tns:id>
 			<tns:street>9</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>19</tns:id>
 			<tns:street>10</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>20</tns:id>
 			<tns:street>10</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>21</tns:id>
 			<tns:street>11</tns:street>
-			<tns:direction>startToEnd</tns:direction>
+			<tns:direction>endToStart</tns:direction>
 		</tns:lane>
 		<tns:lane>
 			<tns:id>22</tns:id>
 			<tns:street>11</tns:street>
-			<tns:direction>endToStart</tns:direction>
+			<tns:direction>startToEnd</tns:direction>
 		</tns:lane>
 
 
@@ -220,26 +220,17 @@
 	<tns:Routes>
 		<tns:route>
 			<tns:id>1</tns:id>
-			<tns:lane>1</tns:lane>
-			<tns:lane>7</tns:lane>
-			<tns:lane>21</tns:lane>
-			<tns:lane>13</tns:lane>
-			<tns:lane>11</tns:lane>
-			<tns:lane>15</tns:lane>
-		</tns:route>
-		<tns:route>
-			<tns:id>2</tns:id>
-			<tns:lane>1</tns:lane>
-			<tns:lane>5</tns:lane>
-			<tns:lane>11</tns:lane>
+			<tns:lane>2</tns:lane>
+			<tns:lane>6</tns:lane>
+			<tns:lane>12</tns:lane>
 			<tns:lane>19</tns:lane>
 		</tns:route>
 		<tns:route>
-			<tns:id>3</tns:id>
-			<tns:lane>4</tns:lane>
-			<tns:lane>5</tns:lane>
-			<tns:lane>11</tns:lane>
-			<tns:lane>15</tns:lane>
+			<tns:id>2</tns:id>
+			<tns:lane>2</tns:lane>
+			<tns:lane>6</tns:lane>
+			<tns:lane>12</tns:lane>
+			<tns:lane>16</tns:lane>
 		</tns:route>
 	</tns:Routes>
 

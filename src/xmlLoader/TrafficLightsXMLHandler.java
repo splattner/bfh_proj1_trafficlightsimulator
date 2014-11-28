@@ -19,10 +19,10 @@ import javax.xml.bind.Unmarshaller;
 
 public class TrafficLightsXMLHandler {
 	
-	private static Collection<Junction> junctions;
-	private static Collection<Street> streets;
-	private static Collection<Lane> lanes;
-	private static Collection<Route> routes;
+	private Collection<Junction> junctions;
+	private Collection<Street> streets;
+	private Collection<Lane> lanes;
+	private Collection<Route> routes;
 	
 	public Collection<Junction> getJunctions () {return junctions;}
 	public Collection<Street> getStreets () {return streets;}
@@ -46,30 +46,30 @@ public class TrafficLightsXMLHandler {
              * objects composed of classes from the xmlLoader package.
              */
             
-            JAXBElement<?> poElement = (JAXBElement<?>)u.unmarshal( new FileInputStream(xmlFilePath));
-            ConfigType ct = (ConfigType)poElement.getValue();
+            JAXBElement<?> configElement = (JAXBElement<?>)u.unmarshal( new FileInputStream(xmlFilePath));
+            ConfigType ct = (ConfigType)configElement.getValue();
             
             junctions = new LinkedList<Junction>();
             
-            for (int i = 0; i<ct.getJunctions().getJunction().size(); i++)
+            for (JunctionType jt : ct.getJunctions().getJunction())
             {
-            	Junction j = new Junction(ct.getJunctions().getJunction().get(i).getId());
+            	Junction j = new Junction(jt.getId());
             	junctions.add(j);
             }
             
             streets = new LinkedList<Street>();
             
-            for (int i = 0; i<ct.getStreets().getStreet().size(); i++)
+            for (StreetType st : ct.getStreets().getStreet())
             {
-				Street s = new Street(ct.getStreets().getStreet().get(i).getId());
+				Street s = new Street(st.getId());
 				
-				s.setOrientaion(Enum.valueOf(Street.orientation.class, ct.getStreets().getStreet().get(i).getOrientation()));
+				s.setOrientaion(Enum.valueOf(Street.orientation.class, st.getOrientation()));
 				
-				if (ct.getStreets().getStreet().get(i).getStartJunction() != null)
+				if (st.getStartJunction() != null)
 				{
 					for (Junction j : junctions)
 					{
-						if (j.getId() == ct.getStreets().getStreet().get(i).getStartJunction())
+						if (j.getId() == st.getStartJunction())
 						{
 							s.setStartJunction(j);
 							break;
@@ -77,11 +77,11 @@ public class TrafficLightsXMLHandler {
 					}
 				}
 
-				if(ct.getStreets().getStreet().get(i).getEndJunction() != null)
+				if(st.getEndJunction() != null)
 				{
 					for (Junction j : junctions)
 					{
-						if (j.getId() == ct.getStreets().getStreet().get(i).getEndJunction())
+						if (j.getId() == st.getEndJunction())
 						{
 							s.setEndJunction(j);
 							break;
@@ -93,15 +93,14 @@ public class TrafficLightsXMLHandler {
             }
             
 			lanes = new LinkedList<Lane>();
-			
-			for (int i = 0; i < ct.getLanes().getLane().size(); i++) 
+
+			for (LaneType lt : ct.getLanes().getLane()) 
 			{
-				Lane l = new Lane(ct.getLanes().getLane().get(i).getId(),
-						Enum.valueOf(Lane.laneOrientations.class, ct.getLanes().getLane().get(i).direction));
+				Lane l = new Lane(lt.getId(), Enum.valueOf(Lane.laneOrientations.class, lt.direction));
 				lanes.add(l);
 				for (Street s : streets)
 				{
-					if (s.getId()==ct.getLanes().getLane().get(i).getStreet())
+					if (s.getId()==lt.getStreet())
 					{
 						s.addLane(l);
 						break;
@@ -110,18 +109,20 @@ public class TrafficLightsXMLHandler {
 			}
 			
 			routes = new ArrayList<Route>();
+
 			
-			for (int i = 0; i < ct.getRoutes().getRoute().size(); i++)
+			for (RouteType rt : ct.getRoutes().getRoute())
 			{
-				Route r = new Route(ct.getRoutes().getRoute().get(i).getId());
+				Route r = new Route(rt.getId());
 				
-				for(int j = 0; j<ct.getRoutes().getRoute().get(i).getLane().size();j++)
+				for(int j = 0; j<rt.getLane().size();j++)
 				{
 					for (Lane l : lanes)
 					{
-						if (l.getId() == ct.getRoutes().getRoute().get(i).getLane().get(j))
+						if (l.getId() == rt.getLane().get(j))
 						{
 							r.addLane(l);
+							r.setDistribution(100/ct.getRoutes().getRoute().size());
 							break;
 						}
 					}
@@ -130,44 +131,44 @@ public class TrafficLightsXMLHandler {
 				routes.add(r);
 			}
 			
-			for (int i = 0; i<ct.getJunctions().getJunction().size(); i++)
+			for (JunctionType jt : ct.getJunctions().getJunction())
 			{
 				for(Junction j : junctions)
 				{
-					if (ct.getJunctions().getJunction().get(i).getId() == j.getId())
+					if (jt.getId() == j.getId())
 					{
-						if(ct.getJunctions().getJunction().get(i).getBottomStreet()!=null)
+						if(jt.getBottomStreet()!=null)
 						{
 							for(Street s : streets)
 							{
-								if (s.getId() == ct.getJunctions().getJunction().get(i).getBottomStreet())
+								if (s.getId() == jt.getBottomStreet())
 										j.setBottomStreet(s);
 							}
 						}
 
-						if(ct.getJunctions().getJunction().get(i).getLeftStreet()!=null)
+						if(jt.getLeftStreet()!=null)
 						{
 							for(Street s : streets)
 							{
-								if (s.getId() == ct.getJunctions().getJunction().get(i).getLeftStreet())
+								if (s.getId() == jt.getLeftStreet())
 										j.setLeftStreet(s);
 							}
 						}
 						
-						if(ct.getJunctions().getJunction().get(i).getRightStreet()!=null)
+						if(jt.getRightStreet()!=null)
 						{
 							for(Street s : streets)
 							{
-								if (s.getId() == ct.getJunctions().getJunction().get(i).getRightStreet())
+								if (s.getId() == jt.getRightStreet())
 										j.setRightStreet(s);
 							}
 						}
 						
-						if(ct.getJunctions().getJunction().get(i).getTopStreet()!=null)
+						if(jt.getTopStreet()!=null)
 						{
 							for(Street s : streets)
 							{
-								if (s.getId() == ct.getJunctions().getJunction().get(i).getTopStreet())
+								if (s.getId() == jt.getTopStreet())
 										j.setTopStreet(s);
 							}
 						}

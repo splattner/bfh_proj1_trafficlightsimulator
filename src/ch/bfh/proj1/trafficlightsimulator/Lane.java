@@ -67,23 +67,11 @@ public class Lane implements DrawableObject {
 
 	@Override
 	public void paintObject(Graphics g) {
-		
-		
-		// Remove traffic light if non is necessary, e.g. at a start/end without a junction
-		if (this.getLaneOrientation() == laneOrientations.startToEnd && this.getStreet().getEndJunction() == null) {
-			this.trafficLight = null;
-		}
-		
-		if (this.getLaneOrientation() == laneOrientations.endToStart && this.getStreet().getStartJunction() == null) {
-			this.trafficLight = null;
-		}
-			
-		
+				
 		g.setColor(Street.streetColor);
 		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);		
 		
-
-		// on vertical lane
+		// on horizontal lane
 		if (this.getStreet().getOrientaion() == Street.orientation.horizontal) {			
 			if (this.getLaneOrientation() == laneOrientations.startToEnd){
 
@@ -130,9 +118,9 @@ public class Lane implements DrawableObject {
 
 		}
 
-		// on horizontal lane
+		// on vertical lane
 		else {			
-			if (this.getLaneOrientation() == laneOrientations.startToEnd){
+			if (this.getLaneOrientation() == laneOrientations.endToStart){
 
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
 					trafficLight.setOrigin(new Point (origin.x, origin.y+dimension.height-10));
@@ -179,10 +167,17 @@ public class Lane implements DrawableObject {
 			}
 		}			
 			
-		// Draw Traffic light if any
-		if (this.trafficLight != null) {
-			trafficLight.paintObject(g);
+		// Remove traffic light if non is necessary, e.g. at a start/end without a junction
+		if (this.getLaneOrientation() == laneOrientations.startToEnd && this.getStreet().getEndJunction() == null) {
+			this.trafficLight = null;
 		}
+		
+		if (this.getLaneOrientation() == laneOrientations.endToStart && this.getStreet().getStartJunction() == null) {
+			this.trafficLight = null;
+		}
+		
+		// Draw Traffic light if any
+		if (this.trafficLight != null) {trafficLight.paintObject(g);}
 		
 		// Draw arrow
 		arrow.paintObject(g);
