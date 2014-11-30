@@ -1,12 +1,13 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Route {
 	
 	private int id;
 	
-	private LinkedList<Lane> route;
+	private ArrayList<Lane> route;
 	
 	/**
 	 * Distribute vehicles based on this distribution on all available routes
@@ -21,7 +22,7 @@ public class Route {
 	private boolean visible = false;
 	
 	public Route(int id) {
-		this.route = new LinkedList<Lane>();
+		this.route = new ArrayList<Lane>();
 		this.id = id;
 	}
 	
@@ -29,7 +30,7 @@ public class Route {
 		this.route.add(l);
 	}
 	
-	public LinkedList<Lane> getRoute() {
+	public ArrayList<Lane> getRoute() {
 		return this.route;
 	}
 

@@ -44,13 +44,7 @@ public class Street implements DrawableObject{
 		this.id=id;
 	}
 
-//	public Street(int id, int length) {
-//		this.lanes = new LinkedList<Lane>();
-//		this.positionsOnStreet = TrafficLightSimulator.defaultPositinOnStreet;
-//		this.length = length;
-//		this.id=id;
-//	} TODO : cancel this constructor ? this is not supported by the XML loader
-	
+
 	@Override
 	public void paintObject(Graphics g) {
 		

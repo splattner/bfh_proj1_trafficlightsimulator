@@ -120,7 +120,7 @@ public class Lane implements DrawableObject {
 
 		// on vertical lane
 		else {			
-			if (this.getLaneOrientation() == laneOrientations.endToStart){
+			if (this.getLaneOrientation() == laneOrientations.startToEnd){
 
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
 					trafficLight.setOrigin(new Point (origin.x, origin.y+dimension.height-10));

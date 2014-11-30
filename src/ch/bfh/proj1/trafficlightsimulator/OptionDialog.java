@@ -359,7 +359,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 				Route r = ((ArrayList<Route>) this.getSimulator().getRoutes()).get(this.routeIndex);
 
-				Lane l = r.getRoute().getFirst();
+				Lane l = r.getRoute().get(0);
 				
 				v.setRoute(r);
 				v.setCurrentLane(l);
@@ -375,7 +375,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 				Route r = ((ArrayList<Route>) this.getSimulator().getRoutes()).get(this.routeIndex);
 
-				Lane l = r.getRoute().getFirst();
+				Lane l = r.getRoute().get(0);
 				
 				v.setRoute(r);
 				v.setCurrentLane(l);

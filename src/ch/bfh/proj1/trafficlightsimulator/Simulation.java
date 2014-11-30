@@ -110,7 +110,7 @@ public class Simulation extends Thread {
 									
 									if (v != null) {
 										v.setRoute(r);
-										v.setCurrentLane(r.getRoute().getFirst());
+										v.setCurrentLane(r.getRoute().get(0));
 										
 										this.getSimulator().getVerhicles().add(v);
 									}

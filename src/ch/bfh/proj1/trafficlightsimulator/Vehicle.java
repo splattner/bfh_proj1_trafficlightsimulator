@@ -9,11 +9,6 @@ import java.util.NoSuchElementException;
 
 /**
  * @author sebastianplattner
- *
- */
-/**
- * @author sebastianplattner
- *
  */
 public abstract class Vehicle implements DrawableObject{
 
@@ -31,7 +26,7 @@ public abstract class Vehicle implements DrawableObject{
 	
 	protected Route route;
 	protected Lane currentLane;
-	
+
 	protected Point origin;
 	protected Dimension dimension;
 	
@@ -380,7 +375,10 @@ public abstract class Vehicle implements DrawableObject{
 	public void toNextLaneOnRoute() {
 		// Do we have a current Lane? Other we are on the first lane of our route;
 		if (currentLane == null) {
-			currentLane = route.getRoute().getFirst();
+			currentLane = route.getRoute().get(0);
+			
+			//currentLane.getStreet()
+			
 			currentLane.getVerhiclesOnLane().addFirst(this);
 			
 		} else {
@@ -455,9 +453,19 @@ public abstract class Vehicle implements DrawableObject{
 		Double convertedPos =  ( (double) this.getCurrentPosOnLane() / (double) s.getPositionsOnStreet() * (double) s.getLenght());
 		
 		
+		int currentRouteIndex = this.getRoute().getRoute().indexOf(l);
+		
+		
+		
+		
 		if (s.getOrientaion() == Street.orientation.horizontal) {
+			
+			
 			// Car is on a horizontal Street
 			if (currentLane.getLaneOrientation() == Lane.laneOrientations.startToEnd) {
+				
+				
+				
 				// Drive from left to right
 				this.setOrigin(new Point(l.getOrigin().x + convertedPos.intValue(), l.getOrigin().y + 5));
 			} else {
