@@ -127,14 +127,28 @@ public class Junction implements DrawableObject{
 							}
 						}
 					}
+					if (this.getTopStreet().getStartJunction() != null) {
+						if (this.getTopStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+							if (l.getTrafficLight() != null) {
+								this.trafficLights.add(l.getTrafficLight());
+							}
+						}
+					}
 				}
 			}
 			
 			// Traffic Lights on Bottom Street
 			if (this.getBottomStreet() != null) {
 				for (Lane l : this.getBottomStreet().getLanes()) {
-					if (this.getTopStreet().getEndJunction()!=null){
-						if (this.getTopStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+					if (this.getBottomStreet().getEndJunction()!=null){
+						if (this.getBottomStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+							if (l.getTrafficLight() != null) {
+								this.trafficLights.add(l.getTrafficLight());
+							}
+						}
+					}
+					if (this.getBottomStreet().getStartJunction() != null) {
+						if (this.getBottomStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
 							if (l.getTrafficLight() != null) {
 								this.trafficLights.add(l.getTrafficLight());
 							}
@@ -146,8 +160,15 @@ public class Junction implements DrawableObject{
 			// Traffic Lights on Left Street
 			if (this.getLeftStreet() != null) {
 				for (Lane l : this.getLeftStreet().getLanes()) {
-					if (this.getTopStreet().getEndJunction()!=null){
-						if (this.getTopStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.startToEnd) {
+					if (this.getLeftStreet().getEndJunction()!=null){
+						if (this.getLeftStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.startToEnd) {
+							if (l.getTrafficLight() != null) {
+								this.trafficLights.add(l.getTrafficLight());
+							}
+						}
+					}
+					if (this.getLeftStreet().getStartJunction() != null) {
+						if (this.getLeftStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
 							if (l.getTrafficLight() != null) {
 								this.trafficLights.add(l.getTrafficLight());
 							}
@@ -159,8 +180,15 @@ public class Junction implements DrawableObject{
 			// Traffic Lights on Right Street
 			if (this.getRightStreet() != null) {
 				for (Lane l : this.getRightStreet().getLanes()) {
-					if (this.getTopStreet().getEndJunction()!=null){
-						if (this.getTopStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+					if (this.getRightStreet().getEndJunction()!=null){
+						if (this.getRightStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+							if (l.getTrafficLight() != null) {
+								this.trafficLights.add(l.getTrafficLight());
+							}
+						}
+					}
+					if (this.getRightStreet().getStartJunction() != null) {
+						if (this.getRightStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
 							if (l.getTrafficLight() != null) {
 								this.trafficLights.add(l.getTrafficLight());
 							}
@@ -170,6 +198,7 @@ public class Junction implements DrawableObject{
 			}
 			
 		}
+		
 		
 		
 		return this.trafficLights;

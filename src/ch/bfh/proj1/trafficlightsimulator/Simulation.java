@@ -18,7 +18,7 @@ public class Simulation extends Thread {
 	private int simulationSpeed = 20;
 	private int currentStep = 0;
 	
-	public Simulation(ArrayList<Vehicle> verhicles, ArrayList<Route> routes, TrafficLightSimulator simulator) {
+	public Simulation(TrafficLightSimulator simulator) {
 
 		this.setSimulator(simulator);
 		
