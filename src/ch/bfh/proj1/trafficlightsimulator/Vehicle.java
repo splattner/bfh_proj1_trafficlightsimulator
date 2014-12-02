@@ -147,11 +147,11 @@ public abstract class Vehicle implements DrawableObject{
 				// There is no next Vehicle on this Lane
 				
 				// Find next Lane on route
-				for (int i = 0; i < route.getRoute().size(); i++) {
-					if (route.getRoute().get(i) == this.currentLane) {
+				for (int i = 0; i < route.getLanes().size(); i++) {
+					if (route.getLanes().get(i) == this.currentLane) {
 						
 						try {
-							nextLane = route.getRoute().get(i+1);
+							nextLane = route.getLanes().get(i+1);
 							// Next Vehicle is first on next lane
 							nextVehicle = nextLane.getVerhiclesOnLane().getFirst();
 						} catch (NoSuchElementException e2) {
@@ -375,7 +375,7 @@ public abstract class Vehicle implements DrawableObject{
 	public void toNextLaneOnRoute() {
 		// Do we have a current Lane? Other we are on the first lane of our route;
 		if (currentLane == null) {
-			currentLane = route.getRoute().get(0);
+			currentLane = route.getLanes().get(0);
 			
 			//currentLane.getStreet()
 			
@@ -383,13 +383,13 @@ public abstract class Vehicle implements DrawableObject{
 			
 		} else {
 			// Goto next Lane on this route
-			for (int i = 0; i < route.getRoute().size(); i++) {
+			for (int i = 0; i < route.getLanes().size(); i++) {
 	            // Search position of current Lane and then set next
-				if (route.getRoute().get(i) == currentLane) {
+				if (route.getLanes().get(i) == currentLane) {
 	            	// if next == null, car has left the route
 					currentLane.getVerhiclesOnLane().remove(this);
-					if (i+1 < route.getRoute().size()) {
-						currentLane = route.getRoute().get(i+1);
+					if (i+1 < route.getLanes().size()) {
+						currentLane = route.getLanes().get(i+1);
 						currentLane.getVerhiclesOnLane().addFirst(this);
 					} else {
 						currentLane = null;
@@ -453,7 +453,7 @@ public abstract class Vehicle implements DrawableObject{
 		Double convertedPos =  ( (double) this.getCurrentPosOnLane() / (double) s.getPositionsOnStreet() * (double) s.getLenght());
 		
 		
-		int currentRouteIndex = this.getRoute().getRoute().indexOf(l);
+		int currentRouteIndex = this.getRoute().getLanes().indexOf(l);
 		
 		
 		

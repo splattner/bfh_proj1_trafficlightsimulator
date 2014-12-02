@@ -4,8 +4,12 @@ package ch.bfh.proj1.trafficlightsimulator;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import xmlLoader.TrafficLightsXMLHandler;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.SimulationMode;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
@@ -43,8 +48,10 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		this.setSimulator(simulator);
 
 		
-		optionDialog = new OptionDialog(this.getSimulator());
-		optionDialog.pack();
+		if (this.getSimulator().getCurrentSimulation().isLoaded()) {
+			optionDialog = new OptionDialog(this.getSimulator());
+			optionDialog.pack();
+		}
 		
 		
 		this.setLayout(new GridBagLayout());
@@ -72,16 +79,22 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		
 		
 			
-		btRunSimulation = new JButton("Start");
-		btRunSimulation.addActionListener(this);
+		this.btRunSimulation = new JButton("Start");
+		this.btRunSimulation.addActionListener(this);
 		
 		c.gridx = 0;
 		c.gridy = 1;
+		
+		if (!this.getSimulator().getCurrentSimulation().isLoaded()) {
+			this.btRunSimulation.setEnabled(false);
+			this.btRunSimulation.setToolTipText("No Simulation loaded");
+		}
+		
 		this.add(btRunSimulation, c);
 		
-		btBreak = new JButton("Break");
-		btBreak.addActionListener(this);
-		btBreak.setEnabled(false);
+		this.btBreak = new JButton("Break");
+		this.btBreak.addActionListener(this);
+		this.btBreak.setEnabled(false);
 		
 		c.gridx = 1;
 		c.gridy = 1;
@@ -149,6 +162,11 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		c.gridx = 0;
 		c.gridy = 4;
 		c.gridwidth = 2;
+		
+		if (!this.getSimulator().getCurrentSimulation().isLoaded()) {
+			this.btShowConfig.setEnabled(false);
+			this.btShowConfig.setToolTipText("No Simulation loaded");
+		}
 		this.add(this.btShowConfig,c);
 		
 		JLabel lb4 = new JLabel("Simulation Speed");
@@ -186,18 +204,58 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		
+		// Load a XML File and configure Simulation
 		if (e.getSource().equals(this.btloadXML))
 		{
+			File simulationFile;
 			this.fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file .xml", "xml");
 			fileChooser.setMultiSelectionEnabled(false);
 			fileChooser.setFileFilter(filter);
 		    int returnVal = fileChooser.showOpenDialog(this);
-		    if(returnVal == JFileChooser.APPROVE_OPTION);	    
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		    	simulationFile = this.fileChooser.getSelectedFile();
+		    	
+		    	System.out.println("Loading SImulation");
+		    	System.out.println("Load XML File: " + simulationFile.getAbsolutePath());
+		    	
+		    	
+				TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler(simulationFile.getAbsolutePath());
+
+				
+				this.getSimulator().setJunctions(txmlh.getJunctions());
+				this.getSimulator().setStreets(txmlh.getStreets());
+				this.getSimulator().setRoutes(txmlh.getRoutes());
+				
+				this.getSimulator().setVerhicles(new ArrayList<Vehicle>());
+				
+				((LinkedList<Street>)this.getSimulator().getStreets()).get(0).setOrigin(new Point(300,200));
+				
+				this.getSimulator().getCurrentSimulation().initOrigins();
+				
+				this.optionDialog = new OptionDialog(this.getSimulator());
+				this.optionDialog.pack();
+				
+				this.getSimulator().getCurrentSimulation().setLoaded(true);
+				
+				this.btShowConfig.setEnabled(true);
+				this.btShowConfig.setToolTipText("");
+				this.btRunSimulation.setEnabled(true);
+				this.btRunSimulation.setToolTipText("");
+				
+				// Redraw Sim Panel
+				//System.out.println("Redraw Sim Panel");
+				this.getSimulator().getMainFrame().invalidate();
+				this.getSimulator().getMainFrame().repaint();
+		    	
+		    }
 		}
 		
 		if (e.getSource().equals(this.btShowConfig)) {
-			this.optionDialog.setVisible(true);
+			if (this.optionDialog != null) {
+				this.optionDialog.setVisible(true);
+			}
 			
 		}
 		
@@ -237,6 +295,8 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 
 		if (e.getSource().equals(btRunSimulation)) {
 
+			
+			
 			if (this.simulator.getCurrentSimulation().isRunning()) {
 				btRunSimulation.setText("Start");
 				this.simulator.getCurrentSimulation().stopSimulation();
@@ -266,9 +326,11 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				
 				
 			} else {
-				btRunSimulation.setText("Stop");
-				this.simulator.getCurrentSimulation().startSimulation();
-				btBreak.setEnabled(true);
+				if (this.getSimulator().getCurrentSimulation().isLoaded()) {
+					btRunSimulation.setText("Stop");
+					this.simulator.getCurrentSimulation().startSimulation();
+					btBreak.setEnabled(true);
+				}
 			}
 	
 		}

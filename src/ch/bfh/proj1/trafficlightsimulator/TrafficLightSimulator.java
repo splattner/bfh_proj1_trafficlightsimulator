@@ -151,21 +151,25 @@ public class TrafficLightSimulator {
 		 *   otherwise calculation of origin for the other streets does not work!
 		 */
 		
-			
 
+		/*
+		TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler("TrafficLightsConfig1.xml");
 
 		
-		TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler("TrafficLightsConfig1.xml");//TODO:put string variable from filechoser instead of hardtext
 		junctions = txmlh.getJunctions();
 		streets = txmlh.getStreets();
 		routes = txmlh.getRoutes();
 		
 		verhicles = new ArrayList<Vehicle>();
 		
+		((List<Street>)streets).get(0).setOrigin(new Point(300,200));
+		
+		*/
+		
 //		junctions = new ArrayList<Junction>();
 //		streets = new ArrayList<Street>();
 //		routes = new ArrayList<Route>();			
-		((List<Street>)streets).get(0).setOrigin(new Point(300,200));
+		
 	
 		
 	}

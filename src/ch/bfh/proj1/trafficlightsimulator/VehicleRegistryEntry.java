@@ -2,23 +2,23 @@ package ch.bfh.proj1.trafficlightsimulator;
 
 public class VehicleRegistryEntry {
 	
-	private Class vehicle;
+	private Class<?> vehicle;
 	
 	private int distribution;
 	
 	private String vehicleName;
 	
-	public VehicleRegistryEntry(Class vehicle, String vehicleName, int distribution) {
+	public VehicleRegistryEntry(Class<?> vehicle, String vehicleName, int distribution) {
 		this.setVehicle(vehicle);
 		this.setVehicleName(vehicleName);
 		this.setDistribution(distribution);
 	}
 
-	public Class getVehicle() {
+	public Class<?> getVehicle() {
 		return vehicle;
 	}
 
-	public void setVehicle(Class vehicle) {
+	public void setVehicle(Class<?> vehicle) {
 		this.vehicle = vehicle;
 	}
 

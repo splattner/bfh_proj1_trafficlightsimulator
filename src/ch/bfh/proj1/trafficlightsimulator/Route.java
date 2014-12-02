@@ -1,7 +1,6 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Route {
 	
@@ -30,7 +29,10 @@ public class Route {
 		this.route.add(l);
 	}
 	
-	public ArrayList<Lane> getRoute() {
+	/*
+	 * Return all Lanes of this Route
+	 */
+	public ArrayList<Lane> getLanes() {
 		return this.route;
 	}
 
