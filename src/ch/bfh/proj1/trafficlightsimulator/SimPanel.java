@@ -81,7 +81,6 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		
 		super.paintComponent(g);
 		
-		
 		// Change Color of Backgrund when Simulation is running
 		if (this.getSimulator().getCurrentSimulation().isRunning()) {
 			if (this.getSimulator().getCurrentSimulation().isBreaking()) {
@@ -94,24 +93,25 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 			g.setColor(Color.BLACK);
 		}
 		
-		if (this.getSimulator().getCurrentSimulation().isLoaded() && this.mouse_pressed) {
-			g.setColor(new Color(200,200,200));
-		}
-
-		
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		
-		if (this.getSimulator().getCurrentSimulation().isLoaded()) {
-			g.setColor(Color.white);
-			g.drawString("Drag & Drop for moving around the simulation", 250, 30);
-		}
-
 		
 		if (!this.getSimulator().getCurrentSimulation().isLoaded()) {
 			// If Simulation is not loaded, then don't paint anything
 			return;
 		}
+		
+		
+
+		// Change Color of Background when in drag mode
+		if (this.mouse_pressed) {
+			g.setColor(new Color(200,200,200));
+			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		}
+
+
+		g.setColor(Color.white);
+		g.drawString("Drag & Drop for moving around the simulation", 270, 30);
+
 
 		
 		// Draw all Streets
@@ -210,7 +210,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		mouse_press_x = e.getX();
 		mouse_press_y = e.getY();
 		mouse_pressed = true;
-		this.getSimulator().refreshWindow();
+
 
 	}
 
@@ -240,12 +240,16 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 			int mouse_move_x = e.getX() - mouse_press_x;
 			int mouse_move_y = e.getY() - mouse_press_y;
 			
-			this.getSimulator().getCurrentSimulation().moveSimulation(mouse_move_x, mouse_move_y);
-			
-			mouse_press_x = e.getX();
-			mouse_press_y = e.getY();
-			
-			this.getSimulator().refreshWindow();
+			// Don't Move at everystep
+			if (Math.abs(mouse_move_x) > 5 || Math.abs(mouse_move_y) > 5) {
+				
+				this.getSimulator().getCurrentSimulation().moveSimulation(mouse_move_x, mouse_move_y);
+				
+				mouse_press_x = e.getX();
+				mouse_press_y = e.getY();
+				
+				this.getSimulator().refreshWindow();
+			}
 		}
 	}
 
