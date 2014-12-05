@@ -223,8 +223,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
+
 		// Load a XML File and configure Simulation
 		if (e.getSource().equals(this.btloadXML))
 		{
@@ -259,10 +258,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				this.btShowConfig.setToolTipText("");
 				this.btRunSimulation.setEnabled(true);
 				this.btRunSimulation.setToolTipText("");
-				
-				
-				
-				
+	
 				// Redraw Sim Panel
 				this.getSimulator().refreshWindow();
 
@@ -279,7 +275,6 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		
 		if (e.getSource().equals(SimulationModeSelector)) {
 
-			
 			switch (SimulationModeSelector.getSelectedIndex()) {
 			case 0:
 
@@ -291,7 +286,6 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				break;
 
 			}
-			
 		}
 		
 		if (e.getSource().equals(LightModeSelector)) {
@@ -308,27 +302,20 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 			}
 			
 		}
-		
-		
 
 		if (e.getSource().equals(btRunSimulation)) {
 
-			
-			
 			if (this.simulator.getCurrentSimulation().isRunning()) {
 				btRunSimulation.setText("Start");
 				this.simulator.getCurrentSimulation().stopSimulation();
 				btBreak.setEnabled(false);
-				
 
 				// Create a new Simulation (based on the old one)
 				this.simulator.setCurrentSimulation(new Simulation(this.simulator.getCurrentSimulation()));
 				
 				// Redraw Sim Panel
 				this.getSimulator().refreshWindow();
-				
-				
-				
+
 			} else {
 				if (this.getSimulator().getCurrentSimulation().isLoaded()) {
 					btRunSimulation.setText("Stop");
@@ -352,13 +339,9 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		
 	}
 
-	public TrafficLightSimulator getSimulator() {
-		return simulator;
-	}
+	public TrafficLightSimulator getSimulator() { return simulator; }
 
-	public void setSimulator(TrafficLightSimulator simulator) {
-		this.simulator = simulator;
-	}
+	public void setSimulator(TrafficLightSimulator simulator) {	this.simulator = simulator; }
 
 	@Override
 	public void stateChanged(ChangeEvent e) {

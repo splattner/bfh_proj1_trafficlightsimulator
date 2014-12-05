@@ -65,12 +65,12 @@ public class TrafficLightSimulator {
 	static public int defaultLaneWidth = 15;
 	
 	/**
-	 * Minimum Distance between two Vehicles at max (depening on vehicles speed)
+	 * Minimum Distance between two Vehicles at max (depending on vehicles speed)
 	 */
 	static public int minimumDistanceBetweenVehiclesMax = 20000;
 	
 	/**
-	 * Minimum Distance between two Vehicles at min (depening on vehicles speed)
+	 * Minimum Distance between two Vehicles at min (depending on vehicles speed)
 	 */
 	static public int minimumDistanceBetweenVehiclesMin = 4000;
 	

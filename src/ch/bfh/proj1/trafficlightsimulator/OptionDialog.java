@@ -59,7 +59,14 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 	private JButton btApply;
 
+	/**
+	 * Table with all routes
+	 */
 	private JTable routeTable;
+	
+	/**
+	 * Table with all Vehicle Classes
+	 */
 	private JTable vehicleTable;
 
 	public OptionDialog(TrafficLightSimulator simulator) {
@@ -82,9 +89,9 @@ public class OptionDialog extends JDialog implements ActionListener{
 		this.routeTable.setPreferredScrollableViewportSize(new Dimension(400, 400));
 		this.routeTable.setFillsViewportHeight(true);
 
+		// Set Cell Renderer & Editor
 		this.routeTable.getColumnModel().getColumn(1).setCellRenderer(new SliderRenderer(JSlider.HORIZONTAL,0,100,0));
 		this.routeTable.getColumnModel().getColumn(1).setCellEditor(new SliderEditor(JSlider.HORIZONTAL, 0, 100, 0));
-		
 		
 		this.routeTable.getColumnModel().getColumn(2).setCellRenderer(new AddVehicleRendererAndEditor(this.getSimulator()));
 		this.routeTable.getColumnModel().getColumn(2).setCellEditor(new AddVehicleRendererAndEditor(this.getSimulator()));
@@ -104,6 +111,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 		this.vehicleTable.setPreferredScrollableViewportSize(new Dimension(400, 400));
 		this.vehicleTable.setFillsViewportHeight(true);
 
+		// Set Cell Renderer & Editor
 		this.vehicleTable.getColumnModel().getColumn(1).setCellRenderer(new SliderRenderer(JSlider.HORIZONTAL,0,100,0));
 		this.vehicleTable.getColumnModel().getColumn(1).setCellEditor(new SliderEditor(JSlider.HORIZONTAL, 0, 100, 0));
 		
@@ -119,49 +127,28 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		this.add(btApply, BorderLayout.PAGE_END);
 
-
-
 	}
 
-	public TrafficLightSimulator getSimulator() {
-		return simulator;
-	}
-
-	public void setSimulator(TrafficLightSimulator simulator) {
-		this.simulator = simulator;
-	}
+	public TrafficLightSimulator getSimulator() { return simulator; }
+	public void setSimulator(TrafficLightSimulator simulator) { this.simulator = simulator; }
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void actionPerformed(ActionEvent e) {}
 	
 	class VehicleTableModel extends AbstractTableModel {
 		private String[] columnNames = {"Vehicle","Distribution of Vehicle"};
 
 		private TrafficLightSimulator simulator;
 
-		public VehicleTableModel(TrafficLightSimulator simulator) {
-			this.simulator = simulator;
-		}
+		public VehicleTableModel(TrafficLightSimulator simulator) {	this.simulator = simulator; }
 
-		public Class getColumnClass(int column) {
-			return getValueAt(0, column).getClass();
-		}
+		public Class getColumnClass(int column) { return getValueAt(0, column).getClass(); }
 
+		public int getColumnCount() {return columnNames.length;	}
 
-		public int getColumnCount() {
-			return columnNames.length;
-		}
+		public int getRowCount() {return this.simulator.getVehicleRegistry().size();}
 
-		public int getRowCount() {
-			return this.simulator.getVehicleRegistry().size();
-		}
-
-		public String getColumnName(int col) {
-			return columnNames[col];
-		}
+		public String getColumnName(int col) { return columnNames[col]; }
 
 
 		@Override
@@ -180,9 +167,8 @@ public class OptionDialog extends JDialog implements ActionListener{
 			}
 
 			return ret;
-
-
 		}
+		
 		@Override
 		public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
@@ -206,8 +192,9 @@ public class OptionDialog extends JDialog implements ActionListener{
 				
 				break;
 			}
+			
+			//Update table
 			fireTableCellUpdated(rowIndex, columnIndex);
-
 		}
 
 		@Override
@@ -233,22 +220,14 @@ public class OptionDialog extends JDialog implements ActionListener{
 			routes = (ArrayList<Route>) this.simulator.getCurrentSimulation().getRoutes();
 		}
 
-		public Class getColumnClass(int column) {
-			return getValueAt(0, column).getClass();
-		}
+		public Class getColumnClass(int column) { return getValueAt(0, column).getClass(); }
 
 
-		public int getColumnCount() {
-			return columnNames.length;
-		}
+		public int getColumnCount() { return columnNames.length; }
 
-		public int getRowCount() {
-			return routes.size();
-		}
+		public int getRowCount() { return routes.size(); }
 
-		public String getColumnName(int col) {
-			return columnNames[col];
-		}
+		public String getColumnName(int col) { return columnNames[col]; }
 
 
 		@Override
@@ -268,16 +247,12 @@ public class OptionDialog extends JDialog implements ActionListener{
 			}
 
 			return ret;
-
-
 		}
+
 		@Override
 		public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
 			switch (columnIndex) {
-			/*case 0:
-				ret =  "Route " + Integer.toString(rowIndex);
-				break;*/
 			case 1:
 
 				this.routes.get(rowIndex).setDistribution((Integer) value);
@@ -294,16 +269,11 @@ public class OptionDialog extends JDialog implements ActionListener{
 				}
 
 
-
-
-
 				break;
-				/*case 2:
-				ret = 0;
-				break;*/
 			}
+			
+			//Update table
 			fireTableCellUpdated(rowIndex, columnIndex);
-
 		}
 
 		@Override
@@ -314,10 +284,6 @@ public class OptionDialog extends JDialog implements ActionListener{
 				return false;
 			}
 		}
-
-
-
-
 	}
 	
 	class AddVehicleRendererAndEditor extends AbstractCellEditor implements TableCellRenderer,TableCellEditor,ActionListener {
@@ -402,15 +368,9 @@ public class OptionDialog extends JDialog implements ActionListener{
 			
 		}
 
-		public TrafficLightSimulator getSimulator() {
-			return simulator;
-		}
+		public TrafficLightSimulator getSimulator() { return simulator; }
 
-		public void setSimulator(TrafficLightSimulator simulator) {
-			this.simulator = simulator;
-		}
-
-
+		public void setSimulator(TrafficLightSimulator simulator) { this.simulator = simulator;}
 
 		@Override
 		public boolean isCellEditable(EventObject anEvent) {
@@ -441,10 +401,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 		}
 
 		@Override
-		public Object getCellEditorValue() {
-			// TODO Auto-generated method stub
-			return null;
-		}
+		public Object getCellEditorValue() { return null; }
 
 	}
 
@@ -525,51 +482,26 @@ public class OptionDialog extends JDialog implements ActionListener{
 			return slider;
 		}
 
-		public Object getCellEditorValue() {
-			return new Integer(slider.getValue());
-		}
+		public Object getCellEditorValue() { return new Integer(slider.getValue()); }
 
-		public boolean stopCellEditing() {
-			return super.stopCellEditing();
-		}
+		public boolean stopCellEditing() { return super.stopCellEditing(); }
 
-		protected void fireEditingStopped() {
-			super.fireEditingStopped();
-		}
-
-
-
+		protected void fireEditingStopped() { super.fireEditingStopped(); }
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseClicked(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mousePressed(MouseEvent e) {}
 
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			this.fireEditingStopped();
-			
-		}
+		public void mouseReleased(MouseEvent e) { this.fireEditingStopped(); }
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseExited(MouseEvent e) {}
 
 
 	}
@@ -586,8 +518,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 			  
 			  int[] selectedRow = this.table.getSelectedRows();
 			  
-			  
-		      
+
 		      for (Route r : this.routes) {
 		    	  r.setVisible(false);
 		      }
@@ -595,13 +526,10 @@ public class OptionDialog extends JDialog implements ActionListener{
 		      for (int i = 0; i < selectedRow.length; i++) {
 		    	  routes.get(selectedRow[i]).setVisible(true);
 		      }
-			  
+ 
 			  
 		  }
 		}
-
-
-
 }
 
 

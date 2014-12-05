@@ -25,12 +25,35 @@ import java.awt.Point;
 
 public interface DrawableObject {
 	
+	/**
+	 * Paint the object
+	 * @param g
+	 */
 	public void paintObject(Graphics g);
 	
+	/**
+	 * Return the origin of this object
+	 * @return Point
+	 */
 	public Point getOrigin();
+	
+	/**
+	 * Set Origin of this object
+	 * @param origin
+	 */
 	public void setOrigin(Point origin);
 	
-	public void setDimension(Dimension dimension);
+	/**
+	 * Return dimension of this object
+	 * @return
+	 */
 	public Dimension getDimension();
+	
+	/**
+	 * Set dimension of this object
+	 * @param dimension
+	 */
+	public void setDimension(Dimension dimension);
+	
 
 }

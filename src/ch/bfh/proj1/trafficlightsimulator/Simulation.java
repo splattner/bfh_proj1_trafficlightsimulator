@@ -43,11 +43,7 @@ public class Simulation extends Thread {
 	private int simulationSpeed = 20;
 	private int currentStep = 0;
 	
-	public Simulation(TrafficLightSimulator simulator) {
-
-		this.setSimulator(simulator);
-		
-	}
+	public Simulation(TrafficLightSimulator simulator) {this.setSimulator(simulator);}
 		
 	
 	public Simulation (Simulation oldSimulation) {
@@ -232,13 +228,9 @@ public class Simulation extends Thread {
 		this.start();
 	}
 
-	public boolean isRunning() {
-		return running;
-	}
+	public boolean isRunning() { return running;}
 
-	public void setRunning(boolean running) {
-		this.running = running;
-	}
+	public void setRunning(boolean running) { this.running = running;}
 	
 	public boolean isBreaking() {
 		return breakState;
@@ -256,31 +248,15 @@ public class Simulation extends Thread {
 
 
 
-	public TrafficLightSimulator getSimulator() {
-		return simulator;
-	}
+	public TrafficLightSimulator getSimulator() {return simulator;}
+	public void setSimulator(TrafficLightSimulator simulator) {this.simulator = simulator;}
 
-	public void setSimulator(TrafficLightSimulator simulator) {
-		this.simulator = simulator;
-	}
-
-	public int getSimulationSpeed() {
-		return simulationSpeed;
-	}
-
-	public void setSimulationSpeed(int simulationSpeed) {
-		this.simulationSpeed = simulationSpeed;
-	}
+	public int getSimulationSpeed() {return simulationSpeed;}
+	public void setSimulationSpeed(int simulationSpeed) {this.simulationSpeed = simulationSpeed;}
 
 
-	public boolean isLoaded() {
-		return loaded;
-	}
-
-
-	public void setLoaded(boolean loaded) {
-		this.loaded = loaded;
-	}
+	public boolean isLoaded() { return loaded;}
+	public void setLoaded(boolean loaded) { this.loaded = loaded; }
 	
 	/**
 	 * This Method calculates all origins and all dimensions for the simulation elements (streets, lanes, junctions)
@@ -295,7 +271,6 @@ public class Simulation extends Thread {
 		// Start with first street (the one very left/top and should have no start junction
 		Street s = ((List<Street>) this.getStreets()).get(0);
 		
-		//System.out.println("Startin with Street " + s.getOrigin().x + " / " + s.getOrigin().y);
 		Junction j;
 		int numOfLanes = 0;
 		Dimension d;
@@ -310,28 +285,20 @@ public class Simulation extends Thread {
 			// Check if street is connected to left side
 			if (j.getLeftStreet().equals(s)) {
 				// Its a horizontal street
-				//System.out.println("Horizontal Street");
-				
+
 				
 				d = new Dimension();
 				d.setSize(TrafficLightSimulator.defaultStreetLenght, numOfLanes * TrafficLightSimulator.defaultLaneWidth);
 				s.setDimension(d);
-				//System.out.println("Calculated Dimension for Street " + d.getWidth() + " * " + d.getHeight());
-				
-				
+
 				// Set Origin for Junction
 				newOrigin = new Point();
 				newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 				j.setOrigin(newOrigin);
-				//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
-				
-				
 				j.setDimension(j.calcucateDimension());
-				//System.out.println("Calculated Dimension of Junction " + j.getDimension().getWidth() + " * " + j.getDimension().getHeight());
-				
+
 				// Go to next Street (top, right, bottom)
 				Street streets[] = {j.getTopStreet(), j.getRightStreet(), j.getBottomStreet()};
-				
 				for (Street nextStreet : streets) {
 					if (nextStreet != null) {
 						calcucalteOriginAndDimension(nextStreet, j);
@@ -341,23 +308,17 @@ public class Simulation extends Thread {
 				
 			} else if ((j.getTopStreet().equals(s))) {
 				// Its a vertical street
-				//System.out.println("Vertical Street");
-				
+	
 				d = new Dimension();
 				d.setSize(numOfLanes * TrafficLightSimulator.defaultLaneWidth, TrafficLightSimulator.defaultStreetLenght);
 				s.setDimension(d);
-				//System.out.println("Calculated Dimension for Street " + d.getWidth() + " * " + d.getHeight());
-				
+
 				// Set Origin for Junction
 				newOrigin = new Point();
 				newOrigin.setLocation(s.getOrigin().x , s.getOrigin().y + s.getDimension().height);
 				j.setOrigin(newOrigin);
-				//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
-				
-				
 				j.setDimension(j.calcucateDimension());
-				//System.out.println("Calculated Dimension of Junction " + j.getDimension().getWidth() + " * " + j.getDimension().getHeight());
-				
+
 				// Go to next Street (left, bottom, right)
 				Street streets[] = {j.getLeftStreet(), j.getBottomStreet(), j.getRightStreet()};
 				for (Street nextStreet : streets) {
@@ -385,7 +346,6 @@ public class Simulation extends Thread {
 		int numOfLanes;
 		
 		if (s.getOrigin() != null) {
-			//System.out.println("Street already calcucaled");
 			// Already calcucaled
 			return;
 		}
@@ -395,14 +355,10 @@ public class Simulation extends Thread {
 		
 		// Check if Last Junction was start or End
 		if (s.getStartJunction() != null && s.getStartJunction().equals(lastJunction)){
-			//System.out.println("Last Junction was start for this street");
 			// This Street starts at last one
 			nextJunction = s.getEndJunction();
-			
-			
 		} else {
 			if (s.getEndJunction() != null && s.getEndJunction().equals(lastJunction)) {
-				//System.out.println("Last Junction was end for this street");
 				// This Street ends at last one
 				nextJunction = s.getStartJunction();	
 			}
@@ -412,53 +368,42 @@ public class Simulation extends Thread {
 		// Check orientation for street
 		if (lastJunction.getTopStreet() != null && lastJunction.getTopStreet().equals(s)) {
 			// it was a top street
-			//System.out.println("This Street is top of last Junction");
 
+			// Set Dimension and origin for street
 			newDimension.setSize(numOfLanes * TrafficLightSimulator.defaultLaneWidth, TrafficLightSimulator.defaultStreetLenght);
 			s.setDimension(newDimension);
-			//System.out.println("Set Dimension for this street " + newDimension.width + " * " + newDimension.height);
-			
 			newOrigin.setLocation(lastJunction.getOrigin().x, lastJunction.getOrigin().y - newDimension.height);
 			s.setOrigin(newOrigin);
-			//System.out.println("Set origin for this street " + newOrigin.x + " / " + newOrigin.y);
-			
+	
 			if (nextJunction == null) {
-				//System.out.println("no next Junction, this is the end of this street");
+				// No Next Junction. This is the end of the street
 				return;
 			}
 			
 			// Go to next Street (left, top, right)
 			if ((nextStreet = nextJunction.getLeftStreet()) != null) {
-				//System.out.println("Next is left Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
 					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x - s.getDimension().width - nextJunction.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
 			}
 			
 			// Go to next Street
-			if ((nextStreet = nextJunction.getTopStreet()) != null) {
-				//System.out.println("Next is top Street of Junction");
-				
-				
+			if ((nextStreet = nextJunction.getTopStreet()) != null) {			
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
 					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
+
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -466,24 +411,18 @@ public class Simulation extends Thread {
 			
 			// Go to next Street
 			if ((nextStreet = nextJunction.getRightStreet()) != null) {
-				//System.out.println("Next is right Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
 			}
 			
-			//System.out.println("No more Streets for next junction. Return");
-			
+			//No more Streets for next junction. Return			
 			return;
 			
 			
@@ -492,34 +431,27 @@ public class Simulation extends Thread {
 		// Check orientation for street
 		if (lastJunction.getBottomStreet() != null && lastJunction.getBottomStreet().equals(s)) {
 			// it was a bottom street
-			//System.out.println("This Street is bottom of last Junction");
 			
+			// Set Dimension and origin for street
 			newDimension.setSize(numOfLanes * TrafficLightSimulator.defaultLaneWidth, TrafficLightSimulator.defaultStreetLenght);
 			s.setDimension(newDimension);
-			//System.out.println("Set Dimension for this street " + newDimension.width + " * " + newDimension.height);
 			newOrigin.setLocation(lastJunction.getOrigin().x, lastJunction.getOrigin().y + lastJunction.getDimension().height);
 			s.setOrigin(newOrigin);
-			//System.out.println("Set origin for this street " + newOrigin.x + " / " + newOrigin.y);
 			
 			
 			if (nextJunction == null) {
-				//System.out.println("no next Junction, this is the end of this street");
+				// No Next Junction. This is the end of the street
 				return;
 			}
 			
 			// Go to next Street (left, bottom, right)
 			if ((nextStreet = nextJunction.getLeftStreet()) != null) {
-				//System.out.println("Next is left Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -527,17 +459,12 @@ public class Simulation extends Thread {
 			
 			// Go to next Street
 			if ((nextStreet = nextJunction.getBottomStreet()) != null) {
-				//System.out.println("Next is bottom Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -545,57 +472,45 @@ public class Simulation extends Thread {
 			
 			// Go to next Street
 			if ((nextStreet = nextJunction.getRightStreet()) != null) {
-				//System.out.println("Next is right Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
 			}
 			
-			//System.out.println("No more Streets for next junction. Return");
+			//No more Streets for next junction. Return	
 			return;
 		}
 		
 		// Check orientation for street
 		if (lastJunction.getLeftStreet() != null && lastJunction.getLeftStreet().equals(s)) {
 			// it was a left street
-			//System.out.println("This Street is left of last Junction");
-			
+
+			// Set Dimension and origin for street
 			newDimension.setSize(TrafficLightSimulator.defaultStreetLenght, numOfLanes * TrafficLightSimulator.defaultLaneWidth);
 			s.setDimension(newDimension);
-			//System.out.println("Set Dimension for this street " + newDimension.width + " * " + newDimension.height);
 			newOrigin.setLocation(lastJunction.getOrigin().x  - newDimension.width, lastJunction.getOrigin().y);
 			s.setOrigin(newOrigin);
-			//System.out.println("Set origin for this street " + newOrigin.x + " / " + newOrigin.y);
 			
 			
 			if (nextJunction == null) {
-				//System.out.println("no next Junction, this is the end of this street");
+				// No Next Junction. This is the end of the street
 				return;
 			}
 			
 			// Go to next Street (top, left, bottom)
 			if ((nextStreet = nextJunction.getTopStreet()) != null) {
-				//System.out.println("Next is top Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x - nextJunction.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -603,74 +518,57 @@ public class Simulation extends Thread {
 			
 			// Go to next Street
 			if ((nextStreet = nextJunction.getLeftStreet()) != null) {
-				//System.out.println("Next is left Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x - s.getDimension().width - nextJunction.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
 			}
 			
 			// Go to next Street
-			if ((nextStreet = nextJunction.getBottomStreet()) != null) {
-				//System.out.println("Next is bottom Street of Junction");
-				
+			if ((nextStreet = nextJunction.getBottomStreet()) != null) {			
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
 			}
-			//System.out.println("No more Streets for next junction. Return");
+			//No more Streets for next junction. Return	
 			return;
 		}
 		
 		// Check orientation for street
 		if (lastJunction.getRightStreet() != null &&  lastJunction.getRightStreet().equals(s)) {
 			// it was a right street
-			//System.out.println("This Street is right of last Junction");
 			
+			// Set Dimension and origin for street
 			newDimension.setSize(TrafficLightSimulator.defaultStreetLenght, numOfLanes * TrafficLightSimulator.defaultLaneWidth);
 			s.setDimension(newDimension);
-			//System.out.println("Set Dimension for this street " + newDimension.width + " * " + newDimension.height);
 			newOrigin.setLocation(lastJunction.getOrigin().x + lastJunction.getDimension().width, lastJunction.getOrigin().y);
 			s.setOrigin(newOrigin);
-			
-			//System.out.println("Set origin for this street " + newOrigin.x + " / " + newOrigin.y);
+
 			
 			if (nextJunction == null) {
-				//System.out.println("no next Junction, this is the end of this street");
+				// No Next Junction. This is the end of the street
 				return;
 			}
 			
 			// Go to next Street (top, right, bottom)
 			if ((nextStreet = nextJunction.getTopStreet()) != null) {
-				//System.out.println("Next is top Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 
 				
@@ -679,17 +577,12 @@ public class Simulation extends Thread {
 			
 			// Go to next Street
 			if ((nextStreet = nextJunction.getRightStreet()) != null) {
-				//System.out.println("Next is right Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
@@ -697,59 +590,47 @@ public class Simulation extends Thread {
 			
 			// Go to next Street
 			if ((nextStreet = nextJunction.getBottomStreet()) != null) {
-				//System.out.println("Next is bottom Street of Junction");
-				
 				if (nextJunction.getOrigin() == null) {
-					//System.out.println("Junction has no origin");
-					
+					// Dimension and Origin for next Junction	
 					nextJunction.setDimension(nextJunction.calcucateDimension());
-					
 					newOrigin = new Point();
 					newOrigin.setLocation(s.getOrigin().x + s.getDimension().width, s.getOrigin().y + s.getDimension().height);
 					nextJunction.setOrigin(newOrigin);
-					//System.out.println("Calculated Origin of Junction " + newOrigin.x + " / " + newOrigin.y);
 				}
 				
 				calcucalteOriginAndDimension(nextStreet, nextJunction);
 			}
-			//System.out.println("No more Streets for next junction. Return");
+			//No more Streets for next junction. Return	
 			return;
 		}
 		
 		
 	}
 	
+	/**
+	 * Move all elements in the Simulation by x & y
+	 * @param x
+	 * @param y
+	 */
 	public void moveSimulation(int x, int y) {
 		
+		// Only if simualation is loaded, otherwise there are no elements to move
 		if (this.isLoaded()) {
 			
+			// Move all Junctions
 			for (Junction j : this.getJunctions()) {
 				j.setOrigin(new Point(j.getOrigin().x + x, j.getOrigin().y + y));
 			}
 			
+			// Move all streets (and lanes, and trafficlights)
 			for (Street s : this.getStreets()) {
 				s.setOrigin(new Point(s.getOrigin().x + x, s.getOrigin().y + y));
-				for (Lane l : s.getLanes()) {
-					l.setOrigin(new Point(l.getOrigin().x + x, l.getOrigin().y + y));
-					
-					TrafficLight tf = l.getTrafficLight();
-					
-					if (tf != null) {
-						tf.setOrigin(new Point(tf.getOrigin().x + x, tf.getOrigin().y + y));
-					}
-					
-					
-				}
 			}
 			
+			// Move all Vehicles
 			for (Vehicle v : this.getVerhicles()) {
 				v.setOrigin(new Point(v.getOrigin().x + x, v.getOrigin().y + y));
 			}
-			
-
 		}
-		
-		
 	}
-
 }

@@ -41,6 +41,13 @@ public class Lane implements DrawableObject {
 		endToStart
 	}
 	
+	public enum arrow_head {
+		up,
+		down,
+		right,
+		left
+	}
+	
 	private int id;
 
 	/**
@@ -49,7 +56,6 @@ public class Lane implements DrawableObject {
 	private laneOrientations laneOrientation;
 	
 	private Dimension dimension;
-
 	private Point origin;
 	
 	/**
@@ -63,8 +69,14 @@ public class Lane implements DrawableObject {
 	 */
 	private TrafficLight trafficLight;
 	
-	private Arrow arrow = new Arrow();
+	/**
+	 * The arrow indicationdirection on the Lane
+	 */
+	private Arrow arrow;
 	
+	/**
+	 * The street this lane is on
+	 */
 	private Street street;
 		
 	public Lane(int id, laneOrientations laneOrientation) {
@@ -73,21 +85,31 @@ public class Lane implements DrawableObject {
 		this.id=id;
 		
 		this.trafficLight = new TrafficLight(this);
+		this.arrow = new Arrow();
 
 	}
 
 	public laneOrientations getLaneOrientation() {return laneOrientation;}
-
-	public void setLaneOrientation(laneOrientations laneOrientation) {
-		this.laneOrientation = laneOrientation;}
+	public void setLaneOrientation(laneOrientations laneOrientation) {this.laneOrientation = laneOrientation;}
 	
+	/**
+	 * Return the traffic light for this lane
+	 * @return TafficLight
+	 */
 	public TrafficLight getTrafficLight () {return trafficLight;}
 
 	@Override
 	public void paintObject(Graphics g) {
 				
 		g.setColor(Street.streetColor);
-		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);		
+		g.fillRect(this.origin.x, this.origin.y, this.dimension.width, this.dimension.height);		
+		
+		
+		// Set Origin and Dimension for Arrow and Traffic Light
+		if (this.arrow.getOrigin() == null) {
+			arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
+			arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
+		}
 		
 		// on horizontal lane
 		if (this.getStreet().getOrientaion() == Street.orientation.horizontal) {			
@@ -97,41 +119,14 @@ public class Lane implements DrawableObject {
 					trafficLight.setOrigin(new Point (origin.x+dimension.width-10, origin.y));
 					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
 				}
-
-				//if (this.arrow.getOrigin() == null) {
-					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
-					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
-
-					arrow.setXPoints(
-							arrow.getOrigin().x+arrow.getDimension().width/2,
-							arrow.getOrigin().x+arrow.getDimension().width/2,
-							arrow.getOrigin().x+arrow.getDimension().width/2+10);
-					arrow.setYPoints(
-							arrow.getOrigin().y-5,
-							arrow.getOrigin().y+5,
-							arrow.getOrigin().y+arrow.getDimension().height/2);
-				//}
+				arrow.setHead(arrow_head.right);
 			}
-
 			else {
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
 					trafficLight.setOrigin(new Point (origin.x, origin.y));
 					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
 				}
-
-				//if (this.arrow.getOrigin() == null) {
-					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
-					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
-
-					arrow.setXPoints(
-							arrow.getOrigin().x-arrow.getDimension().width/2,
-							arrow.getOrigin().x-arrow.getDimension().width/2,
-							arrow.getOrigin().x-arrow.getDimension().width/2-10);
-					arrow.setYPoints(
-							arrow.getOrigin().y-5,
-							arrow.getOrigin().y+5,
-							arrow.getOrigin().y+arrow.getDimension().height/2);
-				//}
+				arrow.setHead(arrow_head.left);
 			}
 
 		}
@@ -144,44 +139,14 @@ public class Lane implements DrawableObject {
 					trafficLight.setOrigin(new Point (origin.x, origin.y+dimension.height-10));
 					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
 				}
-
-				//if (this.arrow.getOrigin() == null) {
-					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
-					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
-
-					arrow.setXPoints(	
-							arrow.getOrigin().x-5,
-							arrow.getOrigin().x+5,
-							arrow.getOrigin().x+arrow.getDimension().width/2);
-
-					arrow.setYPoints(
-							arrow.getOrigin().y+arrow.getDimension().height/2,
-							arrow.getOrigin().y+arrow.getDimension().height/2,
-							arrow.getOrigin().y+arrow.getDimension().height/2+10);
-				//}
-
+				arrow.setHead(arrow_head.down);
 			}
-
 			else {
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
 					trafficLight.setOrigin(new Point (origin.x, origin.y));
 					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
 				}
-
-				//if (this.arrow.getOrigin() == null) {
-					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
-					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
-
-					arrow.setXPoints(	
-							arrow.getOrigin().x-5,
-							arrow.getOrigin().x+5,
-							arrow.getOrigin().x+arrow.getDimension().width/2);
-
-					arrow.setYPoints(
-							arrow.getOrigin().y-arrow.getDimension().height/2,
-							arrow.getOrigin().y-arrow.getDimension().height/2,
-							arrow.getOrigin().y-arrow.getDimension().height/2-10);
-				//}
+				arrow.setHead(arrow_head.up);
 			}
 		}			
 			
@@ -195,63 +160,78 @@ public class Lane implements DrawableObject {
 		}
 		
 		// Draw Traffic light if any
-		if (this.trafficLight != null) {trafficLight.paintObject(g);}
+		if (this.trafficLight != null) { trafficLight.paintObject(g); }
 		
 		// Draw arrow
-		arrow.paintObject(g);
+		this.arrow.paintObject(g);
 	}
 	
 	
 	@Override
-	public void setOrigin (Point aPoint) {origin = aPoint;}
+	public void setOrigin (Point aPoint) {
+		
+		// Get difference to old origin for arrow movement
+		if (this.origin != null) {
+			int move_x = aPoint.x - origin.x;
+			int move_y = aPoint.y - origin.y;
+			
+			// Move Traffic Light
+			TrafficLight tf = this.getTrafficLight();
+			if (tf != null) {
+				tf.setOrigin(new Point(tf.getOrigin().x + move_x, tf.getOrigin().y + move_y));
+			}
+			
+			// Move Arrow
+			if (this.arrow != null) {
+				this.arrow.setOrigin(new Point(this.arrow.getOrigin().x + move_x, this.arrow.getOrigin().y + move_y));
+			}
+		}
+		
+		origin = aPoint;
+	}
 	
 	@Override
 	public Point getOrigin() {return origin;}
 
 	@Override
 	public void setDimension(Dimension dimension) {this.dimension = dimension;}
-
 	@Override
 	public Dimension getDimension() {return dimension;}
 
 	public LinkedList<Vehicle> getVerhiclesOnLane() {return verhiclesOnLane;}
-
 	public void setVerhiclesOnLane(LinkedList<Vehicle> verhiclesOnLane) {this.verhiclesOnLane = verhiclesOnLane;}
 
 	public Street getStreet() {return street;}
-
-	public void setStreet(Street street) {
-		this.street = street;
-	}
+	public void setStreet(Street street) { this.street = street;}
 	
 	public int getId() {return id;}
 	
 	private class Arrow implements DrawableObject {
 		
 		private Dimension dimension;
-
 		private Point origin;
 		
 		private int[] triangleXPoints = new int[3];
-		
 		private int[] triangleYPoints = new int[3];
-		
+
 
 		@Override
 		public void paintObject(Graphics g) {
 			g.setColor(Color.WHITE);
-			g.fillRect(origin.x-dimension.width/2, origin.y-dimension.height/2, dimension.width, dimension.height);
-			g.fillPolygon(triangleXPoints, triangleYPoints, 3);
+			
+			
+			g.fillRect(this.origin.x-this.dimension.width/2, this.origin.y-this.dimension.height/2, this.dimension.width, this.dimension.height);
+			g.fillPolygon(this.triangleXPoints, this.triangleYPoints, 3);
 		}
 		
-		public void setXPoints (int first, int second, int third)
+		private void setXPoints (int first, int second, int third)
 		{
 			triangleXPoints[0] = first;
 			triangleXPoints[1] = second;
 			triangleXPoints[2] = third;
 		}
 		
-		public void setYPoints (int first, int second, int third)
+		private void setYPoints (int first, int second, int third)
 		{
 			triangleYPoints[0] = first;
 			triangleYPoints[1] = second;
@@ -259,7 +239,75 @@ public class Lane implements DrawableObject {
 		}
 
 		@Override
-		public void setOrigin (Point aPoint) {origin = aPoint;}
+		public void setOrigin (Point aPoint) {
+			
+			// Get difference to old origin for head movement
+			if (this.origin != null) {
+				int move_x = aPoint.x - this.origin.x;
+				int move_y = aPoint.y - this.origin.y;
+				
+				// Move Head
+				this.triangleXPoints[0] += move_x;
+				this.triangleXPoints[1] += move_x;
+				this.triangleXPoints[2] += move_x;
+				this.triangleYPoints[0] += move_y;
+				this.triangleYPoints[1] += move_y;
+				this.triangleYPoints[2] += move_y;
+
+			}
+
+			origin = aPoint;
+			
+		}
+		
+		public void setHead(arrow_head head_direction) {
+			
+			switch (head_direction) {
+			case right:
+				this.setXPoints(
+						this.getOrigin().x + this.getDimension().width/2,
+						this.getOrigin().x + this.getDimension().width/2,
+						this.getOrigin().x + this.getDimension().width/2+10);
+				this.setYPoints(
+						this.getOrigin().y - 5,
+						this.getOrigin().y + 5,
+						this.getOrigin().y + this.getDimension().height/2);
+				break;
+			case left:
+				this.setXPoints(
+						this.getOrigin().x-this.getDimension().width/2,
+						this.getOrigin().x-this.getDimension().width/2,
+						this.getOrigin().x-this.getDimension().width/2-10);
+				this.setYPoints(
+						this.getOrigin().y-5,
+						this.getOrigin().y+5,
+						this.getOrigin().y+this.getDimension().height/2);
+				break;
+			case down:
+				this.setXPoints(	
+						this.getOrigin().x-5,
+						this.getOrigin().x+5,
+						this.getOrigin().x+this.getDimension().width/2);
+
+				this.setYPoints(
+						this.getOrigin().y+this.getDimension().height/2,
+						this.getOrigin().y+this.getDimension().height/2,
+						this.getOrigin().y+this.getDimension().height/2+10);
+				break;
+			case up:
+				this.setXPoints(	
+						this.getOrigin().x-5,
+						this.getOrigin().x+5,
+						this.getOrigin().x+this.getDimension().width/2);
+
+				this.setYPoints(
+						this.getOrigin().y-this.getDimension().height/2,
+						this.getOrigin().y-this.getDimension().height/2,
+						this.getOrigin().y-this.getDimension().height/2-10);
+				break;
+			}
+			
+		}
 		
 		@Override
 		public Point getOrigin() {return origin;}

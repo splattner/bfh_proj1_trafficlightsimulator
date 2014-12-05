@@ -47,17 +47,13 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 	 * 
 	 * @return simulator
 	 */
-	public TrafficLightSimulator getSimulator() {
-		return simulator;
-	}
+	public TrafficLightSimulator getSimulator() { return simulator; }
 
 	/**
 	 * Set Traffic Light Simulator
 	 * @param simulator
 	 */
-	public void setSimulator(TrafficLightSimulator simulator) {
-		this.simulator = simulator;
-	}
+	public void setSimulator(TrafficLightSimulator simulator) { this.simulator = simulator; }
 
 	
 	public SimPanel(TrafficLightSimulator simulator) {
@@ -101,7 +97,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 
 		// Change Color of Background when in drag mode
 		if (this.mouse_pressed) {
-			g.setColor(new Color(200,200,200));
+			g.setColor(new Color(50,50,50));
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 
@@ -207,8 +203,6 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		mouse_press_x = e.getX();
 		mouse_press_y = e.getY();
 		mouse_pressed = true;
-
-
 	}
 
 	@Override
@@ -221,14 +215,10 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-	
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -251,9 +241,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-	
-	}
+	public void mouseMoved(MouseEvent e) {}
 
 
 }

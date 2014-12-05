@@ -128,7 +128,30 @@ public class Street implements DrawableObject{
 	public void setEndJunction(Junction endJunction) {this.endJunction = endJunction;}
 
 	public Point getOrigin() {return this.origin;}
-	public void setOrigin(Point origin) {this.origin = origin;}
+	
+	/**
+	 * Set Origin
+	 * If there is already a origin, this is a movement of street 
+	 * So you have to move also the origin of the lanes
+	 */
+	public void setOrigin(Point origin) {
+		
+		// Get difference to old origin for lane movement
+		if (this.origin != null) {
+			
+			int move_x = origin.x - this.origin.x;
+			int move_y = origin.y - this.origin.y;
+			
+			// Move all lanes
+			for (Lane l : this.getLanes()) {
+				l.setOrigin(new Point(l.getOrigin().x + move_x, l.getOrigin().y + move_y));
+				
+			}
+		}
+		
+		this.origin = origin;
+		
+	}
 
 	public int getLenght() {return length;}
 	public void setLenght(int lenght) {this.length = lenght;}

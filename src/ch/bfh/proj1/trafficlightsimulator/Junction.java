@@ -127,10 +127,9 @@ public class Junction implements DrawableObject{
 			
 			this.trafficLights = new LinkedList<TrafficLight>();
 			
-			// Go trought all attached streets and add traffic lights
+			// Go trough all attached streets and add traffic lights
 			Street streets[] = { this.getTopStreet(), this.getBottomStreet(),this.getLeftStreet(), this.getRightStreet() };
-	
-			
+				
 			for (Street s : streets) {
 				if (s != null) {
 					for (Lane l : s.getLanes()) {
@@ -167,6 +166,9 @@ public class Junction implements DrawableObject{
 	public void simulationStep(TrafficLightSimulator.TrafficLightMode mode) {
 		
 		
+		/*
+		 * Loop trough all lights of this junction
+		 */
 		if (mode == TrafficLightMode.sequenze) {
 			
 			TrafficLight currentGreenLight = null;
@@ -188,6 +190,7 @@ public class Junction implements DrawableObject{
 			// Check if we have a light at all?
 			if (currentGreenLight != null) {
 				
+				// Is it time to change the light?
 				if (currentGreenLight.getTimeLastChange() > (1 * TrafficLightSimulator.minimumGreenLightPhase)) {
 					currentGreenLight.setCurrentStatus(trafficLightStatus.RED);
 					currentGreenLight.setTimeLastChange(0);
@@ -198,6 +201,7 @@ public class Junction implements DrawableObject{
 					try {
 						currentGreenLight = this.getTrafficLights().get(currentTrafficLightIndex+1);
 					} catch (IndexOutOfBoundsException e) {
+						// no next light, so reset to first
 						currentGreenLight = this.getTrafficLights().getFirst();
 					}
 					
@@ -229,9 +233,9 @@ public class Junction implements DrawableObject{
 			}
 			
 			// If we have a green light
-			// Check if it was green enought
+			// Check if it was green long enough
 			if (currentGreenLight != null) {
-				if (currentGreenLight.getTimeLastChange() > TrafficLightSimulator.minimumGreenLightPhase || currentGreenLight.getNumOfVehiclesNearLight() == 0) {
+				if (currentGreenLight.getTimeLastChange() > (1 * TrafficLightSimulator.minimumGreenLightPhase) || currentGreenLight.getNumOfVehiclesNearLight() == 0) {
 					currentGreenLight.setCurrentStatus(trafficLightStatus.RED);
 					hasGreenLight = false;
 				} else {
@@ -259,6 +263,7 @@ public class Junction implements DrawableObject{
 				
 			}
 			
+			// If we don't have a light to change, but an alternate, use this
 			if (lightToChange == null && backupLightToChange != null) {
 				lightToChange = backupLightToChange;
 			}
