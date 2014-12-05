@@ -40,7 +40,7 @@ public class Street implements DrawableObject{
 	
 	private int id;
 	
-	/*
+	/**
 	 * Possible orientation of the street
 	 */
 	public enum orientation {
@@ -48,7 +48,7 @@ public class Street implements DrawableObject{
 		vertical
 	}
 	
-	/*
+	/**
 	 * Current orientation for the Street
 	 */
 	private orientation orientaion;
@@ -122,37 +122,26 @@ public class Street implements DrawableObject{
 	}
 
 	public Junction getStartJunction() {return startJunction;}
-
 	public void setStartJunction(Junction startJunction) {this.startJunction = startJunction;}
 
 	public Junction getEndJunction() {return endJunction;}
-
 	public void setEndJunction(Junction endJunction) {this.endJunction = endJunction;}
 
-	@Override
+	public Point getOrigin() {return this.origin;}
 	public void setOrigin(Point origin) {this.origin = origin;}
 
 	public int getLenght() {return length;}
-
 	public void setLenght(int lenght) {this.length = lenght;}
 
-	@Override
+	public Dimension getDimension() {return this.dimension;}
 	public void setDimension(Dimension dimension) {this.dimension = dimension;}
 	
 	public Collection<Lane> getLanes() {return this.lanes;}
 
-	@Override
-	public Point getOrigin() {return this.origin;}
-
-	@Override
-	public Dimension getDimension() {return this.dimension;}
-
 	public orientation getOrientaion() {return orientaion;}
-
 	public void setOrientaion(orientation orientaion) {this.orientaion = orientaion;}
 
 	public int getPositionsOnStreet() {return positionsOnStreet;}
-
 	public void setPositionsOnStreet(int positionsOnStreet) {this.positionsOnStreet = positionsOnStreet;}
 	
 	public int getId() {return id;}

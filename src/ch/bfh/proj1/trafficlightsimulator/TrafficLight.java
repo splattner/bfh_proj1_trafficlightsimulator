@@ -33,7 +33,7 @@ public class TrafficLight implements DrawableObject {
 	private Lane lane;
 	private trafficLightStatus currentStatus = trafficLightStatus.RED;
 	
-	/*
+	/**
 	 * Number of Simulation steps since we changed this to green
 	 */
 	private int timeLastChange;

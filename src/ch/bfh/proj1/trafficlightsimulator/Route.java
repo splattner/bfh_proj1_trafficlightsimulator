@@ -48,28 +48,18 @@ public class Route {
 		this.route.add(l);
 	}
 	
-	/*
+	/**
 	 * Return all Lanes of this Route
 	 */
 	public ArrayList<Lane> getLanes() {
 		return this.route;
 	}
 
-	public int getDistribution() {
-		return distribution;
-	}
+	public int getDistribution() { return distribution;	}
+	public void setDistribution(int distribution) {	this.distribution = distribution;}
 
-	public void setDistribution(int distribution) {
-		this.distribution = distribution;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
+	public boolean isVisible() { return visible; }
+	public void setVisible(boolean visible) { this.visible = visible; }
 	
 	public int getId() {return id;}
 

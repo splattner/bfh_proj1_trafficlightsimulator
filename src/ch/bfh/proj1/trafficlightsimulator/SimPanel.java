@@ -32,10 +32,7 @@ import javax.swing.JPanel;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
-/**
- * @author Sebastian Plattner
- *
- */
+
 public class SimPanel extends JPanel implements MouseListener, MouseMotionListener{
 	
 

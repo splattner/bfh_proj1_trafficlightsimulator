@@ -32,13 +32,8 @@ import ch.bfh.proj1.trafficlightsimulator.Route;
 import ch.bfh.proj1.trafficlightsimulator.Street;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLight;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator;
-import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
-import ch.bfh.proj1.trafficlightsimulator.Street.orientation;
-import ch.bfh.proj1.trafficlightsimulator.TrafficLight.trafficLightStatus;
 
-/**
- * @author sebastianplattner
- */
+
 public abstract class Vehicle implements DrawableObject{
 
 	protected int maxSpeed;
@@ -63,75 +58,41 @@ public abstract class Vehicle implements DrawableObject{
 	
 	private boolean brakeStatus = false;
 	
-	public int getMaxSpeed() {
-		return maxSpeed;
+	public int getMaxSpeed() { return maxSpeed; }
+	public void setMaxSpeed(int maxSpeed) { this.maxSpeed = maxSpeed;
 	}
-	public void setMaxSpeed(int maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-	public int getAccelerationMaxPositiv() {
-		return accelerationMaxPositiv;
-	}
-	public void setAccelerationMaxPositiv(int accelerationMaxPositiv) {
-		this.accelerationMaxPositiv = accelerationMaxPositiv;
-	}
-	public int getAccelerationMaxNegativ() {
-		return accelerationMaxNegativ;
-	}
-	public void setAccelerationMaxNegativ(int accelerationMaxNegativ) {
-		this.accelerationMaxNegativ = accelerationMaxNegativ;
-	}
-	public int getAccelerationStartPositiv() {
-		return accelerationStartPositiv;
-	}
-	public void setAccelerationStartPositiv(int accelerationStartPositiv) {
-		this.accelerationStartPositiv = accelerationStartPositiv;
-	}
-	public int getAccelerationStartNegativ() {
-		return accelerationStartNegativ;
-	}
-	public void setAccelerationStartNegativ(int accelerationStartNegativ) {
-		this.accelerationStartNegativ = accelerationStartNegativ;
-	}
-	public int getAccelerationStepPositiv() {
-		return accelerationStepPositiv;
-	}
-	public void setAccelerationStepPositiv(int accelerationStepPositiv) {
-		this.accelerationStepPositiv = accelerationStepPositiv;
-	}
-	public int getAccelerationStepNegativ() {
-		return accelerationStepNegativ;
-	}
-	public void setAccelerationStepNegativ(int accelerationStepNegativ) {
-		this.accelerationStepNegativ = accelerationStepNegativ;
-	}
-	public int getLenght() {
-		return lenght;
-	}
-	public void setLenght(int lenght) {
-		this.lenght = lenght;
-	}
-	public int getCurrentSpeed() {
-		return currentSpeed;
-	}
-	public void setCurrentSpeed(int currentSpeed) {
-		this.currentSpeed = currentSpeed;
-	}
-	public int getCurrentAcceleration() {
-		return currentAcceleration;
-	}
-	public void setCurrentAcceleration(int currentAcceleration) {
-		this.currentAcceleration = currentAcceleration;
-	}
-	public Route getRoute() {
-		return route;
-	}
-	public void setRoute(Route myRoute) {
-		this.route = myRoute;
-	}
-	public Lane getCurrentLane() {
-		return currentLane;
-	}
+	public int getAccelerationMaxPositiv() { return accelerationMaxPositiv; }
+	public void setAccelerationMaxPositiv(int accelerationMaxPositiv) {	this.accelerationMaxPositiv = accelerationMaxPositiv; }
+	
+	public int getAccelerationMaxNegativ() { return accelerationMaxNegativ; }
+	public void setAccelerationMaxNegativ(int accelerationMaxNegativ) {	this.accelerationMaxNegativ = accelerationMaxNegativ;}
+	
+	public int getAccelerationStartPositiv() { return accelerationStartPositiv;	}
+	public void setAccelerationStartPositiv(int accelerationStartPositiv) {	this.accelerationStartPositiv = accelerationStartPositiv;}
+	
+	public int getAccelerationStartNegativ() { return accelerationStartNegativ; }
+	public void setAccelerationStartNegativ(int accelerationStartNegativ) { this.accelerationStartNegativ = accelerationStartNegativ;}
+	
+	public int getAccelerationStepPositiv() { return accelerationStepPositiv; }
+	public void setAccelerationStepPositiv(int accelerationStepPositiv) { this.accelerationStepPositiv = accelerationStepPositiv; }
+	
+	public int getAccelerationStepNegativ() { return accelerationStepNegativ; }
+	public void setAccelerationStepNegativ(int accelerationStepNegativ) { this.accelerationStepNegativ = accelerationStepNegativ; }
+	
+	public int getLenght() { return lenght; }
+	public void setLenght(int lenght) { this.lenght = lenght; }
+	
+	public int getCurrentSpeed() { return currentSpeed; }
+	public void setCurrentSpeed(int currentSpeed) { this.currentSpeed = currentSpeed; }
+	
+	
+	public int getCurrentAcceleration() { return currentAcceleration; }
+	public void setCurrentAcceleration(int currentAcceleration) { this.currentAcceleration = currentAcceleration; }
+	
+	public Route getRoute() { return route; }
+	public void setRoute(Route myRoute) { this.route = myRoute; }
+	
+	public Lane getCurrentLane() { return currentLane; }
 	
 	
 	
