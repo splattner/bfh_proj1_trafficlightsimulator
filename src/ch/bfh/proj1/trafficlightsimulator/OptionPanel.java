@@ -237,10 +237,6 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
 		    	simulationFile = this.fileChooser.getSelectedFile();
 		    	
-		    	System.out.println("Loading SImulation");
-		    	System.out.println("Load XML File: " + simulationFile.getAbsolutePath());
-		    	
-		    	
 				TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler(simulationFile.getAbsolutePath());
 
 				
@@ -321,19 +317,6 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				this.simulator.getCurrentSimulation().stopSimulation();
 				btBreak.setEnabled(false);
 				
-				// Remove all cars from Lanes (if they are still on a lane)
-				for (Vehicle v : this.getSimulator().getCurrentSimulation().getVerhicles()) {
-					
-					if (v.getCurrentLane() != null)
-						v.getCurrentLane().getVerhiclesOnLane().remove(v);
-					
-					// Dereference, so Garbage Collector can remove the object
-					v = null;
-					
-				}
-				
-				// Remove all Vehicles
-				this.getSimulator().getCurrentSimulation().getVerhicles().clear();
 
 				// Create a new Simulation (based on the old one)
 				this.simulator.setCurrentSimulation(new Simulation(this.simulator.getCurrentSimulation()));

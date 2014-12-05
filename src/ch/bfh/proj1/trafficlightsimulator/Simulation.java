@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -54,6 +55,21 @@ public class Simulation extends Thread {
 
 		this.setSimulationSpeed(oldSimulation.getSimulationSpeed());
 		this.setSimulator(oldSimulation.getSimulator());
+		this.setJunctions(oldSimulation.getJunctions());
+		this.setStreets(oldSimulation.getStreets());
+		this.setRoutes(oldSimulation.getRoutes());
+		this.setLoaded(oldSimulation.isLoaded());
+		
+		// Clear Vehicle List
+		this.setVerhicles(new ArrayList<Vehicle>());
+		
+		// Reset Vehicles on Lane
+		for (Street s : this.getStreets()) {
+			for (Lane l : s.getLanes()) {
+				l.getVerhiclesOnLane().clear();
+			}
+		}
+
 		
 		oldSimulation = null;
 	}

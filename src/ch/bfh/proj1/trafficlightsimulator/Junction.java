@@ -49,40 +49,31 @@ public class Junction implements DrawableObject{
 	public int getId() {return id;}
 	
 	public Street getTopStreet() {return topStreet;}
-	
 	public void setTopStreet(Street topStreet) {this.topStreet = topStreet;}
 	
 	public Street getBottomStreet() {return bottomStreet;}
-	
 	public void setBottomStreet(Street bottomStreet) {this.bottomStreet = bottomStreet;}
 	
 	public Street getLeftStreet() {return leftStreet;}
-	
 	public void setLeftStreet(Street leftStreet) {this.leftStreet = leftStreet;}
 	
 	public Street getRightStreet() {return rightStreet;}
-	
 	public void setRightStreet(Street rightStreet) {this.rightStreet = rightStreet;}
 	
-	
-	@Override
+
 	public void paintObject(Graphics g) {
 		g.setColor(junctionColor);
 		g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
 		
 	}
 	
-	@Override
+
+	public Point getOrigin() {return this.origin;}
 	public void setOrigin(Point origin) {this.origin = origin;}
 	
-	@Override
-	public void setDimension(Dimension dimension) {this.dimension = dimension;}
-	
-	@Override
-	public Point getOrigin() {return this.origin;}
-	
-	@Override
 	public Dimension getDimension() {return this.dimension;}
+	public void setDimension(Dimension dimension) {this.dimension = dimension;}
+
 	
 	/**
 	 * Calculate Dimension of this Junction based on the connected streets / lanes
@@ -136,90 +127,37 @@ public class Junction implements DrawableObject{
 			
 			this.trafficLights = new LinkedList<TrafficLight>();
 			
-			// Traffic Lights on Top Street
-			if (this.getTopStreet() != null) {
-				for (Lane l : this.getTopStreet().getLanes()) {
-					if (this.getTopStreet().getEndJunction()!=null){
-						if (this.getTopStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.startToEnd) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
+			// Go trought all attached streets and add traffic lights
+			LinkedList<Street> streets = new LinkedList<Street>();
+			streets.add(this.getTopStreet());
+			streets.add(this.getBottomStreet());
+			streets.add(this.getLeftStreet());
+			streets.add(this.getRightStreet());
+			
+			for (Street s : streets) {
+				if (s != null) {
+					for (Lane l : s.getLanes()) {
+						if (s.getEndJunction()!=null){
+							if (s.getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.startToEnd) {
+								if (l.getTrafficLight() != null) {
+									this.trafficLights.add(l.getTrafficLight());
+								}
 							}
 						}
-					}
-					if (this.getTopStreet().getStartJunction() != null) {
-						if (this.getTopStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
+						if (s.getStartJunction() != null) {
+							if (s.getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+								if (l.getTrafficLight() != null) {
+									this.trafficLights.add(l.getTrafficLight());
+								}
 							}
 						}
 					}
 				}
 			}
-			
-			// Traffic Lights on Bottom Street
-			if (this.getBottomStreet() != null) {
-				for (Lane l : this.getBottomStreet().getLanes()) {
-					if (this.getBottomStreet().getEndJunction()!=null){
-						if (this.getBottomStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
-							}
-						}
-					}
-					if (this.getBottomStreet().getStartJunction() != null) {
-						if (this.getBottomStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
-							}
-						}
-					}
-				}
-			}
-			
-			// Traffic Lights on Left Street
-			if (this.getLeftStreet() != null) {
-				for (Lane l : this.getLeftStreet().getLanes()) {
-					if (this.getLeftStreet().getEndJunction()!=null){
-						if (this.getLeftStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.startToEnd) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
-							}
-						}
-					}
-					if (this.getLeftStreet().getStartJunction() != null) {
-						if (this.getLeftStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
-							}
-						}
-					}
-				}
-			}
-			
-			// Traffic Lights on Right Street
-			if (this.getRightStreet() != null) {
-				for (Lane l : this.getRightStreet().getLanes()) {
-					if (this.getRightStreet().getEndJunction()!=null){
-						if (this.getRightStreet().getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
-							}
-						}
-					}
-					if (this.getRightStreet().getStartJunction() != null) {
-						if (this.getRightStreet().getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
-							if (l.getTrafficLight() != null) {
-								this.trafficLights.add(l.getTrafficLight());
-							}
-						}
-					}
-				}
-			}
-			
+
 		}
 		
-		
-		
+
 		return this.trafficLights;
 		
 	}

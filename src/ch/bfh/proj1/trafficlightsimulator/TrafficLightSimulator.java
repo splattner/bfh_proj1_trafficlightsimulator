@@ -20,7 +20,6 @@
 package ch.bfh.proj1.trafficlightsimulator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -177,7 +176,7 @@ public class TrafficLightSimulator {
 		// Create new Vehicle Registry and register the current available Vehicles
 		// TODO: Dynamically scan available vehicle classess and add them to registry
 		this.vehicleRegistry = new ArrayList<VehicleRegistryEntry>();
-		
+
 		this.vehicleRegistry.add(new VehicleRegistryEntry(Car.class, "Car",50));
 		this.vehicleRegistry.add(new VehicleRegistryEntry(Truck.class, "Truck",50));
 				

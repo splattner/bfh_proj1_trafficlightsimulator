@@ -36,7 +36,7 @@ public class TrafficLightsXMLHandler {
             /* create a JAXBContext capable of handling classes generated into
              * the xmlLoader package
              */
-            JAXBContext jc = JAXBContext.newInstance("xmlLoader");
+            JAXBContext jc = JAXBContext.newInstance("ch.bfh.proj1.trafficlightsimulator.xmlLoader");
             
             // create an Unmarshaller
             Unmarshaller u = jc.createUnmarshaller();
