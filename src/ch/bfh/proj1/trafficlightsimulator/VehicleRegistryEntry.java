@@ -19,6 +19,11 @@
 
 package ch.bfh.proj1.trafficlightsimulator;
 
+/**
+ * This is a Vehicle Registry Entry.
+ * Each entry represents one type of vehicle
+ *
+ */
 public class VehicleRegistryEntry {
 	
 	private Class<?> vehicle;

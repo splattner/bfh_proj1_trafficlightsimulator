@@ -29,10 +29,7 @@ import ch.bfh.proj1.trafficlightsimulator.vehicles.Car;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Truck;
 
 
-/**
- * @author sebastianplattner
- *
- */
+
 public class TrafficLightSimulator {
 	
 

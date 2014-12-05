@@ -31,7 +31,7 @@ public class TrafficLight implements DrawableObject {
 	private Point origin;
 	private Dimension dimension;
 	private Lane lane;
-	private trafficLightStatus currentStatus = trafficLightStatus.RED; // TODO : remove that later
+	private trafficLightStatus currentStatus = trafficLightStatus.RED;
 	
 	/*
 	 * Number of Simulation steps since we changed this to green
@@ -48,7 +48,6 @@ public class TrafficLight implements DrawableObject {
 		this.setLane(aLane);
 	}
 	
-	@Override
 	public void paintObject(Graphics g) {		
 		if(currentStatus.name().equalsIgnoreCase("RED")) {
 			g.setColor(Color.RED);
@@ -66,56 +65,33 @@ public class TrafficLight implements DrawableObject {
 		g.fillRect(origin.x , origin.y, dimension.width, dimension.height);
 		
 		
-		/*
-		// Just Debug
-		g.setColor(Color.WHITE);
-		g.drawString(Integer.toString(timeLastChange) , this.origin.x, this.origin.y);
-		*/
 	}
 
-	@Override
-	public Point getOrigin() {return origin;}
 
-	@Override
+	public Point getOrigin() {return origin;}
 	public void setOrigin(Point origin) {this.origin = origin;}
 
-	@Override
-	public void setDimension(Dimension dimension) {this.dimension = dimension;}
 
-	@Override
+	public void setDimension(Dimension dimension) {this.dimension = dimension;}
 	public Dimension getDimension() {return dimension;}
 	
 	public trafficLightStatus getCurrentStatus () {return currentStatus;}
+	public void setCurrentStatus(trafficLightStatus currentStatus) {this.currentStatus = currentStatus;}
 
-	public void setCurrentStatus(trafficLightStatus currentStatus) {
-		this.currentStatus = currentStatus;
-	}
+	public Lane getLane() { return lane; }
+	public void setLane(Lane lane) { this.lane = lane;	}
 
-	public Lane getLane() {
-		return lane;
-	}
-
-	public void setLane(Lane lane) {
-		this.lane = lane;
-	}
-
-	public int getTimeLastChange() {
-		return timeLastChange;
-	}
-
-	public void setTimeLastChange(int timeLastChange) {
-		this.timeLastChange = timeLastChange;
-	}
+	public int getTimeLastChange() { return timeLastChange;	}
+	public void setTimeLastChange(int timeLastChange) {	this.timeLastChange = timeLastChange;}
 	
 	/**
 	 * Get the number of vehicles that are close to this traffic light
-	 * @return
+	 * @return numberOfVehiclesNearLight
 	 */
 	public int getNumOfVehiclesNearLight() {
 		int numberOfVehiclesNearLight = 0;
 		for (Vehicle v : this.getLane().getVerhiclesOnLane()) {
-			// All vehicles closer as 35% of Street Lenght
-
+			// All vehicles closer as 35% of Street Lenghta
 			if (v.getCurrentPosOnLane() > this.getLane().getStreet().getPositionsOnStreet() * 0.65) {
 				numberOfVehiclesNearLight++;
 			}

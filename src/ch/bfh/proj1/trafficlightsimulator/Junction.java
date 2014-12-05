@@ -128,11 +128,8 @@ public class Junction implements DrawableObject{
 			this.trafficLights = new LinkedList<TrafficLight>();
 			
 			// Go trought all attached streets and add traffic lights
-			LinkedList<Street> streets = new LinkedList<Street>();
-			streets.add(this.getTopStreet());
-			streets.add(this.getBottomStreet());
-			streets.add(this.getLeftStreet());
-			streets.add(this.getRightStreet());
+			Street streets[] = { this.getTopStreet(), this.getBottomStreet(),this.getLeftStreet(), this.getRightStreet() };
+	
 			
 			for (Street s : streets) {
 				if (s != null) {

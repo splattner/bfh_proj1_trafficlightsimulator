@@ -98,7 +98,7 @@ public class Lane implements DrawableObject {
 					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
 				}
 
-				if (this.arrow.getOrigin() == null) {
+				//if (this.arrow.getOrigin() == null) {
 					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
 					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
 
@@ -110,7 +110,7 @@ public class Lane implements DrawableObject {
 							arrow.getOrigin().y-5,
 							arrow.getOrigin().y+5,
 							arrow.getOrigin().y+arrow.getDimension().height/2);
-				}
+				//}
 			}
 
 			else {
@@ -119,7 +119,7 @@ public class Lane implements DrawableObject {
 					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
 				}
 
-				if (this.arrow.getOrigin() == null) {
+				//if (this.arrow.getOrigin() == null) {
 					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
 					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
 
@@ -131,7 +131,7 @@ public class Lane implements DrawableObject {
 							arrow.getOrigin().y-5,
 							arrow.getOrigin().y+5,
 							arrow.getOrigin().y+arrow.getDimension().height/2);
-				}
+				//}
 			}
 
 		}
@@ -145,7 +145,7 @@ public class Lane implements DrawableObject {
 					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
 				}
 
-				if (this.arrow.getOrigin() == null) {
+				//if (this.arrow.getOrigin() == null) {
 					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
 					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
 
@@ -158,7 +158,7 @@ public class Lane implements DrawableObject {
 							arrow.getOrigin().y+arrow.getDimension().height/2,
 							arrow.getOrigin().y+arrow.getDimension().height/2,
 							arrow.getOrigin().y+arrow.getDimension().height/2+10);
-				}
+				//}
 
 			}
 
@@ -168,7 +168,7 @@ public class Lane implements DrawableObject {
 					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
 				}
 
-				if (this.arrow.getOrigin() == null) {
+				//if (this.arrow.getOrigin() == null) {
 					arrow.setOrigin(new Point (origin.x+dimension.width/2, origin.y+dimension.height/2));
 					arrow.setDimension(new Dimension (dimension.width/6,dimension.height/6));
 
@@ -181,7 +181,7 @@ public class Lane implements DrawableObject {
 							arrow.getOrigin().y-arrow.getDimension().height/2,
 							arrow.getOrigin().y-arrow.getDimension().height/2,
 							arrow.getOrigin().y-arrow.getDimension().height/2-10);
-				}
+				//}
 			}
 		}			
 			

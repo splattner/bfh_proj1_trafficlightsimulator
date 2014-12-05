@@ -23,7 +23,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -301,7 +300,6 @@ public class Simulation extends Thread {
 		int numOfLanes = 0;
 		Dimension d;
 		Point newOrigin;
-		Street nextStreet = null;
 		
 		// Check if this is a horizontal or vertical steet
 		if (s.getEndJunction() != null) {
@@ -332,22 +330,14 @@ public class Simulation extends Thread {
 				//System.out.println("Calculated Dimension of Junction " + j.getDimension().getWidth() + " * " + j.getDimension().getHeight());
 				
 				// Go to next Street (top, right, bottom)
-				if ((nextStreet = j.getTopStreet()) != null) {
-					//System.out.println("Next Street is top");
-					calcucalteOriginAndDimension(nextStreet, j);
-				}
+				Street streets[] = {j.getTopStreet(), j.getRightStreet(), j.getBottomStreet()};
 				
-				// Go to next Street
-				if ((nextStreet = j.getRightStreet()) != null) {
-					//System.out.println("Next street is right");
-					calcucalteOriginAndDimension(nextStreet, j);
+				for (Street nextStreet : streets) {
+					if (nextStreet != null) {
+						calcucalteOriginAndDimension(nextStreet, j);
+					}
 				}
-				
-				// Go to next Street
-				if ((nextStreet = j.getBottomStreet()) != null) {
-					//System.out.println("Next street is bottom");
-					calcucalteOriginAndDimension(nextStreet, j);
-				}
+
 				
 			} else if ((j.getTopStreet().equals(s))) {
 				// Its a vertical street
@@ -369,23 +359,13 @@ public class Simulation extends Thread {
 				//System.out.println("Calculated Dimension of Junction " + j.getDimension().getWidth() + " * " + j.getDimension().getHeight());
 				
 				// Go to next Street (left, bottom, right)
-				if ((nextStreet = j.getLeftStreet()) != null) {
-					//System.out.println("Next Street is left");
-					calcucalteOriginAndDimension(nextStreet, j);
+				Street streets[] = {j.getLeftStreet(), j.getBottomStreet(), j.getRightStreet()};
+				for (Street nextStreet : streets) {
+					if (nextStreet != null) {
+						calcucalteOriginAndDimension(nextStreet, j);
+					}
 				}
-				
-				// Go to next Street
-				if ((nextStreet = j.getBottomStreet()) != null) {
-					//System.out.println("Next Street is bottom");
-					calcucalteOriginAndDimension(nextStreet, j);
-				}
-				
-				// Go to next Street
-				if ((nextStreet = j.getRightStreet()) != null) {
-					//System.out.println("Next Street is right");
-					calcucalteOriginAndDimension(nextStreet, j);
-				}
-			
+
 			}
 			
 		}
@@ -734,6 +714,39 @@ public class Simulation extends Thread {
 			}
 			//System.out.println("No more Streets for next junction. Return");
 			return;
+		}
+		
+		
+	}
+	
+	public void moveSimulation(int x, int y) {
+		
+		if (this.isLoaded()) {
+			
+			for (Junction j : this.getJunctions()) {
+				j.setOrigin(new Point(j.getOrigin().x + x, j.getOrigin().y + y));
+			}
+			
+			for (Street s : this.getStreets()) {
+				s.setOrigin(new Point(s.getOrigin().x + x, s.getOrigin().y + y));
+				for (Lane l : s.getLanes()) {
+					l.setOrigin(new Point(l.getOrigin().x + x, l.getOrigin().y + y));
+					
+					TrafficLight tf = l.getTrafficLight();
+					
+					if (tf != null) {
+						tf.setOrigin(new Point(tf.getOrigin().x + x, tf.getOrigin().y + y));
+					}
+					
+					
+				}
+			}
+			
+			for (Vehicle v : this.getVerhicles()) {
+				v.setOrigin(new Point(v.getOrigin().x + x, v.getOrigin().y + y));
+			}
+			
+
 		}
 		
 		

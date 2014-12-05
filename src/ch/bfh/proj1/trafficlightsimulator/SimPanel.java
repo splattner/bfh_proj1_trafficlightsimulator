@@ -25,6 +25,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -35,7 +36,7 @@ import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
  * @author Sebastian Plattner
  *
  */
-public class SimPanel extends JPanel implements MouseListener{
+public class SimPanel extends JPanel implements MouseListener, MouseMotionListener{
 	
 
 	/*
@@ -70,6 +71,7 @@ public class SimPanel extends JPanel implements MouseListener{
 		
 		// Mouse Listener to react on mouse clickes in the Sim Panwl
 		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
 		
 	}
 	
@@ -92,7 +94,18 @@ public class SimPanel extends JPanel implements MouseListener{
 			g.setColor(Color.BLACK);
 		}
 		
+		if (this.getSimulator().getCurrentSimulation().isLoaded() && this.mouse_pressed) {
+			g.setColor(new Color(200,200,200));
+		}
+
+		
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		
+		
+		if (this.getSimulator().getCurrentSimulation().isLoaded()) {
+			g.setColor(Color.white);
+			g.drawString("Drag & Drop for moving around the simulation", 250, 30);
+		}
 
 		
 		if (!this.getSimulator().getCurrentSimulation().isLoaded()) {
@@ -186,13 +199,27 @@ public class SimPanel extends JPanel implements MouseListener{
 		this.getSimulator().refreshWindow();
 	}
 
+	
+	private int mouse_press_x = 0;
+	private int mouse_press_y = 0;
+	private boolean mouse_pressed = false;
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
+		
+		mouse_press_x = e.getX();
+		mouse_press_y = e.getY();
+		mouse_pressed = true;
+		this.getSimulator().refreshWindow();
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		
+		mouse_pressed = false;
+		
+		this.getSimulator().refreshWindow();
 
 	}
 
@@ -203,6 +230,27 @@ public class SimPanel extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		
+		if (mouse_pressed) {
+			int mouse_move_x = e.getX() - mouse_press_x;
+			int mouse_move_y = e.getY() - mouse_press_y;
+			
+			this.getSimulator().getCurrentSimulation().moveSimulation(mouse_move_x, mouse_move_y);
+			
+			mouse_press_x = e.getX();
+			mouse_press_y = e.getY();
+			
+			this.getSimulator().refreshWindow();
+		}
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
 	
 	}
 

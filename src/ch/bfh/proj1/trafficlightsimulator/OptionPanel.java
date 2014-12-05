@@ -260,6 +260,9 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				this.btRunSimulation.setEnabled(true);
 				this.btRunSimulation.setToolTipText("");
 				
+				
+				
+				
 				// Redraw Sim Panel
 				this.getSimulator().refreshWindow();
 
