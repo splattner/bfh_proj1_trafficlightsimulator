@@ -1,3 +1,22 @@
+/*
+ * Copyright 2014
+ * Sebastian Plattner, Donatello Gallucci
+ * Bern University of applied Science
+ 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package ch.bfh.proj1.trafficlightsimulator;
 
 
@@ -21,9 +40,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import xmlLoader.TrafficLightsXMLHandler;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.SimulationMode;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
+import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
+import ch.bfh.proj1.trafficlightsimulator.xmlLoader.TrafficLightsXMLHandler;
 
 public class OptionPanel extends JPanel implements ActionListener, ChangeListener{
 	
@@ -224,13 +244,13 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler(simulationFile.getAbsolutePath());
 
 				
-				this.getSimulator().setJunctions(txmlh.getJunctions());
-				this.getSimulator().setStreets(txmlh.getStreets());
-				this.getSimulator().setRoutes(txmlh.getRoutes());
+				this.getSimulator().getCurrentSimulation().setJunctions(txmlh.getJunctions());
+				this.getSimulator().getCurrentSimulation().setStreets(txmlh.getStreets());
+				this.getSimulator().getCurrentSimulation().setRoutes(txmlh.getRoutes());
 				
-				this.getSimulator().setVerhicles(new ArrayList<Vehicle>());
+				this.getSimulator().getCurrentSimulation().setVerhicles(new ArrayList<Vehicle>());
 				
-				((LinkedList<Street>)this.getSimulator().getStreets()).get(0).setOrigin(new Point(300,200));
+				((LinkedList<Street>)this.getSimulator().getCurrentSimulation().getStreets()).get(0).setOrigin(new Point(300,200));
 				
 				this.getSimulator().getCurrentSimulation().initOrigins();
 				
@@ -245,9 +265,8 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				this.btRunSimulation.setToolTipText("");
 				
 				// Redraw Sim Panel
-				//System.out.println("Redraw Sim Panel");
-				this.getSimulator().getMainFrame().invalidate();
-				this.getSimulator().getMainFrame().repaint();
+				this.getSimulator().refreshWindow();
+
 		    	
 		    }
 		}
@@ -303,7 +322,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				btBreak.setEnabled(false);
 				
 				// Remove all cars from Lanes (if they are still on a lane)
-				for (Vehicle v : this.getSimulator().getVerhicles()) {
+				for (Vehicle v : this.getSimulator().getCurrentSimulation().getVerhicles()) {
 					
 					if (v.getCurrentLane() != null)
 						v.getCurrentLane().getVerhiclesOnLane().remove(v);
@@ -314,14 +333,13 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 				}
 				
 				// Remove all Vehicles
-				this.getSimulator().getVerhicles().clear();
+				this.getSimulator().getCurrentSimulation().getVerhicles().clear();
 
 				// Create a new Simulation (based on the old one)
 				this.simulator.setCurrentSimulation(new Simulation(this.simulator.getCurrentSimulation()));
 				
-				// Redraw
-				this.getSimulator().getMainFrame().invalidate();
-				this.getSimulator().getMainFrame().repaint();
+				// Redraw Sim Panel
+				this.getSimulator().refreshWindow();
 				
 				
 				

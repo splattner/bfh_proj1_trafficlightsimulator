@@ -1,11 +1,33 @@
+/*
+ * Copyright 2014
+ * Sebastian Plattner, Donatello Gallucci
+ * Bern University of applied Science
+ 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.SimulationMode;
+import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 public class Simulation extends Thread {
 	
@@ -32,12 +54,25 @@ public class Simulation extends Thread {
 
 		this.setSimulationSpeed(oldSimulation.getSimulationSpeed());
 		this.setSimulator(oldSimulation.getSimulator());
-
 		
 		oldSimulation = null;
-
-		
 	}
+	
+	private Collection<Junction> junctions;
+	public Collection<Junction> getJunctions() {return junctions;}
+	public void setJunctions(Collection<Junction> junctions) {this.junctions = junctions;}
+	
+	private Collection<Street> streets;
+	public void setStreets(Collection<Street> streets) {this.streets = streets;}
+	public Collection<Street> getStreets() {return streets;}
+	
+	private Collection<Route> routes;
+	public Collection<Route> getRoutes() {return routes;}
+	public void setRoutes(Collection<Route> routes) {this.routes = routes;}
+	
+	private ArrayList<Vehicle> verhicles;
+	public ArrayList<Vehicle> getVerhicles() {return verhicles;}
+	public void setVerhicles(ArrayList<Vehicle> verhicles) {this.verhicles = verhicles;}
 	
 	public void run() {
 
@@ -49,22 +84,20 @@ public class Simulation extends Thread {
 				
 				
 				// Simulate all vehicles
-				for (Vehicle v : this.getSimulator().getVerhicles()) {
+				for (Vehicle v : this.getSimulator().getCurrentSimulation().getVerhicles()) {
 					v.simulationStep();
 				}
 				
 				
 				
 				// Simulate all Junctions (Traffic Lights)
-				for (Junction j : this.getSimulator().getJunctions()) {
+				for (Junction j : this.getJunctions()) {
 					j.simulationStep(this.getSimulator().getCurrentMode());
 				}
 				
 				
 				// Redraw Sim Panel
-				//System.out.println("Redraw Sim Panel");
-				this.getSimulator().getMainFrame().invalidate();
-				this.getSimulator().getMainFrame().repaint();
+				this.getSimulator().refreshWindow();
 				
 				
 				
@@ -96,7 +129,7 @@ public class Simulation extends Thread {
 						if (randNumberVehicle > currentVehicleDist && randNumberVehicle <= nextVehicleDist) {
 
 							// Loop trought all routes
-							for (Route r : this.getSimulator().getRoutes()) {
+							for (Route r : this.getSimulator().getCurrentSimulation().getRoutes()) {
 								// Set distribution for upper boundery
 								nextRouteDist += r.getDistribution();
 								
@@ -117,7 +150,7 @@ public class Simulation extends Thread {
 										v.setRoute(r);
 										v.setCurrentLane(r.getLanes().get(0));
 										
-										this.getSimulator().getVerhicles().add(v);
+										this.getSimulator().getCurrentSimulation().getVerhicles().add(v);
 									}
 									
 								}
@@ -154,9 +187,8 @@ public class Simulation extends Thread {
 				// Check if we should break
 				if (this.isBreaking()) {
 					//System.out.println("Breaking");
-					//System.out.println("Redraw Sim Panel");
-					this.getSimulator().getMainFrame().invalidate();
-					this.getSimulator().getMainFrame().repaint();
+					// Redraw Sim Panel
+					this.getSimulator().refreshWindow();
 					try {
 						this.wait();
 					} catch (InterruptedException e) {
@@ -246,7 +278,7 @@ public class Simulation extends Thread {
 	public void initOrigins() {
 
 		// Start with first street (the one very left/top and should have no start junction
-		Street s = ((List<Street>) this.getSimulator().getStreets()).get(0);
+		Street s = ((List<Street>) this.getStreets()).get(0);
 		
 		//System.out.println("Startin with Street " + s.getOrigin().x + " / " + s.getOrigin().y);
 		Junction j;

@@ -1,22 +1,36 @@
+/*
+ * Copyright 2014
+ * Sebastian Plattner, Donatello Gallucci
+ * Bern University of applied Science
+ 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
-import java.util.Hashtable;
-import java.util.LinkedList;
 
 import javax.swing.AbstractCellEditor;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -26,10 +40,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
-import javax.swing.border.Border;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -37,6 +47,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import ch.bfh.proj1.trafficlightsimulator.vehicles.Car;
+import ch.bfh.proj1.trafficlightsimulator.vehicles.Truck;
+import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
 public class OptionDialog extends JDialog implements ActionListener{ 
@@ -77,7 +91,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		this.routeTable.setRowHeight(40);
 		
-		SelectionListener listener = new SelectionListener(this.routeTable, this.getSimulator().getRoutes());
+		SelectionListener listener = new SelectionListener(this.routeTable, this.getSimulator().getCurrentSimulation().getRoutes());
 		this.routeTable.getSelectionModel().addListSelectionListener(listener);
 		
 
@@ -216,7 +230,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		public RouteTableModel(TrafficLightSimulator simulator) {
 			this.simulator = simulator;
-			routes = (ArrayList<Route>) this.simulator.getRoutes();
+			routes = (ArrayList<Route>) this.simulator.getCurrentSimulation().getRoutes();
 		}
 
 		public Class getColumnClass(int column) {
@@ -353,11 +367,11 @@ public class OptionDialog extends JDialog implements ActionListener{
 			
 			if (e.getSource().equals(this.btCar)) {
 				
-				ArrayList<Vehicle> vehicles = this.getSimulator().getVerhicles();
+				ArrayList<Vehicle> vehicles = this.getSimulator().getCurrentSimulation().getVerhicles();
 				Vehicle v = new Car();
 				//Vehicle v = new Truck();
 
-				Route r = ((ArrayList<Route>) this.getSimulator().getRoutes()).get(this.routeIndex);
+				Route r = ((ArrayList<Route>) this.getSimulator().getCurrentSimulation().getRoutes()).get(this.routeIndex);
 
 				Lane l = r.getLanes().get(0);
 				
@@ -370,10 +384,10 @@ public class OptionDialog extends JDialog implements ActionListener{
 			
 			if (e.getSource().equals(this.btTruck)) {
 				
-				ArrayList<Vehicle> vehicles = this.getSimulator().getVerhicles();
+				ArrayList<Vehicle> vehicles = this.getSimulator().getCurrentSimulation().getVerhicles();
 				Vehicle v = new Truck();
 
-				Route r = ((ArrayList<Route>) this.getSimulator().getRoutes()).get(this.routeIndex);
+				Route r = ((ArrayList<Route>) this.getSimulator().getCurrentSimulation().getRoutes()).get(this.routeIndex);
 
 				Lane l = r.getLanes().get(0);
 				

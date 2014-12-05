@@ -6,7 +6,7 @@
 //
 
 
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

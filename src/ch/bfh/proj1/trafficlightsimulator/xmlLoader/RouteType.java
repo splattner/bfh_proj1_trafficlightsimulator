@@ -6,7 +6,7 @@
 //
 
 
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for LanesType complex type.
+ * <p>Java class for RouteType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="LanesType">
+ * &lt;complexType name="RouteType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="lane" type="{http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema}LaneType" maxOccurs="unbounded" minOccurs="2"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="lane" type="{http://www.w3.org/2001/XMLSchema}int" maxOccurs="unbounded" minOccurs="2"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,13 +37,31 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "LanesType", propOrder = {
+@XmlType(name = "RouteType", propOrder = {
+    "id",
     "lane"
 })
-public class LanesType {
+public class RouteType {
 
-    @XmlElement(required = true)
-    protected List<LaneType> lane;
+    protected int id;
+    @XmlElement(type = Integer.class)
+    protected List<Integer> lane;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(int value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the lane property.
@@ -62,13 +81,13 @@ public class LanesType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link LaneType }
+     * {@link Integer }
      * 
      * 
      */
-    public List<LaneType> getLane() {
+    public List<Integer> getLane() {
         if (lane == null) {
-            lane = new ArrayList<LaneType>();
+            lane = new ArrayList<Integer>();
         }
         return this.lane;
     }

@@ -1,4 +1,23 @@
-package ch.bfh.proj1.trafficlightsimulator;
+/*
+ * Copyright 2014
+ * Sebastian Plattner, Donatello Gallucci
+ * Bern University of applied Science
+ 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package ch.bfh.proj1.trafficlightsimulator.vehicles;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,6 +25,16 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+
+import ch.bfh.proj1.trafficlightsimulator.DrawableObject;
+import ch.bfh.proj1.trafficlightsimulator.Lane;
+import ch.bfh.proj1.trafficlightsimulator.Route;
+import ch.bfh.proj1.trafficlightsimulator.Street;
+import ch.bfh.proj1.trafficlightsimulator.TrafficLight;
+import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator;
+import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
+import ch.bfh.proj1.trafficlightsimulator.Street.orientation;
+import ch.bfh.proj1.trafficlightsimulator.TrafficLight.trafficLightStatus;
 
 /**
  * @author sebastianplattner

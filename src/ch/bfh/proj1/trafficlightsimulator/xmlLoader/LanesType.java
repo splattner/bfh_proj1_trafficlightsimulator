@@ -6,7 +6,7 @@
 //
 
 
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for StreetsType complex type.
+ * <p>Java class for LanesType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="StreetsType">
+ * &lt;complexType name="LanesType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="street" type="{http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema}StreetType" maxOccurs="unbounded" minOccurs="2"/>
+ *         &lt;element name="lane" type="{http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema}LaneType" maxOccurs="unbounded" minOccurs="2"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StreetsType", propOrder = {
-    "street"
+@XmlType(name = "LanesType", propOrder = {
+    "lane"
 })
-public class StreetsType {
+public class LanesType {
 
     @XmlElement(required = true)
-    protected List<StreetType> street;
+    protected List<LaneType> lane;
 
     /**
-     * Gets the value of the street property.
+     * Gets the value of the lane property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the street property.
+     * This is why there is not a <CODE>set</CODE> method for the lane property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getStreet().add(newItem);
+     *    getLane().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link StreetType }
+     * {@link LaneType }
      * 
      * 
      */
-    public List<StreetType> getStreet() {
-        if (street == null) {
-            street = new ArrayList<StreetType>();
+    public List<LaneType> getLane() {
+        if (lane == null) {
+            lane = new ArrayList<LaneType>();
         }
-        return this.street;
+        return this.lane;
     }
 
 }

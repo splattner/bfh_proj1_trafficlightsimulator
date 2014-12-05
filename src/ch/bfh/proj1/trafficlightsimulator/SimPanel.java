@@ -1,16 +1,34 @@
+/*
+ * Copyright 2014
+ * Sebastian Plattner, Donatello Gallucci
+ * Bern University of applied Science
+ 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
 import javax.swing.JPanel;
+
+import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
 /**
@@ -84,7 +102,7 @@ public class SimPanel extends JPanel implements MouseListener{
 
 		
 		// Draw all Streets
-		for (Street street : this.getSimulator().getStreets()) {
+		for (Street street : this.getSimulator().getCurrentSimulation().getStreets()) {
 
 			street.paintObject(g);
 			
@@ -100,7 +118,7 @@ public class SimPanel extends JPanel implements MouseListener{
 		}
 		
 		// Draw all Junctions
-		for (Junction j : this.getSimulator().getJunctions()) {
+		for (Junction j : this.getSimulator().getCurrentSimulation().getJunctions()) {
 			j.paintObject(g);
 		}
 		
@@ -112,7 +130,7 @@ public class SimPanel extends JPanel implements MouseListener{
 		g2d.setStroke(new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
      
 		
-		for (Route r : this.getSimulator().getRoutes()) {
+		for (Route r : this.getSimulator().getCurrentSimulation().getRoutes()) {
 			if (r.isVisible()) {
 				for (Lane l : r.getLanes()) {
 					if (l.getStreet().getOrientaion() == Street.orientation.horizontal) {
@@ -132,7 +150,7 @@ public class SimPanel extends JPanel implements MouseListener{
 		
 		// Only allow interction with traffic lights in manuel mode
 		if (this.getSimulator().getCurrentMode() == TrafficLightSimulator.TrafficLightMode.manuel) {
-			for (Junction j : this.getSimulator().getJunctions()) {
+			for (Junction j : this.getSimulator().getCurrentSimulation().getJunctions()) {
 				
 				// Change a single light
 				for (TrafficLight tf : j.getTrafficLights()) {
@@ -164,9 +182,8 @@ public class SimPanel extends JPanel implements MouseListener{
 			}
 		}
 		
-		// Redraw
-		this.getSimulator().getMainFrame().invalidate();
-		this.getSimulator().getMainFrame().repaint();
+		// Redraw Sim Panel
+		this.getSimulator().refreshWindow();
 	}
 
 	@Override

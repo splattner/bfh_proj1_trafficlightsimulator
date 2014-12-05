@@ -6,7 +6,7 @@
 //
 
 
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for JunctionsType complex type.
+ * <p>Java class for StreetsType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="JunctionsType">
+ * &lt;complexType name="StreetsType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="junction" type="{http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema}JunctionType" maxOccurs="unbounded"/>
+ *         &lt;element name="street" type="{http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema}StreetType" maxOccurs="unbounded" minOccurs="2"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "JunctionsType", propOrder = {
-    "junction"
+@XmlType(name = "StreetsType", propOrder = {
+    "street"
 })
-public class JunctionsType {
+public class StreetsType {
 
     @XmlElement(required = true)
-    protected List<JunctionType> junction;
+    protected List<StreetType> street;
 
     /**
-     * Gets the value of the junction property.
+     * Gets the value of the street property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the junction property.
+     * This is why there is not a <CODE>set</CODE> method for the street property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getJunction().add(newItem);
+     *    getStreet().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JunctionType }
+     * {@link StreetType }
      * 
      * 
      */
-    public List<JunctionType> getJunction() {
-        if (junction == null) {
-            junction = new ArrayList<JunctionType>();
+    public List<StreetType> getStreet() {
+        if (street == null) {
+            street = new ArrayList<StreetType>();
         }
-        return this.junction;
+        return this.street;
     }
 
 }

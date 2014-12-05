@@ -6,5 +6,5 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 

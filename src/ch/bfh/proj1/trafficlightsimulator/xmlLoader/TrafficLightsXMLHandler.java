@@ -1,4 +1,4 @@
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 
 import java.io.FileInputStream;
 import java.io.IOException;

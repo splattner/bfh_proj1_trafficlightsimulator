@@ -6,7 +6,7 @@
 //
 
 
-package xmlLoader;
+package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for RouteType complex type.
+ * <p>Java class for JunctionsType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="RouteType">
+ * &lt;complexType name="JunctionsType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="lane" type="{http://www.w3.org/2001/XMLSchema}int" maxOccurs="unbounded" minOccurs="2"/>
+ *         &lt;element name="junction" type="{http://www.bfh.ch/project1/2014/I2R/TrafficLightConfigSchema}JunctionType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,59 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RouteType", propOrder = {
-    "id",
-    "lane"
+@XmlType(name = "JunctionsType", propOrder = {
+    "junction"
 })
-public class RouteType {
+public class JunctionsType {
 
-    protected int id;
-    @XmlElement(type = Integer.class)
-    protected List<Integer> lane;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
+    @XmlElement(required = true)
+    protected List<JunctionType> junction;
 
     /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the lane property.
+     * Gets the value of the junction property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lane property.
+     * This is why there is not a <CODE>set</CODE> method for the junction property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLane().add(newItem);
+     *    getJunction().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Integer }
+     * {@link JunctionType }
      * 
      * 
      */
-    public List<Integer> getLane() {
-        if (lane == null) {
-            lane = new ArrayList<Integer>();
+    public List<JunctionType> getJunction() {
+        if (junction == null) {
+            junction = new ArrayList<JunctionType>();
         }
-        return this.lane;
+        return this.junction;
     }
 
 }

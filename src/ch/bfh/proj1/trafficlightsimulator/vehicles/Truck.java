@@ -17,20 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ch.bfh.proj1.trafficlightsimulator;
+package ch.bfh.proj1.trafficlightsimulator.vehicles;
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Point;
 
-public interface DrawableObject {
+public class Truck extends Vehicle {
 	
-	public void paintObject(Graphics g);
-	
-	public Point getOrigin();
-	public void setOrigin(Point origin);
-	
-	public void setDimension(Dimension dimension);
-	public Dimension getDimension();
-
+	public Truck() {
+		this.dimension = new Dimension(20,7);
+		this.carColor = Color.ORANGE;
+		
+		this.accelerationMaxPositiv = 10;
+		this.accelerationMaxNegativ = 15;
+		this.accelerationStartPositiv = 3;
+		this.accelerationStartNegativ = 7;
+		this.accelerationStepPositiv = 1;
+		this.accelerationStepNegativ = 1;
+		
+		this.maxSpeed = 300;
+	}
 }
