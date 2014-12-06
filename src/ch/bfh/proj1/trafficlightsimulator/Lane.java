@@ -78,6 +78,11 @@ public class Lane implements DrawableObject {
 	 * The street this lane is on
 	 */
 	private Street street;
+	
+	
+	private boolean highlighted = false;
+	public boolean isHighlighted() {return highlighted; }
+	public void setHighlighted(boolean highlighted) { this.highlighted = highlighted;}
 		
 	public Lane(int id, laneOrientations laneOrientation) {
 		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
@@ -100,8 +105,12 @@ public class Lane implements DrawableObject {
 
 	@Override
 	public void paintObject(Graphics g) {
-				
-		g.setColor(Street.streetColor);
+		
+		if (this.isHighlighted()) {
+			g.setColor(new Color(0, 200, 0));
+		} else {
+			g.setColor(Street.streetColor);
+		}
 		g.fillRect(this.origin.x, this.origin.y, this.dimension.width, this.dimension.height);		
 		
 		
@@ -206,6 +215,40 @@ public class Lane implements DrawableObject {
 	
 	public int getId() {return id;}
 	
+	public boolean isLeftToRight() { return this.laneOrientation == laneOrientations.startToEnd; }
+	public boolean isRightToLeft() { return this.laneOrientation == laneOrientations.endToStart; }
+	
+	public boolean isTopToBottom() { return this.laneOrientation == laneOrientations.startToEnd; }
+	public boolean isBottomToTop() { return this.laneOrientation == laneOrientations.endToStart; }
+	
+	public Junction getNextJunction() {
+		Junction j;
+		
+		if (this.getStreet().isHorizontal()) {
+			if (this.isLeftToRight()) {
+				// Next Junction is on the End Side
+				j = this.getStreet().getEndJunction();
+				
+			} else {
+				// Next Junction is on the Start Side
+				j = this.getStreet().getStartJunction();
+			}
+		} else {
+			if (this.isTopToBottom()) {
+				// Next Junction is on the End Side
+				j = this.getStreet().getEndJunction();
+			} else {
+				// Next Junction is on the Start Side
+				j = this.getStreet().getStartJunction();
+			}
+		}
+		
+		
+		return j;
+	}
+	
+
+
 	private class Arrow implements DrawableObject {
 		
 		private Dimension dimension;

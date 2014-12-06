@@ -168,5 +168,8 @@ public class Street implements DrawableObject{
 	public void setPositionsOnStreet(int positionsOnStreet) {this.positionsOnStreet = positionsOnStreet;}
 	
 	public int getId() {return id;}
+	
+	public boolean isHorizontal() { return this.orientaion == orientaion.horizontal; }
+	public boolean isVertical() { return this.orientaion == orientaion.vertical; }
 
 }

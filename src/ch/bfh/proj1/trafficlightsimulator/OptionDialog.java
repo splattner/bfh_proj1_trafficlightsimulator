@@ -521,11 +521,17 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		      for (Route r : this.routes) {
 		    	  r.setVisible(false);
+		    	  r.highLightNextLanes(false);
+		    	  
 		      }
 		      
 		      for (int i = 0; i < selectedRow.length; i++) {
-		    	  routes.get(selectedRow[i]).setVisible(true);
+		    	  Route r = routes.get(selectedRow[i]);
+		    	  r.setVisible(true);
+		    	  r.highLightNextLanes(true);	  
 		      }
+		      
+		      getSimulator().refreshWindow();
  
 			  
 		  }

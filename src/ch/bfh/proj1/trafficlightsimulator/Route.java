@@ -19,13 +19,13 @@
 
 package ch.bfh.proj1.trafficlightsimulator;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Route {
 	
 	private int id;
 	
-	private ArrayList<Lane> route;
+	private LinkedList<Lane> route;
 	
 	/**
 	 * Distribute vehicles based on this distribution on all available routes
@@ -40,7 +40,7 @@ public class Route {
 	private boolean visible = false;
 	
 	public Route(int id) {
-		this.route = new ArrayList<Lane>();
+		this.route = new LinkedList<Lane>();
 		this.id = id;
 	}
 	
@@ -51,7 +51,7 @@ public class Route {
 	/**
 	 * Return all Lanes of this Route
 	 */
-	public ArrayList<Lane> getLanes() {
+	public LinkedList<Lane> getLanes() {
 		return this.route;
 	}
 
@@ -62,5 +62,22 @@ public class Route {
 	public void setVisible(boolean visible) { this.visible = visible; }
 	
 	public int getId() {return id;}
+	
+	public void highLightNextLanes(boolean highLight) {
+		try {
+		  	  Lane lastLane = this.getLanes().get(this.getLanes().size()-1);
+		  	  Junction nextJunction = lastLane.getNextJunction();
+		  	  
+		  	  if (nextJunction != null) {
+			    	  for (Lane l : nextJunction.getOutgoingLanes()) {
+			    		  l.setHighlighted(highLight);
+			    	  }
+		  	  }
+		} catch (Exception e) {
+			
+		}
+
+	}
+
 
 }

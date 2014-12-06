@@ -152,9 +152,51 @@ public class Junction implements DrawableObject{
 			}
 
 		}
-		
 
 		return this.trafficLights;
+		
+	}
+	
+	/**
+	 * Return all outgoing lanes of this Junction
+	 * @return
+	 */
+	public LinkedList<Lane> getOutgoingLanes() {
+		LinkedList<Lane> lanes = new LinkedList<Lane>();
+		
+		if (this.topStreet != null) {
+			for (Lane l : this.topStreet.getLanes()) {
+				if (l.isBottomToTop()) {
+					lanes.add(l);
+				}
+			}
+		}
+		
+		if (this.rightStreet != null) {
+			for (Lane l : this.rightStreet.getLanes()) {
+				if (l.isLeftToRight()) {
+					lanes.add(l);
+				}
+			}
+		}
+		
+		if (this.bottomStreet != null) {
+			for (Lane l : this.bottomStreet.getLanes()) {
+				if (l.isTopToBottom()) {
+					lanes.add(l);
+				}
+			}
+		}
+		
+		if (this.leftStreet != null) {
+			for (Lane l : this.leftStreet.getLanes()) {
+				if (l.isRightToLeft()) {
+					lanes.add(l);
+				}
+			}
+		}
+		
+		return lanes;
 		
 	}
 	

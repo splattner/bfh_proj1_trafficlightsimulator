@@ -26,9 +26,14 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
@@ -145,7 +150,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 						g2d.drawLine(l.getOrigin().x + 7, l.getOrigin().y, l.getOrigin().x + 7, l.getOrigin().y + l.getDimension().height);
 					}
 					
-				}
+				}	
 			}
 		}
 		
@@ -182,6 +187,53 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 							tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
 						} else {
 							tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+						}
+					}
+				}
+			}
+		}
+		
+		
+		for (Street s : this.getSimulator().getCurrentSimulation().getStreets()) {
+			for (Lane l : s.getLanes()) {
+				if (e.getX() >= l.getOrigin().x && e.getX() < l.getOrigin().x + l.getDimension().width &&
+						e.getY() >= l.getOrigin().y && e.getY() < l.getOrigin().y + l.getDimension().height) {
+					
+					for (Route r : this.getSimulator().getCurrentSimulation().getRoutes()) {
+						if (r.isVisible()) {
+							
+							LinkedList<Lane> lanes = r.getLanes();
+							// Check if this route has the clicked lane
+							
+							if (lanes.contains(l)) {
+								// Remove lane and all lanes after the clicked one
+								r.highLightNextLanes(false);
+								int index = lanes.indexOf(l);
+								
+								for (int i = lanes.size() - 1 ; i >= index ; i--){
+									lanes.remove(i);
+								}
+								
+								// Highlight next available Lanes
+								r.highLightNextLanes(true);
+								
+								
+							} else {
+								// Add Lane
+								try {
+									Lane lastLane = lanes.get(lanes.size()-1);
+									Junction nextJunction = lastLane.getNextJunction();
+									if (nextJunction != null && nextJunction.getOutgoingLanes().contains(l)) {
+										r.highLightNextLanes(false);
+										lanes.add(l);
+										// Highlight next available Lanes
+										r.highLightNextLanes(true);
+									}
+								} catch (Exception outofBound) {
+									lanes.add(l);
+								}
+
+							}
 						}
 					}
 				}
