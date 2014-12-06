@@ -197,7 +197,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		 * Check if we clicked on a lane
 		 * Only if simulation is not running
 		 */
-		if (!this.getSimulator().getCurrentSimulation().isRunning()) {
+		if (!this.getSimulator().getCurrentSimulation().isRunning() && this.getSimulator().getCurrentSimulation().isLoaded()) {
 			for (Street s : this.getSimulator().getCurrentSimulation().getStreets()) {
 				for (Lane l : s.getLanes()) {
 					if (e.getX() >= l.getOrigin().x && e.getX() < l.getOrigin().x + l.getDimension().width &&
@@ -217,7 +217,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 
 								// Check if this route has the clicked lane
 
-								// Remove lane and all lanes after the clicked one
+								// Remove lane if it was the lastLane in route
 								if (lastLane != null && lanes.contains(l) && l == lastLane) {
 									// You can only remove the last one
 
