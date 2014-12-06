@@ -48,6 +48,12 @@ public class Lane implements DrawableObject {
 		left
 	}
 	
+	public enum marker {
+		none,
+		green,
+		red,
+	}
+	
 	private int id;
 
 	/**
@@ -80,9 +86,9 @@ public class Lane implements DrawableObject {
 	private Street street;
 	
 	
-	private boolean highlighted = false;
-	public boolean isHighlighted() {return highlighted; }
-	public void setHighlighted(boolean highlighted) { this.highlighted = highlighted;}
+	private marker currentMarker = marker.none;
+	public marker getCurrentMarker() {return currentMarker; }
+	public void setCurrentMarker(marker newMarker) { this.currentMarker = newMarker;}
 		
 	public Lane(int id, laneOrientations laneOrientation) {
 		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
@@ -106,10 +112,17 @@ public class Lane implements DrawableObject {
 	@Override
 	public void paintObject(Graphics g) {
 		
-		if (this.isHighlighted()) {
-			g.setColor(new Color(0, 200, 0));
-		} else {
+		
+		switch (this.currentMarker) {
+		case none:
 			g.setColor(Street.streetColor);
+			break;
+		case green:
+			g.setColor(new Color(0, 200, 0));
+			break;
+		case red:
+			g.setColor(new Color(200, 0, 0));
+			break;
 		}
 		g.fillRect(this.origin.x, this.origin.y, this.dimension.width, this.dimension.height);		
 		

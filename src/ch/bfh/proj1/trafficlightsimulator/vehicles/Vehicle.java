@@ -50,8 +50,10 @@ public abstract class Vehicle implements DrawableObject{
 	
 	protected Route route;
 	protected Lane currentLane;
+	protected int laneIndexOnRoute;
 
 	protected Point origin;
+
 	protected Dimension dimension;
 	
 	protected Color carColor;
@@ -93,6 +95,8 @@ public abstract class Vehicle implements DrawableObject{
 	public void setRoute(Route myRoute) { this.route = myRoute; }
 	
 	public Lane getCurrentLane() { return currentLane; }
+	public int getLaneIndexOnRoute() { return laneIndexOnRoute; }
+	public void setLaneIndexOnRoute(int laneIndexOnRoute) { this.laneIndexOnRoute = laneIndexOnRoute; }
 	
 	
 	
@@ -364,30 +368,25 @@ public abstract class Vehicle implements DrawableObject{
 	 */
 	public void toNextLaneOnRoute() {
 		// Do we have a current Lane? Other we are on the first lane of our route;
-		if (currentLane == null) {
-			currentLane = route.getLanes().get(0);
-			
-			//currentLane.getStreet()
-			
+		if (this.getCurrentLane() == null) {
+			this.setCurrentLane(route.getLanes().get(0));
+			this.setLaneIndexOnRoute(0);
 			currentLane.getVerhiclesOnLane().addFirst(this);
 			
 		} else {
 			// Goto next Lane on this route
-			for (int i = 0; i < route.getLanes().size(); i++) {
-	            // Search position of current Lane and then set next
-				if (route.getLanes().get(i) == currentLane) {
-	            	// if next == null, car has left the route
-					currentLane.getVerhiclesOnLane().remove(this);
-					if (i+1 < route.getLanes().size()) {
-						currentLane = route.getLanes().get(i+1);
-						currentLane.getVerhiclesOnLane().addFirst(this);
-					} else {
-						currentLane = null;
-					}
-					
-	            	break;
-				}
+			
+			// Remove vehicle for current Lane
+			currentLane.getVerhiclesOnLane().remove(this);
+			
+			if (this.laneIndexOnRoute +1 < route.getLanes().size()) {
+				currentLane = route.getLanes().get(laneIndexOnRoute+1);
+				currentLane.getVerhiclesOnLane().addFirst(this);
+				this.laneIndexOnRoute++;
+			} else {
+				currentLane = null;
 			}
+			
 		}
 		
 		this.currentPosOnLane = 0;
