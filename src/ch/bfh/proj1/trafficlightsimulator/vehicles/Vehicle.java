@@ -441,20 +441,12 @@ public abstract class Vehicle implements DrawableObject{
 		
 		Double convertedPos =  ( (double) this.getCurrentPosOnLane() / (double) s.getPositionsOnStreet() * (double) s.getLenght());
 		
-		
-		int currentRouteIndex = this.getRoute().getLanes().indexOf(l);
-		
-		
-		
-		
-		if (s.getOrientaion() == Street.orientation.horizontal) {
-			
-			
+
+		if (s.isHorizontal()) {
+
 			// Car is on a horizontal Street
-			if (currentLane.getLaneOrientation() == Lane.laneOrientations.startToEnd) {
-				
-				
-				
+			if (currentLane.isLeftToRight()) {
+
 				// Drive from left to right
 				this.setOrigin(new Point(l.getOrigin().x + convertedPos.intValue(), l.getOrigin().y + 5));
 			} else {
@@ -467,7 +459,7 @@ public abstract class Vehicle implements DrawableObject{
 			
 		} else {
 			// Car is on a vertical Street
-			if (currentLane.getLaneOrientation() == Lane.laneOrientations.startToEnd) {
+			if (currentLane.isTopToBottom()) {
 				// Drive from left to right
 				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + convertedPos.intValue()));
 			} else {
