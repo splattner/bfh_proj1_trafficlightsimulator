@@ -21,19 +21,17 @@ package ch.bfh.proj1.trafficlightsimulator;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
 import ch.bfh.proj1.trafficlightsimulator.Lane.marker;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
@@ -46,6 +44,9 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 	 * Reference to the Traffic Light Simulator
 	 */
 	private TrafficLightSimulator simulator;
+
+
+	private GUIHighlighter guiHighlighter;
 
 
 	/**
@@ -71,6 +72,10 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		// Mouse Listener to react on mouse clickes in the Sim Panwl
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+
+
+		this.guiHighlighter = new GUIHighlighter();
+
 
 	}
 
@@ -154,6 +159,11 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 			}
 		}
 
+
+		if (this.guiHighlighter.isVisible()) {
+			this.guiHighlighter.paintObject(g);
+		}
+
 	}
 
 	@Override
@@ -197,7 +207,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		 * Check if we clicked on a lane
 		 * Only if simulation is not running
 		 */
-		if (!this.getSimulator().getCurrentSimulation().isRunning()) {
+		if (!this.getSimulator().getCurrentSimulation().isRunning() && this.getSimulator().getCurrentSimulation().isLoaded()) {
 			for (Street s : this.getSimulator().getCurrentSimulation().getStreets()) {
 				for (Lane l : s.getLanes()) {
 					if (e.getX() >= l.getOrigin().x && e.getX() < l.getOrigin().x + l.getDimension().width &&
@@ -216,8 +226,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 								}
 
 								// Check if this route has the clicked lane
-
-								// Remove lane and all lanes after the clicked one
+								// Remove lane if it was the lastLane in route
 								if (lastLane != null && lanes.contains(l) && l == lastLane) {
 									// You can only remove the last one
 
@@ -252,8 +261,13 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 			}
 		}
 
+
+
+
+
 		// Redraw Sim Panel
 		this.getSimulator().refreshWindow();
+
 	}
 
 
@@ -305,7 +319,124 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {}
+	public void mouseMoved(MouseEvent e) {
+
+
+		this.guiHighlighter.setVisible(false);
+		
+		// Check if user is over a start or end of a junction
+		if (!this.getSimulator().getCurrentSimulation().isRunning() && this.getSimulator().getCurrentSimulation().isLoaded()) {
+			// First get the street over which the user is
+			for (Street s : this.getSimulator().getCurrentSimulation().getStreets()) {
+				if (e.getX() >= s.getOrigin().x && e.getX() < s.getOrigin().x + s.getDimension().width &&
+						e.getY() >= s.getOrigin().y && e.getY() < s.getOrigin().y + s.getDimension().height) {
+
+					// Check if he is at end or start
+					if (s.isHorizontal()) {
+						// At start
+						if (e.getX() >= s.getOrigin().x && e.getX() < s.getOrigin().x + (s.getDimension().width/10)) {
+							Dimension d = new Dimension(s.getDimension().width/10, s.getDimension().height);
+							Point p = new Point(s.getOrigin().x, s.getOrigin().y);
+							
+							this.guiHighlighter.setDimension(d);
+							this.guiHighlighter.setOrigin(p);
+							this.guiHighlighter.setVisible(true);
+							this.guiHighlighter.setColor(Color.BLUE);
+
+						}
+						
+						// At the end
+						if (e.getX() >= s.getOrigin().x + ((s.getDimension().width/10)*9) && e.getX() < s.getOrigin().x + s.getDimension().width) {
+							Dimension d = new Dimension(s.getDimension().width/10, s.getDimension().height);
+							Point p = new Point(s.getOrigin().x + ((s.getDimension().width/10)*9), s.getOrigin().y);
+							
+							this.guiHighlighter.setDimension(d);
+							this.guiHighlighter.setOrigin(p);
+							this.guiHighlighter.setVisible(true);
+							this.guiHighlighter.setColor(Color.BLUE);
+
+						}
+					} else {
+
+						// At start
+						if (e.getY() >= s.getOrigin().y && e.getY() < s.getOrigin().y + (s.getDimension().height/10)) {
+							Dimension d = new Dimension(s.getDimension().width, s.getDimension().height/10);
+							Point p = new Point(s.getOrigin().x, s.getOrigin().y);
+							
+							this.guiHighlighter.setDimension(d);
+							this.guiHighlighter.setOrigin(p);
+							this.guiHighlighter.setVisible(true);
+							this.guiHighlighter.setColor(Color.BLUE);
+
+						}
+						
+						// At the end
+						if (e.getY() >= s.getOrigin().y + ((s.getDimension().height/10)*9) && e.getY() < s.getOrigin().y + s.getDimension().height) {
+							Dimension d = new Dimension(s.getDimension().width, s.getDimension().height/10);
+							Point p = new Point(s.getOrigin().x, s.getOrigin().y + ((s.getDimension().height/10)*9));
+							
+							this.guiHighlighter.setDimension(d);
+							this.guiHighlighter.setOrigin(p);
+							this.guiHighlighter.setVisible(true);
+							this.guiHighlighter.setColor(Color.BLUE);
+
+						}
+					}
+				}
+			}
+		}
+
+		// Redraw Sim Panel
+		this.getSimulator().refreshWindow();
+
+	}
+
+
+	private class GUIHighlighter implements DrawableObject {
+
+		private Color color;
+
+		private Point origin;
+		private Dimension dimension;
+
+		private Boolean visible;
+
+		public Boolean isVisible() { return visible;}
+		public void setVisible(Boolean visible) { this.visible = visible;}
+
+		public void setColor(Color color) {	this.color = color;} 
+		public Color getColor() { return this.color; }
+
+
+		public GUIHighlighter() {
+			this.setVisible(false);
+			this.origin = new Point();
+			this.dimension = new Dimension();
+		}
+		@Override
+		public void paintObject(Graphics g) {
+
+			if (isVisible()) {
+				g.setColor(this.color);
+				g.fillRect(this.origin.x, this.origin.y, this.dimension.width, this.dimension.height);
+			}
+
+
+		}
+
+		@Override
+		public Point getOrigin() { return this.origin; }
+
+		@Override
+		public void setOrigin(Point origin) { this.origin = origin; }
+
+		@Override
+		public Dimension getDimension() { return this.dimension; }
+
+		@Override
+		public void setDimension(Dimension dimension) { this.dimension = dimension; }
+
+	}
 
 
 }
