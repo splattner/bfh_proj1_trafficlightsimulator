@@ -222,7 +222,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 									// You can only remove the last one
 
 									r.highlightLanes(marker.none);
-									lanes.remove(l);
+									lanes.removeLastOccurrence(l);
 
 									// Highlight next available Lanes
 									r.highlightLanes(marker.green);
