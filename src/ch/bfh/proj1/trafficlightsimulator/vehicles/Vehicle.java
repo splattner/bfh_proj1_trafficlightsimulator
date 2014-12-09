@@ -2,7 +2,7 @@
  * Copyright 2014
  * Sebastian Plattner, Donatello Gallucci
  * Bern University of applied Science
- 
+
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
+
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,6 @@ import ch.bfh.proj1.trafficlightsimulator.DrawableObject;
 import ch.bfh.proj1.trafficlightsimulator.Lane;
 import ch.bfh.proj1.trafficlightsimulator.Route;
 import ch.bfh.proj1.trafficlightsimulator.Street;
-import ch.bfh.proj1.trafficlightsimulator.TrafficLight;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator;
 
 
@@ -47,7 +46,7 @@ public abstract class Vehicle implements DrawableObject{
 	protected int currentSpeed;
 	protected int currentAcceleration;
 	protected int currentPosOnLane;
-	
+
 	protected Route route;
 	protected Lane currentLane;
 	protected int laneIndexOnRoute;
@@ -55,51 +54,50 @@ public abstract class Vehicle implements DrawableObject{
 	protected Point origin;
 
 	protected Dimension dimension;
-	
+
 	protected Color carColor;
-	
+
 	private boolean brakeStatus = false;
-	
+
 	public int getMaxSpeed() { return maxSpeed; }
 	public void setMaxSpeed(int maxSpeed) { this.maxSpeed = maxSpeed;
 	}
 	public int getAccelerationMaxPositiv() { return accelerationMaxPositiv; }
 	public void setAccelerationMaxPositiv(int accelerationMaxPositiv) {	this.accelerationMaxPositiv = accelerationMaxPositiv; }
-	
+
 	public int getAccelerationMaxNegativ() { return accelerationMaxNegativ; }
 	public void setAccelerationMaxNegativ(int accelerationMaxNegativ) {	this.accelerationMaxNegativ = accelerationMaxNegativ;}
-	
+
 	public int getAccelerationStartPositiv() { return accelerationStartPositiv;	}
 	public void setAccelerationStartPositiv(int accelerationStartPositiv) {	this.accelerationStartPositiv = accelerationStartPositiv;}
-	
+
 	public int getAccelerationStartNegativ() { return accelerationStartNegativ; }
 	public void setAccelerationStartNegativ(int accelerationStartNegativ) { this.accelerationStartNegativ = accelerationStartNegativ;}
-	
+
 	public int getAccelerationStepPositiv() { return accelerationStepPositiv; }
 	public void setAccelerationStepPositiv(int accelerationStepPositiv) { this.accelerationStepPositiv = accelerationStepPositiv; }
-	
+
 	public int getAccelerationStepNegativ() { return accelerationStepNegativ; }
 	public void setAccelerationStepNegativ(int accelerationStepNegativ) { this.accelerationStepNegativ = accelerationStepNegativ; }
-	
+
 	public int getLenght() { return lenght; }
 	public void setLenght(int lenght) { this.lenght = lenght; }
-	
+
 	public int getCurrentSpeed() { return currentSpeed; }
 	public void setCurrentSpeed(int currentSpeed) { this.currentSpeed = currentSpeed; }
-	
-	
+
 	public int getCurrentAcceleration() { return currentAcceleration; }
 	public void setCurrentAcceleration(int currentAcceleration) { this.currentAcceleration = currentAcceleration; }
-	
+
 	public Route getRoute() { return route; }
 	public void setRoute(Route myRoute) { this.route = myRoute; }
-	
+
 	public Lane getCurrentLane() { return currentLane; }
 	public int getLaneIndexOnRoute() { return laneIndexOnRoute; }
 	public void setLaneIndexOnRoute(int laneIndexOnRoute) { this.laneIndexOnRoute = laneIndexOnRoute; }
-	
-	
-	
+
+
+
 	/**
 	 * Set the current Lane for this vehicle
 	 * Also add this vehicle to the Vehicle Collection on the lane
@@ -112,7 +110,7 @@ public abstract class Vehicle implements DrawableObject{
 		this.currentLane = currentLane;
 		this.currentLane.getVerhiclesOnLane().addFirst(this);
 	}
-	
+
 	/**
 	 * One Step of the simulation. This function is called by the Simulation Threat
 	 * Move Vehicles
@@ -121,71 +119,66 @@ public abstract class Vehicle implements DrawableObject{
 	{
 		// Check if this Vehicle is on a Lane
 		if (this.currentLane != null) {
-		
-			
+
+
 			// Get Discance to next car
 			int indexOfVehicleonLane = this.currentLane.getVerhiclesOnLane().indexOf(this);
 			int indexOfNextVehicleonLane = indexOfVehicleonLane + 1;
-			
+
 			// Get all vehicles on this lane
 			LinkedList<Vehicle> vehiclesOnThisLane = this.currentLane.getVerhiclesOnLane();
-			
+
 			// Get next vehicle, if any
 			// next vehicle could be on next lane!
 			Vehicle nextVehicle = null;
-			Lane nextLane = null;
 			try {
 				// Try on same lane first
 				nextVehicle = vehiclesOnThisLane.get(indexOfNextVehicleonLane);	
 			} catch (IndexOutOfBoundsException e1) {
 				// There is no next Vehicle on this Lane
-				
+
 				// Find next Lane on route
-				for (int i = 0; i < route.getLanes().size(); i++) {
-					if (route.getLanes().get(i) == this.currentLane) {
-						
-						try {
-							nextLane = route.getLanes().get(i+1);
-							// Next Vehicle is first on next lane
-							nextVehicle = nextLane.getVerhiclesOnLane().getFirst();
-						} catch (NoSuchElementException e2) {
-							// No Vehicle on next lane
-							nextVehicle = null;
-						} catch (IndexOutOfBoundsException e3) {
-							// No next Lane, so no next vehicle
-							nextVehicle = null;
-						}
-						
-						// We found it, skip the rest
-						break;
-					}
+				try {
+					Lane nextLane = this.getRoute().getLanes().get(this.getLaneIndexOnRoute()+1);
+					// Next Vehicle is first on next lane
+					nextVehicle = nextLane.getVerhiclesOnLane().getFirst();
+				} catch (NoSuchElementException e2) {
+					// No Vehicle on next lane
+					nextVehicle = null;
+				} catch (IndexOutOfBoundsException e3) {
+					// No next Lane, so no next vehicle
+					nextVehicle = null;
 				}
+
+
 			}
+
+			// Lenght of vehicle in Lane positions
+			int vehicleLenghtinPositions = (int) ( ( (double)this.dimension.width / (double) TrafficLightSimulator.defaultStreetLenght) * TrafficLightSimulator.defaultPositinOnStreet);			
 			
-			int carLenghtinPositions = (int) ( ( (double)this.dimension.width / (double) TrafficLightSimulator.defaultStreetLenght) * TrafficLightSimulator.defaultPositinOnStreet);			
-			//int trafficLigthLenghtInPosition = (int) ( ( (double)this.currentLane.getTrafficLight().getDimension().width / (double) TrafficLightSimulator.defaultStreetLenght) * TrafficLightSimulator.defaultPositinOnStreet);
+			// Lenght of Traffic Light in Lane positions
 			int trafficLigthLenghtInPosition = (int) ( ( (double) 10 / (double) TrafficLightSimulator.defaultStreetLenght) * TrafficLightSimulator.defaultPositinOnStreet);	
-					
-			
+
+
 			// Get Minimum Distance between two vehicles based on this vehicles speed (when speed equal)
 			int minDistance = ((TrafficLightSimulator.minimumDistanceBetweenVehiclesMax - TrafficLightSimulator.minimumDistanceBetweenVehiclesMin) / this.maxSpeed * this.currentSpeed) + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin; 
-			minDistance += carLenghtinPositions;
-			
+			minDistance += vehicleLenghtinPositions;
+
 			// Force Max Speed
 			if (this.currentSpeed > this.maxSpeed) this.currentSpeed = this.maxSpeed;
-			
+
 			// Calculate Distance for a full stop (for traffic light stop)
 			int distFullStop = this.calcucateDistanceForBraking();
-			distFullStop += carLenghtinPositions;
+			distFullStop += vehicleLenghtinPositions;
 			//System.out.println("Distance full stop: " + distFullStop);
-			
+
 			// Did we already fired a brakeing command? if so, no second one!
 			boolean alreadyBraked = false;
-			
+
 			// Check if traffic light is red
 			// false if there is no traffic light
-			boolean isRed = (this.currentLane.getTrafficLight() != null) && (this.currentLane.getTrafficLight().getCurrentStatus() == TrafficLight.trafficLightStatus.RED);
-			
+			boolean isRed = (this.currentLane.getTrafficLight() != null) && (this.currentLane.getTrafficLight().isRed());
+
 			// Check if distance to next vehicle is enought (if any)
 			boolean isEnoughDistance = false;
 			if (nextVehicle != null) {
@@ -195,13 +188,13 @@ public abstract class Vehicle implements DrawableObject{
 					//System.out.println("Next VehicleVirtual Pos: " + (this.getCurrentLane().getStreet().getPositionsOnStreet() + nextVehicle.getCurrentPosOnLane()));
 					//System.out.println("This Vehicle Pos: " + this.getCurrentPosOnLane());
 					isEnoughDistance = ((this.getCurrentLane().getStreet().getPositionsOnStreet() + nextVehicle.getCurrentPosOnLane()) - this.getCurrentPosOnLane()) > minDistance;
-					//System.out.println("Is Enought: " + isEnoughDistance);
+					//System.out.println( indexOfVehicleonLane + ": Is Enought: " + isEnoughDistance);
 				} else {
 					// They are on the same lane
 					isEnoughDistance = nextVehicle.getCurrentPosOnLane() - this.getCurrentPosOnLane() > minDistance;
 				}
 			}
-			
+
 			// Check if distance for full brake to next vehicle is enought (if any)
 			boolean isEnoughDistanceFullBrake = false;
 			if (nextVehicle != null) {
@@ -213,19 +206,20 @@ public abstract class Vehicle implements DrawableObject{
 					// They are on the same lane
 					isEnoughDistanceFullBrake = (nextVehicle.getCurrentPosOnLane() - this.currentPosOnLane) > (distFullStop + TrafficLightSimulator.minimumDistanceBetweenVehiclesMin);
 				}
-			}			
+			}
+			
 			
 
-	 
-			
+
+
+
 			// is there a next vehicle
 			if (nextVehicle != null) {
 				//System.out.println("There is a next car");
 				if (nextVehicle.getCurrentSpeed() == 0) {
 					//System.out.println("Next Car has speed 0");
 					// Next Vehicle stop, brake if distance is not enought for full stop
-					if (this.brakeStatus || !isEnoughDistanceFullBrake) {
-						//System.out.println("Distance not enoght -> brake");
+					if (!isEnoughDistanceFullBrake) {
 						this.brakeStatus = true;
 						this.decreaseSpeed();
 						alreadyBraked = true;
@@ -264,7 +258,7 @@ public abstract class Vehicle implements DrawableObject{
 					}
 				}
 			}
-			
+
 			if (isRed) {
 				//System.out.println("Traffic Light is red");
 				if (this.brakeStatus || this.currentLane.getStreet().getPositionsOnStreet() - this.currentPosOnLane <= (distFullStop + (2 * trafficLigthLenghtInPosition))) {
@@ -283,7 +277,7 @@ public abstract class Vehicle implements DrawableObject{
 					this.brakeStatus = false;
 				}
 			}
-			
+
 			// Are we currently braking?
 			if (!this.brakeStatus ) {
 				if (isRed && (this.currentLane.getStreet().getPositionsOnStreet() - this.currentPosOnLane > (distFullStop + (2 * trafficLigthLenghtInPosition)))) {
@@ -296,23 +290,23 @@ public abstract class Vehicle implements DrawableObject{
 					//System.out.println("Not braking, Increase Speed");
 					this.increaseSpeed();
 				}
-					
-			}
-			
-			
 
-			
+			}
+
+
+
+
 			// Move car to next position based on his speed
 			this.currentPosOnLane += this.currentSpeed;
-			
+
 			// Move car on next lane if necessary
 			if (this.currentPosOnLane > this.currentLane.getStreet().getPositionsOnStreet()) {
 				this.toNextLaneOnRoute();
 			}
 		}
-		
+
 	}
-	
+
 	// Accelerate vehicle to max
 	private void increaseSpeed() {
 		if (this.currentAcceleration <= 0) {
@@ -322,24 +316,24 @@ public abstract class Vehicle implements DrawableObject{
 				this.currentAcceleration += this.accelerationStepPositiv;
 			}
 		}
-		
+
 		// Increase speed with current acceleration if below max speed
 		if (this.currentSpeed < this.maxSpeed) {
 			this.currentSpeed += this.currentAcceleration;
 		}
-		
+
 		// Don't accelerate anymore when max speed reached
 		if (currentSpeed >= this.maxSpeed) {
 			this.currentSpeed = this.maxSpeed;
 			this.currentAcceleration = 0;
 		}
-		
+
 		//System.out.println("Increase. Current Speed: " + this.currentSpeed + " Current Acc: " + this.currentAcceleration);
-	
+
 	}
-	
+
 	private void decreaseSpeed() {
-		
+
 		if (this.currentAcceleration >= 0 ) {
 			this.currentAcceleration = -this.accelerationStartNegativ;
 		} else {
@@ -347,22 +341,22 @@ public abstract class Vehicle implements DrawableObject{
 				this.currentAcceleration -= this.accelerationStepNegativ;
 			}
 		}
-		
+
 		// Increase speed with current acceleration if below max speed
 		if (this.currentSpeed > 0) {
 			this.currentSpeed += this.currentAcceleration;
 		}
-		
+
 		// Don't accelerate anymore when min speed reached
 		if (currentSpeed <= 0) {
 			this.currentSpeed = 0;
 			this.currentAcceleration = 0;
 		}
-		
+
 		//System.out.println("Decrease. Current Speed: " + this.currentSpeed + " Current Acc: " + this.currentAcceleration);
-		
+
 	}
-	
+
 	/**
 	 * Put this vehicle on the next lane of the route
 	 */
@@ -372,13 +366,13 @@ public abstract class Vehicle implements DrawableObject{
 			this.setCurrentLane(route.getLanes().get(0));
 			this.setLaneIndexOnRoute(0);
 			currentLane.getVerhiclesOnLane().addFirst(this);
-			
+
 		} else {
 			// Goto next Lane on this route
-			
+
 			// Remove vehicle for current Lane
 			currentLane.getVerhiclesOnLane().remove(this);
-			
+
 			if (this.laneIndexOnRoute +1 < route.getLanes().size()) {
 				currentLane = route.getLanes().get(laneIndexOnRoute+1);
 				currentLane.getVerhiclesOnLane().addFirst(this);
@@ -386,12 +380,12 @@ public abstract class Vehicle implements DrawableObject{
 			} else {
 				currentLane = null;
 			}
-			
+
 		}
-		
+
 		this.currentPosOnLane = 0;
 	}
-	
+
 	/**
 	 * Calculate the distance for a full stop based on this vehicles properties
 	 * @return
@@ -400,47 +394,49 @@ public abstract class Vehicle implements DrawableObject{
 		int speed = this.currentSpeed;
 		int acc = -this.accelerationStartNegativ;
 		int dist = 0;
-		
+
 		//System.out.println("Start Calc Dist For Full Break. Speed = " + speed);
 		//System.out.println("Acc = " + acc);
-		
+
 		while (speed > 0) {
-			
+
 
 			speed += acc;
 			//System.out.println("Speed = " + speed);
-			
+
 			dist += speed;
-			
+
 			//System.out.println("Dist: " + dist);
-			
+
 			if (acc > - this.accelerationMaxNegativ) {
 				acc -= this.accelerationStepNegativ;
 				//System.out.println("Acc = " + acc);
 			}
-			
+
 		}
-		
+
 		return dist;
 	}
-	
+
 	public int getCurrentPosOnLane() {
 		return currentPosOnLane;
 	}
 	public void setCurrentPosOnLane(int currentPosOnLane) {
 		this.currentPosOnLane = currentPosOnLane;
 	}
-	
+
 	@Override
 	public void paintObject(Graphics g) {
-		
+
 		Lane l = this.getCurrentLane();
 		Street s = l.getStreet();
-		
+
 		g.setColor(carColor);
 		
+		Point brakeLight = null;
+
 		Double convertedPos =  ( (double) this.getCurrentPosOnLane() / (double) s.getPositionsOnStreet() * (double) s.getLenght());
-		
+
 
 		if (s.isHorizontal()) {
 
@@ -449,39 +445,68 @@ public abstract class Vehicle implements DrawableObject{
 
 				// Drive from left to right
 				this.setOrigin(new Point(l.getOrigin().x + convertedPos.intValue(), l.getOrigin().y + 5));
+				
+				if (this.brakeStatus) {
+					brakeLight = new Point(l.getOrigin().x + convertedPos.intValue(), l.getOrigin().y + 5);
+				}
+				
 			} else {
 				// Drive from right to left
 				this.setOrigin(new Point(l.getOrigin().x + l.getDimension().width- convertedPos.intValue() , l.getOrigin().y + 5));
+				
+				if (this.brakeStatus) {
+					brakeLight = new Point(l.getOrigin().x + l.getDimension().width + dimension.width  - 2 - convertedPos.intValue(), l.getOrigin().y + 5);
+				}
 			}
-			
+
 			g.fillRect(origin.x, origin.y, dimension.width, dimension.height);
 			
-			
+			if (brakeLight != null) {
+				g.setColor(Color.RED);
+				g.fillRect(brakeLight.x, brakeLight.y, 2, dimension.height);
+			}
+
+
 		} else {
 			// Car is on a vertical Street
 			if (currentLane.isTopToBottom()) {
 				// Drive from left to right
 				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + convertedPos.intValue()));
+				
+				if (this.brakeStatus) {
+					brakeLight = new Point(l.getOrigin().x + 5, l.getOrigin().y + convertedPos.intValue());
+				}
+				
+				
 			} else {
-				// Drive from right to left
+				// Drive from bottom to up
 				this.setOrigin(new Point(l.getOrigin().x + 5, l.getOrigin().y + l.getDimension().height- convertedPos.intValue()));
+				
+				if (this.brakeStatus) {
+					brakeLight = new Point(l.getOrigin().x + 5, l.getOrigin().y + l.getDimension().height + dimension.width - 2 - convertedPos.intValue());
+				}
 			}
-			
+
 			g.fillRect(origin.x, origin.y, dimension.height, dimension.width);
+			
+			if (brakeLight != null) {
+				g.setColor(Color.RED);
+				g.fillRect(brakeLight.x, brakeLight.y, dimension.height, 2);
+			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void setOrigin(Point origin) {
 		this.origin = origin;
-		
+
 	}
 
 	@Override
 	public void setDimension(Dimension dimension) {
 		// You cannot set the dimension of a car.
-		
+
 	}
 
 	@Override

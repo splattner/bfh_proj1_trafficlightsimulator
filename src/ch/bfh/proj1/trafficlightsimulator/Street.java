@@ -51,7 +51,7 @@ public class Street implements DrawableObject{
 	/**
 	 * Current orientation for the Street
 	 */
-	private orientation orientaion;
+	private orientation currentOrientation;
 	
 	public static final Color laneColor = Color.WHITE;
 	public static final Color streetColor = Color.GRAY;
@@ -161,15 +161,15 @@ public class Street implements DrawableObject{
 	
 	public Collection<Lane> getLanes() {return this.lanes;}
 
-	public orientation getOrientaion() {return orientaion;}
-	public void setOrientaion(orientation orientaion) {this.orientaion = orientaion;}
+	public orientation getOrientaion() {return currentOrientation;}
+	public void setOrientaion(orientation orientaion) {this.currentOrientation = orientaion;}
 
 	public int getPositionsOnStreet() {return positionsOnStreet;}
 	public void setPositionsOnStreet(int positionsOnStreet) {this.positionsOnStreet = positionsOnStreet;}
 	
 	public int getId() {return id;}
 	
-	public boolean isHorizontal() { return this.orientaion == orientaion.horizontal; }
-	public boolean isVertical() { return this.orientaion == orientaion.vertical; }
+	public boolean isHorizontal() { return this.currentOrientation == orientation.horizontal; }
+	public boolean isVertical() { return this.currentOrientation == orientation.vertical; }
 
 }

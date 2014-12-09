@@ -26,14 +26,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
-
 import javax.swing.JPanel;
-
-import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
 import ch.bfh.proj1.trafficlightsimulator.Lane.marker;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
@@ -80,7 +74,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 
 		super.paintComponent(g);
 
-		// Change Color of Backgrund when Simulation is running
+		// Change Color of Background when Simulation is running
 		if (this.getSimulator().getCurrentSimulation().isRunning()) {
 			if (this.getSimulator().getCurrentSimulation().isBreaking()) {
 				g.setColor(new Color(100,100,100));

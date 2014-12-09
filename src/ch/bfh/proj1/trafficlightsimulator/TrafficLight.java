@@ -91,13 +91,25 @@ public class TrafficLight implements DrawableObject {
 	public int getNumOfVehiclesNearLight() {
 		int numberOfVehiclesNearLight = 0;
 		for (Vehicle v : this.getLane().getVerhiclesOnLane()) {
-			// All vehicles closer as 35% of Street Lenghta
+			// All vehicles closer as 35% of Street Lenght
 			if (v.getCurrentPosOnLane() > this.getLane().getStreet().getPositionsOnStreet() * 0.65) {
 				numberOfVehiclesNearLight++;
 			}
 		}
 		
 		return numberOfVehiclesNearLight;
+	}
+	
+	public boolean isRed() {
+		return this.currentStatus == trafficLightStatus.RED;
+	}
+	
+	public boolean isOrange() {
+		return this.currentStatus == trafficLightStatus.ORANGE;
+	}
+	
+	public boolean isGreen() {
+		return this.currentStatus == trafficLightStatus.GREEN;
 	}
 
 }

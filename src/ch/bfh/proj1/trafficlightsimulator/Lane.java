@@ -234,6 +234,10 @@ public class Lane implements DrawableObject {
 	public boolean isTopToBottom() { return this.getStreet().isVertical() &&this.laneOrientation == laneOrientations.startToEnd; }
 	public boolean isBottomToTop() { return this.getStreet().isVertical() && this.laneOrientation == laneOrientations.endToStart; }
 
+	
+	/**
+	 * Return the next Junction for a vehicle on this Lane
+	 */
 	public Junction getNextJunction() {
 		Junction j = null;
 
