@@ -26,7 +26,7 @@ import java.awt.Point;
 
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
-public class TrafficLight implements DrawableObject {
+public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	
 	private Point origin;
 	private Dimension dimension;
@@ -82,7 +82,6 @@ public class TrafficLight implements DrawableObject {
 	public void setLane(Lane lane) { this.lane = lane;	}
 
 	public int getTimeLastChange() { return timeLastChange;	}
-	public void setTimeLastChange(int timeLastChange) {	this.timeLastChange = timeLastChange;}
 	
 	/**
 	 * Get the number of vehicles that are close to this traffic light
@@ -91,8 +90,8 @@ public class TrafficLight implements DrawableObject {
 	public int getNumOfVehiclesNearLight() {
 		int numberOfVehiclesNearLight = 0;
 		for (Vehicle v : this.getLane().getVerhiclesOnLane()) {
-			// All vehicles closer as 35% of Street Lenght
-			if (v.getCurrentPosOnLane() > this.getLane().getStreet().getPositionsOnStreet() * 0.65) {
+			// All vehicles closer as 50% of Street Lenght
+			if (v.getCurrentPosOnLane() > this.getLane().getStreet().getPositionsOnStreet() * 0.50) {
 				numberOfVehiclesNearLight++;
 			}
 		}
@@ -110,6 +109,36 @@ public class TrafficLight implements DrawableObject {
 	
 	public boolean isGreen() {
 		return this.currentStatus == trafficLightStatus.GREEN;
+	}
+	
+	public void setRed() {
+		if (isRed()) {
+			this.timeLastChange++;
+		} else {
+			this.currentStatus = trafficLightStatus.RED;
+			this.timeLastChange = 0;
+		}
+	}
+	
+	public void setGreen() {
+		if (isGreen()) {
+			this.timeLastChange++;
+		} else {
+			this.currentStatus = trafficLightStatus.GREEN;
+			this.timeLastChange = 0;
+		}
+	}
+
+	@Override
+	public int compareTo(TrafficLight o) {
+		if (this.getNumOfVehiclesNearLight() > o.getNumOfVehiclesNearLight()) {
+			return -1;
+		} else if (this.getNumOfVehiclesNearLight() == o.getNumOfVehiclesNearLight()) {
+			return 0;
+		} else {
+			return 1;
+		}
+
 	}
 
 }

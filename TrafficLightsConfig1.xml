@@ -227,11 +227,28 @@
 		</tns:route>
 		<tns:route>
 			<tns:id>2</tns:id>
-			<tns:lane>2</tns:lane>
+			<tns:lane>17</tns:lane>
+			<tns:lane>11</tns:lane>
+			<tns:lane>13</tns:lane>
+			<tns:lane>21</tns:lane>
+			<tns:lane>8</tns:lane>
+			<tns:lane>4</tns:lane>
+		</tns:route>
+		<tns:route>
+			<tns:id>3</tns:id>
+			<tns:lane>3</tns:lane>
 			<tns:lane>6</tns:lane>
 			<tns:lane>12</tns:lane>
-			<tns:lane>16</tns:lane>
+			<tns:lane>19</tns:lane>
 		</tns:route>
+		<tns:route>
+			<tns:id>4</tns:id>
+			<tns:lane>15</tns:lane>
+			<tns:lane>11</tns:lane>
+			<tns:lane>5</tns:lane>
+			<tns:lane>4</tns:lane>
+		</tns:route>
+		
 	</tns:Routes>
 
 </tns:TrafficLightConfig>
