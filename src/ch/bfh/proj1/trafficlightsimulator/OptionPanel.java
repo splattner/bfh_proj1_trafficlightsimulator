@@ -44,6 +44,7 @@ import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.SimulationMode;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 import ch.bfh.proj1.trafficlightsimulator.xmlLoader.TrafficLightsXMLHandler;
+import ch.bfh.proj1.trafficlightsimulator.xmlLoader.TrafficLightsXMLWriter;
 
 public class OptionPanel extends JPanel implements ActionListener, ChangeListener{
 	
@@ -51,6 +52,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 	private JButton btBreak;
 	private JButton btShowConfig;
 	private JButton btloadXML;
+	private JButton btsaveXML;
 	
 	private JSlider simulationFrequency;
 	
@@ -214,9 +216,15 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		this.btloadXML.addActionListener(this);
 		
 		c.gridx = 0;
-		c.gridy = 7
-				;
+		c.gridy = 7;
 		this.add(btloadXML, c);
+		
+		this.btsaveXML = new JButton("Save XML file");
+		this.btsaveXML.addActionListener(this);
+		
+		c.gridx = 0;
+		c.gridy = 8;
+		this.add(btsaveXML, c);
 
 		
 	}
@@ -224,6 +232,24 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		// Save a XML File
+		if (e.getSource().equals(this.btsaveXML))
+		{
+			File simulationFile;
+			this.fileChooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file .xml", "xml");
+			fileChooser.setFileFilter(filter);
+		    int returnVal = fileChooser.showSaveDialog(this);
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		    	simulationFile = this.fileChooser.getSelectedFile();
+				TrafficLightsXMLWriter txmlw = new TrafficLightsXMLWriter(
+						simulationFile.getAbsolutePath(),
+						this.getSimulator().getCurrentSimulation().getJunctions(),
+						this.getSimulator().getCurrentSimulation().getStreets(),
+						this.getSimulator().getCurrentSimulation().getRoutes());
+		    }
+		}
+		    
 		// Load a XML File and configure Simulation
 		if (e.getSource().equals(this.btloadXML))
 		{
