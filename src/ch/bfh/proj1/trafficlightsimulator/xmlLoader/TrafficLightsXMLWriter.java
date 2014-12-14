@@ -11,6 +11,7 @@ import ch.bfh.proj1.trafficlightsimulator.Route;
 import ch.bfh.proj1.trafficlightsimulator.Street;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
@@ -47,16 +48,19 @@ public class TrafficLightsXMLWriter {
 			// create a Marshaller
 			Marshaller m = jc.createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-//			m.setProperty(”com.sun.xml.bind.namespacePrefixMapper”,        
-//				    new MyNamespacePrefixMapper()); //TODO: well... i'll see lol
 
 			/*
 			 * marshal a configuration instance objects document into an XML
 			 * document composed of classes from the xmlLoader package.
 			 */
 
-			ConfigType ct = new ConfigType();
-			JunctionsType jtl = new JunctionsType();
+			ObjectFactory of = new ObjectFactory();
+			
+			ConfigType ct = of.createConfigType();
+			
+            JAXBElement<ConfigType> configElement = of.createTrafficLightConfig(ct);
+
+			JunctionsType jtl = of.createJunctionsType();
 			
 			for (Junction j : junctions){
 				JunctionType jt = new JunctionType();
@@ -120,7 +124,7 @@ public class TrafficLightsXMLWriter {
 			
 			ct.setRoutes(rtl);
 			
-			 m.marshal(ct,new FileOutputStream(xmlFilePath));
+			m.marshal(configElement,new FileOutputStream(xmlFilePath));
 
 		} catch (JAXBException je) {
 			je.printStackTrace();
