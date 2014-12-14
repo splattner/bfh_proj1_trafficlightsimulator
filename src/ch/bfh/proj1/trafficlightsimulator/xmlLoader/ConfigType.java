@@ -11,6 +11,7 @@ package ch.bfh.proj1.trafficlightsimulator.xmlLoader;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -43,6 +44,8 @@ import javax.xml.bind.annotation.XmlType;
     "lanes",
     "routes"
 })
+
+@XmlRootElement
 public class ConfigType {
 
     @XmlElement(name = "Junctions", required = true)

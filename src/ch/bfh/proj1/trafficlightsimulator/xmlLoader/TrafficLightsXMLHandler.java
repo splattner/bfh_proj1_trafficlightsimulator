@@ -46,7 +46,7 @@ public class TrafficLightsXMLHandler {
              * objects composed of classes from the xmlLoader package.
              */
             
-            JAXBElement<?> configElement = (JAXBElement<?>)u.unmarshal( new FileInputStream(xmlFilePath));
+            JAXBElement<?> configElement = (JAXBElement<?>)u.unmarshal(new FileInputStream(xmlFilePath));
             ConfigType ct = (ConfigType)configElement.getValue();
             
             junctions = new LinkedList<Junction>();
