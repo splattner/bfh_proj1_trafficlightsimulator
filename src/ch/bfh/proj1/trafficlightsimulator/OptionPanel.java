@@ -46,6 +46,7 @@ import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 import ch.bfh.proj1.trafficlightsimulator.xmlLoader.TrafficLightsXMLHandler;
 import ch.bfh.proj1.trafficlightsimulator.xmlLoader.TrafficLightsXMLWriter;
 
+@SuppressWarnings("serial")
 public class OptionPanel extends JPanel implements ActionListener, ChangeListener{
 	
 	private JButton btRunSimulation;

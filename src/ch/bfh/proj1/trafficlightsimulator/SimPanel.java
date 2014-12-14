@@ -27,12 +27,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
+
 import javax.swing.JPanel;
+
 import ch.bfh.proj1.trafficlightsimulator.Lane.marker;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
 
+@SuppressWarnings("serial")
 public class SimPanel extends JPanel implements MouseListener, MouseMotionListener{
 
 

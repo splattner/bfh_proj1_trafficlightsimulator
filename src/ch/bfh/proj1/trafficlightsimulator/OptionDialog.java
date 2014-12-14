@@ -54,6 +54,7 @@ import ch.bfh.proj1.trafficlightsimulator.vehicles.Truck;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
+@SuppressWarnings("serial")
 public class OptionDialog extends JDialog implements ActionListener{ 
 
 	private TrafficLightSimulator simulator;
@@ -186,7 +187,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		public VehicleTableModel(TrafficLightSimulator simulator) {	this.simulator = simulator; }
 
-		public Class getColumnClass(int column) { return getValueAt(0, column).getClass(); }
+		public Class<?> getColumnClass(int column) { return getValueAt(0, column).getClass(); }
 
 		public int getColumnCount() {return columnNames.length;	}
 
@@ -264,7 +265,7 @@ public class OptionDialog extends JDialog implements ActionListener{
 			routes = (ArrayList<Route>) this.simulator.getCurrentSimulation().getRoutes();
 		}
 
-		public Class getColumnClass(int column) { return getValueAt(0, column).getClass(); }
+		public Class<?> getColumnClass(int column) { return getValueAt(0, column).getClass(); }
 
 
 		public int getColumnCount() { return columnNames.length; }
@@ -494,8 +495,8 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 	class SliderEditor extends DefaultCellEditor implements MouseListener {
 		private JSlider slider;
-
 		private int value;
+		
 		public SliderEditor(int orientation, int min, int max, int value) {
 			super(new JCheckBox());
 			this.slider = new JSlider(orientation, min, max, value);     
