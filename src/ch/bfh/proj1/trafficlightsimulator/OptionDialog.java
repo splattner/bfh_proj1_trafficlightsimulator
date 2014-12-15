@@ -104,6 +104,9 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 		SelectionListener listener = new SelectionListener(this.routeTable, this.getSimulator().getCurrentSimulation().getRoutes());
 		this.routeTable.getSelectionModel().addListSelectionListener(listener);
+		
+		// Disable Column reorder
+		this.routeTable.getTableHeader().setReorderingAllowed(false);
 
 
 		panel.add(scrollPaneRoutes);
@@ -133,12 +136,15 @@ public class OptionDialog extends JDialog implements ActionListener{
 		this.vehicleTable.getColumnModel().getColumn(1).setCellEditor(new SliderEditor(JSlider.HORIZONTAL, 0, 100, 0));
 
 		this.vehicleTable.setRowHeight(40);
+		
+		// Disable Column reorder
+		this.vehicleTable.getTableHeader().setReorderingAllowed(false);
 
 		panel.add(scrollPaneVehicles);
 
 		this.add(panel, BorderLayout.CENTER);
 
-		this.btApply = new JButton("Apply");
+		this.btApply = new JButton("Close");
 		this.btApply.addActionListener(this);
 
 
@@ -152,7 +158,8 @@ public class OptionDialog extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource().equals(this.btAddRoute)) {
+		// Add a new route, only if simulation is not running
+		if (e.getSource().equals(this.btAddRoute) && !this.getSimulator().getCurrentSimulation().isRunning()) {
 			
 			int idLastRoute = this.getSimulator().getCurrentSimulation().getRoutes().size();
 			
@@ -165,7 +172,10 @@ public class OptionDialog extends JDialog implements ActionListener{
 			
 		}
 		
-		if (e.getSource().equals(this.btDelRoute)) {
+		// Delete a selected route, only if simulation is not running
+		if (e.getSource().equals(this.btDelRoute) && !this.getSimulator().getCurrentSimulation().isRunning()) {
+			
+
 			
 			for (Route r : this.getSimulator().getCurrentSimulation().getRoutes()) {
 				if (r.isVisible()) {

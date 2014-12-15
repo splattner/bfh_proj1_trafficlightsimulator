@@ -214,7 +214,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 
 		this.add(this.simulationFrequency, c);
 		
-		this.btloadXML = new JButton("Load XML");
+		this.btloadXML = new JButton("Load Scenario");
 		this.btloadXML.addActionListener(this);
 		
 		c.gridx = 0;
@@ -222,7 +222,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		c.gridwidth = 1;
 		this.add(btloadXML, c);
 		
-		this.btsaveXML = new JButton("Save XML");
+		this.btsaveXML = new JButton("Save Scenario");
 		this.btsaveXML.addActionListener(this);
 		
 		c.gridx = 1;
