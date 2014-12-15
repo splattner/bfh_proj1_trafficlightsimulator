@@ -192,7 +192,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		}
 		this.add(this.btShowConfig,c);
 		
-		JLabel lb4 = new JLabel("Simulation Speed");
+		JLabel lb4 = new JLabel("Vehicle Injection Speed");
 
 		
 		c.gridx = 0;
@@ -210,21 +210,23 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		
 		c.gridx = 0;
 		c.gridy = 6;
+		
 
 		this.add(this.simulationFrequency, c);
 		
-		this.btloadXML = new JButton("Load XML file");
+		this.btloadXML = new JButton("Load XML");
 		this.btloadXML.addActionListener(this);
 		
 		c.gridx = 0;
 		c.gridy = 7;
+		c.gridwidth = 1;
 		this.add(btloadXML, c);
 		
-		this.btsaveXML = new JButton("Save XML file");
+		this.btsaveXML = new JButton("Save XML");
 		this.btsaveXML.addActionListener(this);
 		
-		c.gridx = 0;
-		c.gridy = 8;
+		c.gridx = 1;
+		c.gridy = 7;
 		this.add(btsaveXML, c);
 
 		

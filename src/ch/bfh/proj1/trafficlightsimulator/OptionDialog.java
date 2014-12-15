@@ -569,8 +569,6 @@ public class OptionDialog extends JDialog implements ActionListener{
 				r.setVisible(false);
 
 				r.highlightLanes(marker.none);
-
-
 			}
 
 			for (int i = 0; i < selectedRow.length; i++) {
