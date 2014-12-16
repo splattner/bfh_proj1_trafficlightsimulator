@@ -188,6 +188,10 @@ public class OptionDialog extends JDialog implements ActionListener{
 			
 		}
 		
+		if (e.getSource().equals(this.btApply)) {
+			this.setVisible(false);
+		}
+		
 	}
 
 	class VehicleTableModel extends AbstractTableModel {
