@@ -60,6 +60,10 @@ public class TrafficLightsXMLWriter {
 			
             JAXBElement<ConfigType> configElement = of.createTrafficLightConfig(ct);
 
+            /*
+             * Extract data from junction list and add related Junction information to the xml root element.
+             */
+            
 			JunctionsType jtl = of.createJunctionsType();
 			
 			for (Junction j : junctions){
@@ -73,6 +77,10 @@ public class TrafficLightsXMLWriter {
 			}
 			
 			ct.setJunctions(jtl);
+
+            /*
+             * Extract data from Street list and add related Street information to the xml root element.
+             */
 			
 			StreetsType stl = new StreetsType();
 
@@ -86,7 +94,12 @@ public class TrafficLightsXMLWriter {
 			}
 			
 			ct.setStreets(stl);
-						
+
+			/*
+			 * Extract data from Lane list (which is built through Street list)
+			 * and add related Lane information to the xml root element.
+			 */
+			
 			LanesType ltl = new LanesType();
 			
 			for (Street s : streets){
@@ -104,6 +117,10 @@ public class TrafficLightsXMLWriter {
 			}
 			
 			ct.setLanes(ltl);
+
+            /*
+             * Extract data from Route list and add related Route information to the xml root element.
+             */
 			
 			RoutesType rtl = new RoutesType();
 			
@@ -123,6 +140,8 @@ public class TrafficLightsXMLWriter {
 			}
 			
 			ct.setRoutes(rtl);
+			
+			// marschal everything in the selected path.
 			
 			m.marshal(configElement,new FileOutputStream(xmlFilePath));
 
