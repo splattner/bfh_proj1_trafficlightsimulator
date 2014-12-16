@@ -65,12 +65,25 @@ public class Route {
 	
 	public int getId() {return id;}
 	
+	
+	/**
+	 * Highlight (or de highlight) this lane
+	 * @param doHighlight
+	 */
+	public void hightLight(boolean doHighlight) {
+		if (doHighlight) {
+			this.highlightLanes(marker.green);
+		} else {
+			this.highlightLanes(marker.none);
+		}
+	}
+	
 	/**
 	 * Highlight all possible lanes you can add to the route
 	 * Highlight the lane you can remove from the route (lastOne)
 	 * @param highLight
 	 */
-	public void highlightLanes(marker newMarker) {
+	private void highlightLanes(marker newMarker) {
 		try {
 		  	  Lane lastLane = this.getLanes().get(this.getLanes().size()-1);
 		  	  Junction nextJunction = lastLane.getNextJunction();
@@ -90,9 +103,7 @@ public class Route {
 		  	  }
 		  	  
 		  	  
-		} catch (Exception e) {
-			
-		}
+		} catch (Exception e) {}
 
 	}
 

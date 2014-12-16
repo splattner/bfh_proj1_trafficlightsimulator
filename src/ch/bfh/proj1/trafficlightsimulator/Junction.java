@@ -28,7 +28,6 @@ import java.util.LinkedList;
 import java.util.Collections;
 
 import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
-import ch.bfh.proj1.trafficlightsimulator.TrafficLight.trafficLightStatus;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
 public class Junction implements DrawableObject{
@@ -223,7 +222,7 @@ public class Junction implements DrawableObject{
 
 			// Check if there is a green light
 			for (TrafficLight l : this.getTrafficLights()) {
-				if (l.getCurrentStatus() == trafficLightStatus.GREEN) {
+				if (l.isGreen()) {
 					currentGreenLight = l;
 					break;
 				}

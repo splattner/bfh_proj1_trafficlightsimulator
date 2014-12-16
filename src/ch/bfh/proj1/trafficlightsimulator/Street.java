@@ -77,7 +77,7 @@ public class Street implements DrawableObject{
 			
 			if(l.getOrigin() == null) // calculate origins and dimension the first time only
 			{
-				if (this.getOrientaion() == orientation.horizontal) {
+				if (this.isHorizontal()) {
 					// Horizontal street
 					l.setOrigin(new Point (origin.x, origin.y+TrafficLightSimulator.defaultLaneWidth*i));
 					l.setDimension(new Dimension (TrafficLightSimulator.defaultStreetLenght, TrafficLightSimulator.defaultLaneWidth));
@@ -98,7 +98,7 @@ public class Street implements DrawableObject{
 		// Draw the separation line
 		if (numOfLanes > 1) {
 			for (int j = 1 ; j < numOfLanes ; j++) {
-				if (this.getOrientaion() == orientation.horizontal) {
+				if (this.isHorizontal()) {
 					g.setColor(laneColor);
 					g.drawLine(origin.x, origin.y + (TrafficLightSimulator.defaultLaneWidth * j), origin.x + dimension.width, origin.y + (TrafficLightSimulator.defaultLaneWidth * j));
 					

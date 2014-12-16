@@ -43,9 +43,19 @@ public class Simulation extends Thread {
 	private int simulationSpeed = 20;
 	private int currentStep = 0;
 	
-	public Simulation(TrafficLightSimulator simulator) {this.setSimulator(simulator);}
-		
 	
+	/**
+	 * Create a new Simulation
+	 * @param simulator
+	 */
+	public Simulation(TrafficLightSimulator simulator) {
+		this.setSimulator(simulator);
+	}
+		
+	/**
+	 * Create a new Simulation based on the loaded old simulation
+	 * @param oldSimulation
+	 */
 	public Simulation (Simulation oldSimulation) {
 
 		this.setSimulationSpeed(oldSimulation.getSimulationSpeed());
@@ -87,13 +97,10 @@ public class Simulation extends Thread {
 	
 	public void run() {
 
-		//System.out.println("Start SimLoop");
 		
 		synchronized (this) {
 			while (this.isRunning()) {
-				
-				
-				
+
 				// Simulate all vehicles
 				for (Vehicle v : this.getSimulator().getCurrentSimulation().getVerhicles()) {
 					v.simulationStep();
@@ -110,10 +117,7 @@ public class Simulation extends Thread {
 				// Redraw Sim Panel
 				this.getSimulator().refreshWindow();
 				
-				
-				
-				
-				
+	
 				// Add Vehicles if in automatic mode
 				// Only add them, when we have a simulation speed and current step is 0
 				if (this.getSimulationSpeed() > 0 && this.currentStep == 0 && this.getSimulator().getSimulationMode() == SimulationMode.automatic) {
@@ -147,37 +151,34 @@ public class Simulation extends Thread {
 								// Random was for this route
 								if (randNumberRoute > currentRouteDist && randNumberRoute <= nextRouteDist) {
 	
+									// Create new vehicle
 									Vehicle v = null;
 									try {
 										v = (Vehicle) ve.getVehicle().newInstance();
-									} catch (InstantiationException e) {
-
-									} catch (IllegalAccessException e) {
-
-									}
+									} 
+									catch (InstantiationException e) {} 
+									catch (IllegalAccessException e) {}
 									
 									
+									// If we have a vehicle
+									// Set route and add to vehicle list
 									if (v != null) {
 										v.setRoute(r);
 										v.setCurrentLane(r.getLanes().get(0));
 										
 										this.getSimulator().getCurrentSimulation().getVerhicles().add(v);
 									}
-									
 								}
 								
 								// Set Distribution for lower boundery (this upper is the next lower)
 								currentRouteDist += r.getDistribution();
 								
 							}
-							
 						}
 						
 						// Set Distribution for lower boundery (this upper is the next lower)
 						currentVehicleDist += ve.getDistribution();
-
-					}	
-					
+					}		
 				}
 				
 				// Increase current Simulation Step
@@ -197,7 +198,6 @@ public class Simulation extends Thread {
 
 				// Check if we should break
 				if (this.isBreaking()) {
-					//System.out.println("Breaking");
 					// Redraw Sim Panel
 					this.getSimulator().refreshWindow();
 					try {
@@ -211,9 +211,11 @@ public class Simulation extends Thread {
 			
 		}
 
-		//System.out.println("Interrupted");
 	}
 	
+	/** 
+	 * Stop the currently running Simulation
+	 */
 	public void stopSimulation() {
 		
 		this.running = false;
@@ -222,6 +224,9 @@ public class Simulation extends Thread {
 		}
 	}
 	
+	/** 
+	 * Start this simulation
+	 */
 	public void startSimulation() {
 		this.running = true;
 
@@ -236,6 +241,10 @@ public class Simulation extends Thread {
 		return breakState;
 	}
 	
+	/**
+	 * Break or restart a running simulation
+	 * @param breakState
+	 */
 	public void setBreaking(boolean breakState) {
 		this.breakState = breakState;
 		

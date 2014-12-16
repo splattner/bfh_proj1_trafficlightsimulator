@@ -38,7 +38,7 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	 */
 	private int timeLastChange;
 	
-	public enum trafficLightStatus {
+	private enum trafficLightStatus {
 	    RED,
 	    ORANGE,
 	    GREEN
@@ -75,9 +75,6 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	public void setDimension(Dimension dimension) {this.dimension = dimension;}
 	public Dimension getDimension() {return dimension;}
 	
-	public trafficLightStatus getCurrentStatus () {return currentStatus;}
-	public void setCurrentStatus(trafficLightStatus currentStatus) {this.currentStatus = currentStatus;}
-
 	public Lane getLane() { return lane; }
 	public void setLane(Lane lane) { this.lane = lane;	}
 

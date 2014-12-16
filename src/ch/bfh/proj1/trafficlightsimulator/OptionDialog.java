@@ -48,7 +48,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import ch.bfh.proj1.trafficlightsimulator.Lane.marker;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Car;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Truck;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
@@ -179,7 +178,8 @@ public class OptionDialog extends JDialog implements ActionListener{
 			
 			for (Route r : this.getSimulator().getCurrentSimulation().getRoutes()) {
 				if (r.isVisible()) {
-					r.highlightLanes(marker.none);
+					r.hightLight(false);
+					
 					this.getSimulator().getCurrentSimulation().getRoutes().remove(r);
 					break;
 				}
@@ -581,15 +581,15 @@ public class OptionDialog extends JDialog implements ActionListener{
 
 			for (Route r : this.routes) {
 				r.setVisible(false);
-
-				r.highlightLanes(marker.none);
+				r.hightLight(false);
+			
 			}
 
 			for (int i = 0; i < selectedRow.length; i++) {
 				Route r = routes.get(selectedRow[i]);
 				r.setVisible(true);
 				if (!getSimulator().getCurrentSimulation().isRunning()) {
-					r.highlightLanes(marker.green);
+					r.hightLight(true);
 				}
 			}
 

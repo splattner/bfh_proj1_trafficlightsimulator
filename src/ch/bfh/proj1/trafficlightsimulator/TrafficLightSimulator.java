@@ -134,6 +134,9 @@ public class TrafficLightSimulator {
 	}
 	
 	
+	/**
+	 * Refresh all components in the main Frame
+	 */
 	public void refreshWindow() {
 		this.mainFrame.invalidate();
 		this.mainFrame.repaint();	
@@ -161,6 +164,7 @@ public class TrafficLightSimulator {
 
 	public static void main(String[] args) {
 
+		// Instantuate a new Traffic Light Simulator and init it.
 		TrafficLightSimulator app = new TrafficLightSimulator();
 		app.init();
 		

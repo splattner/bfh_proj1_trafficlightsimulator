@@ -29,8 +29,6 @@ import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
-
-import ch.bfh.proj1.trafficlightsimulator.Lane.marker;
 import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 
 
@@ -39,7 +37,7 @@ import ch.bfh.proj1.trafficlightsimulator.vehicles.Vehicle;
 public class SimPanel extends JPanel implements MouseListener, MouseMotionListener{
 
 
-	/*
+	/**
 	 * Reference to the Traffic Light Simulator
 	 */
 	private TrafficLightSimulator simulator;
@@ -72,7 +70,9 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
 
 
-
+	/**
+	 * Paint all elements on the Sim Panel (Street, Lanes, Junctions, Traffic Lights, Vehicles)
+	 */
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
@@ -112,14 +112,14 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 
 		// Draw all Streets
 		for (Street street : this.getSimulator().getCurrentSimulation().getStreets()) {
-
+			
+			// Paint the Steet
 			street.paintObject(g);
-
 
 			// Draw Vehicles on Lane
 			for (Lane l : street.getLanes()) {
 				for (Vehicle v : l.getVerhiclesOnLane()) {
-
+					// Paint the vehicle
 					v.paintObject(g);
 				}
 			}
@@ -141,7 +141,7 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 		for (Route r : this.getSimulator().getCurrentSimulation().getRoutes()) {
 			if (r.isVisible()) {
 				for (Lane l : r.getLanes()) {
-					if (l.getStreet().getOrientaion() == Street.orientation.horizontal) {
+					if (l.getStreet().isHorizontal()) {
 						g2d.drawLine(l.getOrigin().x, l.getOrigin().y + 7, l.getOrigin().x + l.getDimension().width, l.getOrigin().y + 7);
 					} else {
 						g2d.drawLine(l.getOrigin().x + 7, l.getOrigin().y, l.getOrigin().x + 7, l.getOrigin().y + l.getDimension().height);
@@ -164,10 +164,10 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 				for (TrafficLight tf : j.getTrafficLights()) {
 					if (e.getX() >= tf.getOrigin().x && e.getX() < tf.getOrigin().x + tf.getDimension().width &&
 							e.getY() >= tf.getOrigin().y && e.getY() < tf.getOrigin().y + tf.getDimension().height) {
-						if (tf.getCurrentStatus() == TrafficLight.trafficLightStatus.GREEN) {
-							tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+						if (tf.isGreen()) {
+							tf.setRed();
 						} else {
-							tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+							tf.setGreen();
 						}
 
 
@@ -180,10 +180,10 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 						e.getY() >= j.getOrigin().y && e.getY() < j.getOrigin().y + j.getDimension().height) {
 
 					for (TrafficLight tf : j.getTrafficLights()) {
-						if (tf.getCurrentStatus() == TrafficLight.trafficLightStatus.GREEN) {
-							tf.setCurrentStatus(TrafficLight.trafficLightStatus.RED);
+						if (tf.isGreen()) {
+							tf.setRed();
 						} else {
-							tf.setCurrentStatus(TrafficLight.trafficLightStatus.GREEN);
+							tf.setGreen();
 						}
 					}
 				}
@@ -218,11 +218,11 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 								if (lastLane != null && lanes.contains(l) && l == lastLane) {
 									// You can only remove the last one
 
-									r.highlightLanes(marker.none);
+									r.hightLight(false);
 									lanes.removeLastOccurrence(l);
 
 									// Highlight next available Lanes
-									r.highlightLanes(marker.green);
+									r.hightLight(true);
 
 
 								} else {
@@ -230,17 +230,15 @@ public class SimPanel extends JPanel implements MouseListener, MouseMotionListen
 									if (lastLane != null) {	
 										Junction nextJunction = lastLane.getNextJunction();
 										if (nextJunction != null && nextJunction.getOutgoingLanes().contains(l)) {
-											r.highlightLanes(marker.none);
+											r.hightLight(false);
 											lanes.add(l);
 											// Highlight next available Lanes
-											r.highlightLanes(marker.green);
+											r.hightLight(true);
 										}
 									} else {
 										lanes.add(l);
-										r.highlightLanes(marker.green);
+										r.hightLight(true);
 									}
-
-
 								}
 							}
 						}
