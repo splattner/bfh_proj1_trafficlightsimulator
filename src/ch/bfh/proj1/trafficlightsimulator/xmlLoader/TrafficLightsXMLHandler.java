@@ -48,7 +48,12 @@ public class TrafficLightsXMLHandler {
             
             JAXBElement<?> configElement = (JAXBElement<?>)u.unmarshal(new FileInputStream(xmlFilePath));
             ConfigType ct = (ConfigType)configElement.getValue();
-            
+             
+            /*
+             * create and populate Junction list.
+             * Assign id's based on id's extracted from the XML file.
+             */
+
             junctions = new LinkedList<Junction>();
             
             for (JunctionType jt : ct.getJunctions().getJunction())
@@ -56,6 +61,15 @@ public class TrafficLightsXMLHandler {
             	Junction j = new Junction(jt.getId());
             	junctions.add(j);
             }
+
+            /*
+             * create and populate Street list.
+             * Based on xml file :
+             * 	- Assign id's.
+             * 	- Set Street orientation.
+             * 	- Allocate start junction to Street object (if any).
+             * 	- Allocate end junction to Street object (if any).
+             */
             
             streets = new LinkedList<Street>();
             
@@ -91,9 +105,17 @@ public class TrafficLightsXMLHandler {
 				
 				streets.add(s);
             }
-            
-			lanes = new LinkedList<Lane>();
 
+            /*
+             * create and populate Lane list.
+             * Based on xml file :
+             * 	- Assign id's.
+             * 	- Set lane orientation / direction.
+             * 	- Add Lane Object to Street Object.
+             */
+			
+            lanes = new LinkedList<Lane>();
+            
 			for (LaneType lt : ct.getLanes().getLane()) 
 			{
 				Lane l = new Lane(lt.getId(), Enum.valueOf(Lane.laneOrientations.class, lt.direction));
@@ -107,6 +129,13 @@ public class TrafficLightsXMLHandler {
 					}
 				}
 			}
+
+            /*
+             * create and populate Route list.
+             * Based on xml file :
+             * 	- Assign id's.
+             * 	- Set lanes to build the path for the Route.
+             */
 			
 			routes = new ArrayList<Route>();
 
@@ -130,6 +159,11 @@ public class TrafficLightsXMLHandler {
 				
 				routes.add(r);
 			}
+
+            /*
+             * Set streets for each Junction.
+             */
+						
 			
 			for (JunctionType jt : ct.getJunctions().getJunction())
 			{
