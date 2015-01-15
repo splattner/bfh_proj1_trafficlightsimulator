@@ -21,7 +21,7 @@ package ch.bfh.proj1.trafficlightsimulator;
 
 import java.util.LinkedList;
 
-import ch.bfh.proj1.trafficlightsimulator.Lane.marker;
+import ch.bfh.proj1.trafficlightsimulator.Lane.LaneMarker;
 
 public class Route {
 	
@@ -72,9 +72,9 @@ public class Route {
 	 */
 	public void hightLight(boolean doHighlight) {
 		if (doHighlight) {
-			this.highlightLanes(marker.green);
+			this.highlightLanes(LaneMarker.GREEN);
 		} else {
-			this.highlightLanes(marker.none);
+			this.highlightLanes(LaneMarker.NONE);
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class Route {
 	 * Highlight the lane you can remove from the route (lastOne)
 	 * @param highLight
 	 */
-	private void highlightLanes(marker newMarker) {
+	private void highlightLanes(LaneMarker newMarker) {
 		try {
 		  	  Lane lastLane = this.getLanes().get(this.getLanes().size()-1);
 		  	  Junction nextJunction = lastLane.getNextJunction();
@@ -96,10 +96,10 @@ public class Route {
 		  	  
 		  	  // Remove marker on last Lane when we dehighlight the lanes
 		  	  // Otherwise mark last lane with red
-		  	  if (newMarker == marker.none) {
-		  		  lastLane.setCurrentMarker(marker.none);
+		  	  if (newMarker == LaneMarker.NONE) {
+		  		  lastLane.setCurrentMarker(LaneMarker.NONE);
 		  	  } else {
-		  		lastLane.setCurrentMarker(marker.red);
+		  		lastLane.setCurrentMarker(LaneMarker.RED);
 		  	  }
 		  	  
 		  	  

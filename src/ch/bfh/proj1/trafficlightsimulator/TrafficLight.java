@@ -31,27 +31,27 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	private Point origin;
 	private Dimension dimension;
 	private Lane lane;
-	private trafficLightStatus currentStatus = trafficLightStatus.RED;
+	private TrafficLightStatus currentStatus = TrafficLightStatus.RED;
 	
 	/**
 	 * Number of Simulation steps since we changed this to green
 	 */
 	private int timeLastChange;
 	
-	private enum trafficLightStatus {
+	private enum TrafficLightStatus {
 	    RED,
 	    ORANGE,
 	    GREEN
 	}
 
 	public TrafficLight (Lane aLane) {
-		this.setLane(aLane);
+		this.lane = aLane;
 	}
 	
 	public void paintObject(Graphics g) {		
-		if(currentStatus.name().equalsIgnoreCase("RED")) {
+		if(this.isRed()) {
 			g.setColor(Color.RED);
-		} else if(currentStatus.name().equalsIgnoreCase("GREEN")) {
+		} else if(this.isGreen()) {
 			
 			/*if (this.getTimeLastChange() > TrafficLightSimulator.minimumGreenLightPhase * 0.8) {
 				g.setColor(Color.ORANGE);
@@ -59,7 +59,7 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 				g.setColor(Color.GREEN);
 			/*}*/
 			
-		} else if (currentStatus.name().equalsIgnoreCase("ORANGE")) {
+		} else if (this.isOrange()) {
 			g.setColor(Color.ORANGE);
 		}
 		g.fillRect(origin.x , origin.y, dimension.width, dimension.height);
@@ -75,8 +75,6 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	public void setDimension(Dimension dimension) {this.dimension = dimension;}
 	public Dimension getDimension() {return dimension;}
 	
-	public Lane getLane() { return lane; }
-	public void setLane(Lane lane) { this.lane = lane;	}
 
 	public int getTimeLastChange() { return timeLastChange;	}
 	
@@ -86,9 +84,9 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	 */
 	public int getNumOfVehiclesNearLight() {
 		int numberOfVehiclesNearLight = 0;
-		for (Vehicle v : this.getLane().getVerhiclesOnLane()) {
+		for (Vehicle v : this.lane.getVerhiclesOnLane()) {
 			// All vehicles closer as 50% of Street Lenght
-			if (v.getCurrentPosOnLane() > this.getLane().getStreet().getPositionsOnStreet() * 0.50) {
+			if (v.getCurrentPosOnLane() > this.lane.getStreet().getPositionsOnStreet() * 0.50) {
 				numberOfVehiclesNearLight++;
 			}
 		}
@@ -97,22 +95,22 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 	}
 	
 	public boolean isRed() {
-		return this.currentStatus == trafficLightStatus.RED;
+		return this.currentStatus == TrafficLightStatus.RED;
 	}
 	
 	public boolean isOrange() {
-		return this.currentStatus == trafficLightStatus.ORANGE;
+		return this.currentStatus == TrafficLightStatus.ORANGE;
 	}
 	
 	public boolean isGreen() {
-		return this.currentStatus == trafficLightStatus.GREEN;
+		return this.currentStatus == TrafficLightStatus.GREEN;
 	}
 	
 	public void setRed() {
 		if (isRed()) {
 			this.timeLastChange++;
 		} else {
-			this.currentStatus = trafficLightStatus.RED;
+			this.currentStatus = TrafficLightStatus.RED;
 			this.timeLastChange = 0;
 		}
 	}
@@ -121,7 +119,7 @@ public class TrafficLight implements DrawableObject, Comparable<TrafficLight> {
 		if (isGreen()) {
 			this.timeLastChange++;
 		} else {
-			this.currentStatus = trafficLightStatus.GREEN;
+			this.currentStatus = TrafficLightStatus.GREEN;
 			this.timeLastChange = 0;
 		}
 	}

@@ -36,22 +36,22 @@ public class Lane implements DrawableObject {
 	 * ore vice versa
 	 *
 	 */
-	public enum laneOrientations {
-		startToEnd,
-		endToStart
+	public enum LaneOrientations {
+		START_TO_END,
+		END_TO_START
 	}
 
-	public enum arrow_head {
-		up,
-		down,
-		right,
-		left
+	public enum ArrowHead {
+		UP,
+		DOWN,
+		RIGHT,
+		LEFT
 	}
 
-	public enum marker {
-		none,
-		green,
-		red,
+	public enum LaneMarker {
+		NONE,
+		GREEN,
+		RED,
 	}
 
 	private int id;
@@ -59,7 +59,7 @@ public class Lane implements DrawableObject {
 	/**
 	 * Current lane orientation
 	 */
-	private laneOrientations laneOrientation;
+	private LaneOrientations laneOrientation;
 
 	private Dimension dimension;
 	private Point origin;
@@ -86,13 +86,12 @@ public class Lane implements DrawableObject {
 	private Street street;
 
 
-	private marker currentMarker = marker.none;
-	public marker getCurrentMarker() {return currentMarker; }
-	public void setCurrentMarker(marker newMarker) { this.currentMarker = newMarker;}
+	private LaneMarker currentMarker = LaneMarker.NONE;
+	public void setCurrentMarker(LaneMarker newMarker) { this.currentMarker = newMarker;}
 
-	public Lane(int id, laneOrientations laneOrientation) {
-		this.setVerhiclesOnLane(new LinkedList<Vehicle>());
-		this.setLaneOrientation(laneOrientation);
+	public Lane(int id, LaneOrientations laneOrientation) {
+		this.verhiclesOnLane = new LinkedList<Vehicle>();
+		this.laneOrientation = laneOrientation;
 		this.id=id;
 
 		this.trafficLight = new TrafficLight(this);
@@ -100,8 +99,8 @@ public class Lane implements DrawableObject {
 
 	}
 
-	public laneOrientations getLaneOrientation() {return laneOrientation;}
-	public void setLaneOrientation(laneOrientations laneOrientation) {this.laneOrientation = laneOrientation;}
+	public LaneOrientations getLaneOrientation() {return laneOrientation;}
+	public void setLaneOrientation(LaneOrientations laneOrientation) {this.laneOrientation = laneOrientation;}
 
 	/**
 	 * Return the traffic light for this lane
@@ -114,13 +113,13 @@ public class Lane implements DrawableObject {
 
 
 		switch (this.currentMarker) {
-		case none:
+		case NONE:
 			g.setColor(Street.streetColor);
 			break;
-		case green:
+		case GREEN:
 			g.setColor(new Color(0, 200, 0));
 			break;
-		case red:
+		case RED:
 			g.setColor(new Color(200, 0, 0));
 			break;
 		}
@@ -141,14 +140,14 @@ public class Lane implements DrawableObject {
 					trafficLight.setOrigin(new Point (origin.x+dimension.width-10, origin.y));
 					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
 				}
-				arrow.setHead(arrow_head.right);
+				arrow.setHead(ArrowHead.RIGHT);
 			}
 			else {
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
 					trafficLight.setOrigin(new Point (origin.x, origin.y));
 					trafficLight.setDimension(new Dimension (10,TrafficLightSimulator.defaultLaneWidth));
 				}
-				arrow.setHead(arrow_head.left);
+				arrow.setHead(ArrowHead.LEFT);
 			}
 
 		}
@@ -161,23 +160,23 @@ public class Lane implements DrawableObject {
 					trafficLight.setOrigin(new Point (origin.x, origin.y+dimension.height-10));
 					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
 				}
-				arrow.setHead(arrow_head.down);
+				arrow.setHead(ArrowHead.DOWN);
 			}
 			else {
 				if (this.trafficLight != null && this.trafficLight.getOrigin() == null) {
 					trafficLight.setOrigin(new Point (origin.x, origin.y));
 					trafficLight.setDimension(new Dimension (TrafficLightSimulator.defaultLaneWidth,10));
 				}
-				arrow.setHead(arrow_head.up);
+				arrow.setHead(ArrowHead.UP);
 			}
 		}			
 
 		// Remove traffic light if non is necessary, e.g. at a start/end without a junction
-		if (this.getLaneOrientation() == laneOrientations.startToEnd && this.getStreet().getEndJunction() == null) {
+		if (this.getLaneOrientation() == LaneOrientations.START_TO_END && this.getStreet().getEndJunction() == null) {
 			this.trafficLight = null;
 		}
 
-		if (this.getLaneOrientation() == laneOrientations.endToStart && this.getStreet().getStartJunction() == null) {
+		if (this.getLaneOrientation() == LaneOrientations.END_TO_START && this.getStreet().getStartJunction() == null) {
 			this.trafficLight = null;
 		}
 
@@ -221,18 +220,17 @@ public class Lane implements DrawableObject {
 	public Dimension getDimension() {return dimension;}
 
 	public LinkedList<Vehicle> getVerhiclesOnLane() {return verhiclesOnLane;}
-	public void setVerhiclesOnLane(LinkedList<Vehicle> verhiclesOnLane) {this.verhiclesOnLane = verhiclesOnLane;}
 
 	public Street getStreet() {return street;}
 	public void setStreet(Street street) { this.street = street;}
 
 	public int getId() {return id;}
 
-	public boolean isLeftToRight() { return this.getStreet().isHorizontal() && this.laneOrientation == laneOrientations.startToEnd; }
-	public boolean isRightToLeft() { return this.getStreet().isHorizontal() && this.laneOrientation == laneOrientations.endToStart; }
+	public boolean isLeftToRight() { return this.getStreet().isHorizontal() && this.laneOrientation == LaneOrientations.START_TO_END; }
+	public boolean isRightToLeft() { return this.getStreet().isHorizontal() && this.laneOrientation == LaneOrientations.END_TO_START; }
 
-	public boolean isTopToBottom() { return this.getStreet().isVertical() &&this.laneOrientation == laneOrientations.startToEnd; }
-	public boolean isBottomToTop() { return this.getStreet().isVertical() && this.laneOrientation == laneOrientations.endToStart; }
+	public boolean isTopToBottom() { return this.getStreet().isVertical() &&this.laneOrientation == LaneOrientations.START_TO_END; }
+	public boolean isBottomToTop() { return this.getStreet().isVertical() && this.laneOrientation == LaneOrientations.END_TO_START; }
 
 	
 	/**
@@ -322,10 +320,10 @@ public class Lane implements DrawableObject {
 
 		}
 
-		public void setHead(arrow_head head_direction) {
+		public void setHead(ArrowHead head_direction) {
 
 			switch (head_direction) {
-			case right:
+			case RIGHT:
 				this.setXPoints(
 						this.getOrigin().x + this.getDimension().width/2,
 						this.getOrigin().x + this.getDimension().width/2,
@@ -335,7 +333,7 @@ public class Lane implements DrawableObject {
 						this.getOrigin().y + 5,
 						this.getOrigin().y + this.getDimension().height/2);
 				break;
-			case left:
+			case LEFT:
 				this.setXPoints(
 						this.getOrigin().x-this.getDimension().width/2,
 						this.getOrigin().x-this.getDimension().width/2,
@@ -345,7 +343,7 @@ public class Lane implements DrawableObject {
 						this.getOrigin().y+5,
 						this.getOrigin().y+this.getDimension().height/2);
 				break;
-			case down:
+			case DOWN:
 				this.setXPoints(	
 						this.getOrigin().x-5,
 						this.getOrigin().x+5,
@@ -356,7 +354,7 @@ public class Lane implements DrawableObject {
 						this.getOrigin().y+this.getDimension().height/2,
 						this.getOrigin().y+this.getDimension().height/2+10);
 				break;
-			case up:
+			case UP:
 				this.setXPoints(	
 						this.getOrigin().x-5,
 						this.getOrigin().x+5,

@@ -77,7 +77,7 @@ public class TrafficLightsXMLHandler {
             {
 				Street s = new Street(st.getId());
 				
-				s.setOrientaion(Enum.valueOf(Street.orientation.class, st.getOrientation()));
+				s.setOrientaion(Enum.valueOf(Street.Orientation.class, st.getOrientation()));
 				
 				if (st.getStartJunction() != null)
 				{
@@ -118,7 +118,7 @@ public class TrafficLightsXMLHandler {
             
 			for (LaneType lt : ct.getLanes().getLane()) 
 			{
-				Lane l = new Lane(lt.getId(), Enum.valueOf(Lane.laneOrientations.class, lt.direction));
+				Lane l = new Lane(lt.getId(), Enum.valueOf(Lane.LaneOrientations.class, lt.direction));
 				lanes.add(l);
 				for (Street s : streets)
 				{

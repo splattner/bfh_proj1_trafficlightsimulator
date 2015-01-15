@@ -63,6 +63,7 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 	private OptionDialog optionDialog;
 	
 	private JFileChooser fileChooser;
+	private File simulationFile;
 	
 
 	private TrafficLightSimulator simulator;
@@ -238,15 +239,22 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		// Save a XML File
 		if (e.getSource().equals(this.btsaveXML))
 		{
-			File simulationFile;
+
+			
 			this.fileChooser = new JFileChooser();
+			
+			if (this.simulationFile != null) {
+				this.fileChooser.setCurrentDirectory(this.simulationFile);
+			}
+			
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file .xml", "xml");
 			fileChooser.setFileFilter(filter);
 		    int returnVal = fileChooser.showSaveDialog(this);
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		    	simulationFile = this.fileChooser.getSelectedFile();
+		    	this.simulationFile = this.fileChooser.getSelectedFile();
+		    	
 				TrafficLightsXMLWriter txmlw = new TrafficLightsXMLWriter(
-						simulationFile.getAbsolutePath(),
+						this.simulationFile.getAbsolutePath(),
 						this.getSimulator().getCurrentSimulation().getJunctions(),
 						this.getSimulator().getCurrentSimulation().getStreets(),
 						this.getSimulator().getCurrentSimulation().getRoutes());
@@ -256,16 +264,20 @@ public class OptionPanel extends JPanel implements ActionListener, ChangeListene
 		// Load a XML File and configure Simulation
 		if (e.getSource().equals(this.btloadXML))
 		{
-			File simulationFile;
 			this.fileChooser = new JFileChooser();
+			
+			if (this.simulationFile != null) {
+				this.fileChooser.setCurrentDirectory(this.simulationFile);
+			}
+			
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file .xml", "xml");
 			fileChooser.setMultiSelectionEnabled(false);
 			fileChooser.setFileFilter(filter);
 		    int returnVal = fileChooser.showOpenDialog(this);
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		    	simulationFile = this.fileChooser.getSelectedFile();
+		    	this.simulationFile = this.fileChooser.getSelectedFile();
 		    	
-				TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler(simulationFile.getAbsolutePath());
+				TrafficLightsXMLHandler txmlh = new TrafficLightsXMLHandler(this.simulationFile.getAbsolutePath());
 
 				
 				this.getSimulator().getCurrentSimulation().setJunctions(txmlh.getJunctions());

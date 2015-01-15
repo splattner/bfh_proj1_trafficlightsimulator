@@ -36,61 +36,61 @@
     <Streets>
         <street>
             <id>1</id>
-            <orientation>horizontal</orientation>
+            <orientation>HORIZONTAL</orientation>
             <endJunction>1</endJunction>
         </street>
         <street>
             <id>2</id>
-            <orientation>vertical</orientation>
+            <orientation>VERTICAL</orientation>
             <endJunction>1</endJunction>
         </street>
         <street>
             <id>3</id>
-            <orientation>horizontal</orientation>
+            <orientation>HORIZONTAL</orientation>
             <startJunction>1</startJunction>
             <endJunction>2</endJunction>
         </street>
         <street>
             <id>4</id>
-            <orientation>vertical</orientation>
+            <orientation>VERTICAL</orientation>
             <startJunction>1</startJunction>
             <endJunction>4</endJunction>
         </street>
         <street>
             <id>5</id>
-            <orientation>vertical</orientation>
+            <orientation>VERTICAL</orientation>
             <endJunction>2</endJunction>
         </street>
         <street>
             <id>6</id>
-            <orientation>horizontal</orientation>
+            <orientation>HORIZONTAL</orientation>
             <startJunction>2</startJunction>
             <endJunction>3</endJunction>
         </street>
         <street>
             <id>7</id>
-            <orientation>vertical</orientation>
+            <orientation>VERTICAL</orientation>
             <startJunction>2</startJunction>
             <endJunction>5</endJunction>
         </street>
         <street>
             <id>8</id>
-            <orientation>vertical</orientation>
+            <orientation>VERTICAL</orientation>
             <endJunction>3</endJunction>
         </street>
         <street>
             <id>9</id>
-            <orientation>horizontal</orientation>
+            <orientation>HORIZONTAL</orientation>
             <startJunction>3</startJunction>
         </street>
         <street>
             <id>10</id>
-            <orientation>vertical</orientation>
+            <orientation>VERTICAL</orientation>
             <startJunction>3</startJunction>
         </street>
         <street>
             <id>11</id>
-            <orientation>horizontal</orientation>
+            <orientation>HORIZONTAL</orientation>
             <startJunction>4</startJunction>
             <endJunction>5</endJunction>
         </street>
@@ -99,112 +99,112 @@
         <lane>
             <id>1</id>
             <street>1</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>2</id>
             <street>1</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>3</id>
             <street>2</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>4</id>
             <street>2</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>5</id>
             <street>3</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>6</id>
             <street>3</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>7</id>
             <street>4</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>8</id>
             <street>4</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>9</id>
             <street>5</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>10</id>
             <street>5</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>11</id>
             <street>6</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>12</id>
             <street>6</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>13</id>
             <street>7</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>14</id>
             <street>7</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>15</id>
             <street>8</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>16</id>
             <street>8</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>17</id>
             <street>9</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>18</id>
             <street>9</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>19</id>
             <street>10</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
         <lane>
             <id>20</id>
             <street>10</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>21</id>
             <street>11</street>
-            <direction>endToStart</direction>
+            <direction>END_TO_START</direction>
         </lane>
         <lane>
             <id>22</id>
             <street>11</street>
-            <direction>startToEnd</direction>
+            <direction>START_TO_END</direction>
         </lane>
     </Lanes>
     <Routes>

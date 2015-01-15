@@ -36,48 +36,48 @@ public class TrafficLightSimulator {
 	/**
 	 * The Application Title
 	 */
-	static public String applicationTitle = "TrafficLightSimulator v1.0";
+	static final public String applicationTitle = "TrafficLightSimulator v1.0";
 	
 	
 	/**
 	 * Application Width
 	 */
-	static public int applicationWidth = 1024;
+	static final public int applicationWidth = 1024;
 	
 	/**
 	 * Application Height
 	 */
-	static public int applicationHeight = 600;
+	static final public int applicationHeight = 600;
 	
 	/**
 	 * Number of positions on a street. Each car is on one of these positions
 	 */
-	static public int defaultPositinOnStreet = 100000;
+	static final public int defaultPositinOnStreet = 100000;
 	
 	/**
 	 * Street Length in Pixel
 	 */
-	static public int defaultStreetLenght = 150;
+	static final public int defaultStreetLenght = 150;
 	
 	/**
 	 * Street Width in Pixel
 	 */
-	static public int defaultLaneWidth = 15;
+	static final public int defaultLaneWidth = 15;
 	
 	/**
 	 * Minimum Distance between two Vehicles at max (depending on vehicles speed)
 	 */
-	static public int minimumDistanceBetweenVehiclesMax = 20000;
+	static final public int minimumDistanceBetweenVehiclesMax = 20000;
 	
 	/**
 	 * Minimum Distance between two Vehicles at min (depending on vehicles speed)
 	 */
-	static public int minimumDistanceBetweenVehiclesMin = 4000;
+	static final public int minimumDistanceBetweenVehiclesMin = 4000;
 	
 	/**
 	 * Minimum Green Light Phase. Change light, if necessary, after this minimum green light phase
 	 */
-	static public int minimumGreenLightPhase = 400;
+	static final public int minimumGreenLightPhase = 400;
 	
 	
 	/**

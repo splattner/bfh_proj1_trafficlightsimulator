@@ -98,7 +98,7 @@ public class Simulation extends Thread {
 	public void run() {
 
 		
-		synchronized (this) {
+		
 			while (this.isRunning()) {
 
 				// Simulate all vehicles
@@ -190,9 +190,9 @@ public class Simulation extends Thread {
 				
 				// Wait n ms after each loop
 				try {
-					this.wait(10);
-				} catch (InterruptedException e1) {
-
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 				
 
@@ -200,10 +200,13 @@ public class Simulation extends Thread {
 				if (this.isBreaking()) {
 					// Redraw Sim Panel
 					this.getSimulator().refreshWindow();
-					try {
-						this.wait();
-					} catch (InterruptedException e) {
-
+					synchronized (this) {
+						try {
+							this.wait();
+							
+						} catch (InterruptedException e) {
+								e.printStackTrace();
+						}
 					}
 				}
 			
@@ -211,7 +214,6 @@ public class Simulation extends Thread {
 			
 		}
 
-	}
 	
 	/** 
 	 * Stop the currently running Simulation

@@ -43,15 +43,15 @@ public class Street implements DrawableObject{
 	/**
 	 * Possible orientation of the street
 	 */
-	public enum orientation {
-		horizontal,
-		vertical
+	public enum Orientation {
+		HORIZONTAL,
+		VERTICAL
 	}
 	
 	/**
 	 * Current orientation for the Street
 	 */
-	private orientation currentOrientation;
+	private Orientation currentOrientation;
 	
 	public static final Color laneColor = Color.WHITE;
 	public static final Color streetColor = Color.GRAY;
@@ -154,22 +154,22 @@ public class Street implements DrawableObject{
 	}
 
 	public int getLenght() {return length;}
-	public void setLenght(int lenght) {this.length = lenght;}
+	//public void setLenght(int lenght) {this.length = lenght;}
 
 	public Dimension getDimension() {return this.dimension;}
 	public void setDimension(Dimension dimension) {this.dimension = dimension;}
 	
 	public Collection<Lane> getLanes() {return this.lanes;}
 
-	public orientation getOrientaion() {return currentOrientation;}
-	public void setOrientaion(orientation orientaion) {this.currentOrientation = orientaion;}
+	public Orientation getOrientaion() {return currentOrientation;}
+	public void setOrientaion(Orientation orientaion) {this.currentOrientation = orientaion;}
 
 	public int getPositionsOnStreet() {return positionsOnStreet;}
-	public void setPositionsOnStreet(int positionsOnStreet) {this.positionsOnStreet = positionsOnStreet;}
+	//public void setPositionsOnStreet(int positionsOnStreet) {this.positionsOnStreet = positionsOnStreet;}
 	
 	public int getId() {return id;}
 	
-	public boolean isHorizontal() { return this.currentOrientation == orientation.horizontal; }
-	public boolean isVertical() { return this.currentOrientation == orientation.vertical; }
+	public boolean isHorizontal() { return this.currentOrientation == Orientation.HORIZONTAL; }
+	public boolean isVertical() { return this.currentOrientation == Orientation.VERTICAL; }
 
 }

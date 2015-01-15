@@ -31,8 +31,8 @@
     		<element name="orientation" maxOccurs="1" minOccurs="1">
     			<simpleType>
     				<restriction base="string">
-    					<enumeration value="horizontal"></enumeration>
-    					<enumeration value="vertical"></enumeration>
+    					<enumeration value="HORIZONTAL"></enumeration>
+    					<enumeration value="VERTICAL"></enumeration>
     				</restriction>
     			</simpleType>
     		</element>
@@ -52,8 +52,8 @@
         	<element name="direction" maxOccurs="1" minOccurs="1">
         		<simpleType>
         			<restriction base="string">
-        				<enumeration value="endToStart"></enumeration>
-        				<enumeration value="startToEnd"></enumeration>
+        				<enumeration value="END_TO_START"></enumeration>
+        				<enumeration value="START_TO_END"></enumeration>
         			</restriction>
         		</simpleType>
         	</element>

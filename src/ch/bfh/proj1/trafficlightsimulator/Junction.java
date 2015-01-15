@@ -27,7 +27,7 @@ import java.util.LinkedList;
 
 import java.util.Collections;
 
-import ch.bfh.proj1.trafficlightsimulator.Lane.laneOrientations;
+import ch.bfh.proj1.trafficlightsimulator.Lane.LaneOrientations;
 import ch.bfh.proj1.trafficlightsimulator.TrafficLightSimulator.TrafficLightMode;
 
 public class Junction implements DrawableObject{
@@ -116,7 +116,8 @@ public class Junction implements DrawableObject{
 			numOfLanesVertical = numOfLanesHorizontal;
 		}
 
-		d.setSize(numOfLanesHorizontal * TrafficLightSimulator.defaultLaneWidth, numOfLanesVertical * TrafficLightSimulator.defaultLaneWidth);
+		d.setSize(numOfLanesHorizontal * TrafficLightSimulator.defaultLaneWidth, 
+				numOfLanesVertical * TrafficLightSimulator.defaultLaneWidth);
 
 		return d;
 	}
@@ -138,14 +139,14 @@ public class Junction implements DrawableObject{
 				if (s != null) {
 					for (Lane l : s.getLanes()) {
 						if (s.getEndJunction()!=null){
-							if (s.getEndJunction().equals(this) && l.getLaneOrientation() == laneOrientations.startToEnd) {
+							if (s.getEndJunction().equals(this) && l.getLaneOrientation() == LaneOrientations.START_TO_END) {
 								if (l.getTrafficLight() != null) {
 									this.trafficLights.add(l.getTrafficLight());
 								}
 							}
 						}
 						if (s.getStartJunction() != null) {
-							if (s.getStartJunction().equals(this) && l.getLaneOrientation() == laneOrientations.endToStart) {
+							if (s.getStartJunction().equals(this) && l.getLaneOrientation() == LaneOrientations.END_TO_START) {
 								if (l.getTrafficLight() != null) {
 									this.trafficLights.add(l.getTrafficLight());
 								}
@@ -282,7 +283,8 @@ public class Junction implements DrawableObject{
 			// If we have a green light
 			// Check if it was green long enough
 			if (currentGreenLight != null) {
-				if (currentGreenLight.getTimeLastChange() > (1 * TrafficLightSimulator.minimumGreenLightPhase) || currentGreenLight.getNumOfVehiclesNearLight() == 0) {
+				if (currentGreenLight.getTimeLastChange() > (1 * TrafficLightSimulator.minimumGreenLightPhase) 
+						|| currentGreenLight.getNumOfVehiclesNearLight() == 0) {
 					currentGreenLight.setRed();
 					hasGreenLight = false;
 				} else {
